@@ -1,0 +1,238 @@
+// this is a short cut to center any block element
+@mixin center-auto {
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+// div {
+//   @include center-auto()
+// }
+
+@mixin box($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// img {
+//   @include box(200px)
+// }
+
+// button {
+//   @include box(200px, 50px)
+// }
+
+@mixin cover-background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+// div{
+//   background-image: url('this.jpg');
+//   @include cover-background()
+// }
+
+// flexbox toolkit
+@mixin flex-colum {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-space {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
+@mixin flex-center-column {
+  @include flex-center();
+  flex-direction: column;
+}
+
+// This initialized the ::after and ::before pseudo classes
+
+@mixin pseudo($width: 100%, $height: 100%, $display: block, $pos: absolute, $content: "") {
+  content: $content;
+  display: $display;
+  position: $pos;
+  @include box($width, $height);
+}
+
+// div {
+//   &::after{
+//     @include pseudo(200px, 100px)
+//   }
+// }
+
+@mixin position($position, $arge) {
+  @each $pos in top right bottom left {
+    $i: index($arge, $pos);
+    @if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) {
+      #{$pos}: nth($args, $i + 1);
+    }
+  }
+  position: $position;
+}
+
+@mixin absolute($args: " ") {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: " ") {
+  @include position(fixed, $args);
+}
+
+@mixin relative($args: " ") {
+  @include position(relative, $args);
+}
+
+// .submenu {
+//   @include absolute(top 100% left 0)
+// }
+
+$phone-wide: 480px;
+$phablet: 560px;
+$tablet-small: 640px;
+$tablet: 768px;
+$large: 1024px;
+$desktop: 1280px;
+$desktop-wide: 1440px;
+
+@mixin tablet-small {
+  @media only screen and (min-width: $tablet-small) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (min-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (min-width: $large) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+// example
+// div{
+//   font-size: 3rem;
+//   @include tablet() {
+//     font-size: 5rem;
+//   }
+// }
+
+@mixin fade($type) {
+  @if $type == "hide" {
+    visibility: hidden;
+    opacity: 0;
+    transition: $transition;
+  } @else if $type == "show" {
+    visibility: visible;
+    opacity: 1;
+    transition: $transition;
+  }
+}
+
+// .showing {
+//   @include fade(show)
+// }
+
+// .hidden {
+//   @include fade(hide)
+// }
+
+@mixin input-placeholder {
+  &.placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+
+// input {
+//   @include input-placeholder(){
+//     color: hsl(195, 54%, 51%);
+//     font-style: italic;
+//   }
+// }
+
+@mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: quote($font-name);
+    src: url($file-name + ".eot");
+    src: url($file-name + "eot#iefix") format("embedded-opentype"), url($file-name + ".woff") format("woff"),
+      url($file-name + ".ttf") format("ttf"), url($file-name + ".svg") format("svg");
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+// if you wanted to skip something you can just do what i did for style
+// @include font-face('MyFont', './base/typogr/file-name.ttf', $style: underline )
+
+@mixin text-shorten {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin css-triangle($color, $direction, $size: 6px, $position: absolute, $round: false) {
+  @include pseudo($pos: $position);
+  width: 0;
+  height: 0;
+  @if $round {
+    border-radius: 3px;
+  }
+  @if $direction == down {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid $color;
+    margin-top: 0 - round($size/2.5);
+  } @else if $direction == up {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-bottom: $size solid $color;
+    margin-bottom: 0 - round($size/2.5);
+  } @else if $direction == right {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+    margin-right: -$size;
+  } @else if $direction == left {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+    margin-left: 0 -$size/2.5;
+  }
+}
+
+// menu, li {
+//   @include css-triangle(red, up, 12px)
+// }

@@ -7,7 +7,7 @@ const { StatusCodes } = require("http-status-codes");
 
 const register = async (req, res) => {
 	const newUser = await User.create(req.body);
-	const token = newUser.createJWT()
+	const token = newUser.createJWT();
 	res.status(StatusCodes.CREATED).json({ user: newUser.name, userID: newUser._id, token });
 };
 
@@ -26,6 +26,7 @@ const login = async (req, res) => {
 	}
 
 	const isPasswordCorrect = await userLogin.comparePassword(password);
+	
 	if (!isPasswordCorrect) {
 		throw new UnauthError("Invaild Credentials");
 	}

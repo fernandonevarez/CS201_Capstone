@@ -16,7 +16,7 @@ const ProductSchema = new monogoose.Schema({
         maxlength: [50, 'Description must be less than 500 characters'],
         minlength: [10, 'Description must be more than 10 characters'],
     },
-    image: [
+    imageArray: [
         {
             type: String,
             required: [true, 'Please add an image that displays the product'],

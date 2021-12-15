@@ -59,6 +59,7 @@ const startServer = async () => {
         })
       )
       .use([express.urlencoded({ extended: false }), express.json()])
+      .use(fileUpload({ useTempFiles: true }))
       // safety blanket
       .use(helmet())
       // cors prevents CORS errors
@@ -66,7 +67,6 @@ const startServer = async () => {
       // xss (user sanitization) - cleans up user inputs to make sure they are safe.
       .use(xss())
 
-      .use(fileUpload({ useTempFiles: true }))
 
       // routes
       .use("/api/v1/auth", authRouter)

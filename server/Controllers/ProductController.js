@@ -31,12 +31,12 @@ const createProduct = async (req, res) => {
     fs.unlinkSync(each.tempFilePath);
     imageURLS.push(result.secure_url);
     
-    console.log([...imageURLS]);
+    console.log(imageURLS);
     // console.table(result);
   })
-  
+  // stringify json
   console.log('test');
-  res.status(StatusCodes.OK).json({ name: name, price: price, description: description, image: [...imageURLS] });
+  res.status(StatusCodes.OK).json.({ name: name, price: price, description: description, image: imageURLS });
 };
 
 const getAllProduct = async (req, res) => {

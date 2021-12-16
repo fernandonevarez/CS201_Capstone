@@ -1,5 +1,5 @@
-// import { Switch, Route } from "react-router-dom";
-import { Routes as Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+// import { Routes as Switch, Route } from "react-router-dom";
 
 import Home from "./Pages/Home";
 import "./Styles/main.css";

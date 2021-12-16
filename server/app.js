@@ -17,7 +17,7 @@ const stripeController = require("./Controllers/SpriteController")
 
 // Routes
 const productRouter = require("./Routes/productRoute")
-const authRouter = require("./routes/authRoute");
+const authRouter = require("./Routes/authRoute");
 
 // sercurity libraries
 const xss = require("xss-clean");
@@ -32,10 +32,10 @@ const cors = require("cors");
 
 // couldinary
 const cloudinary = require("cloudinary").v2;
-cloudinary.config({ 
-  cloud_name: process.env.cloud_name, 
-  api_key: process.env.api_key, 
-  api_secret: process.env.api_secret 
+cloudinary.config({
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret
 });
 
 // fileuploader
@@ -58,6 +58,7 @@ const startServer = async () => {
           max: 100,
         })
       )
+      // .usd(express.static("./publicTwo"))
       .use([express.urlencoded({ extended: false }), express.json()])
       .use(fileUpload({ useTempFiles: true }))
       // safety blanket
@@ -69,6 +70,8 @@ const startServer = async () => {
 
 
       // routes
+
+
       .use("/api/v1/auth", authRouter)
       .use("/api/v1/products", authenticationMiddleware, productRouter)
 

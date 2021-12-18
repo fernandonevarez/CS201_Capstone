@@ -11,35 +11,38 @@ const Product = require("../Model/ProductSchema");
 
 
 const createProduct = async (req, res) => {
-  // req.body.createdBy = req.user.userID;
+  const {
+    body: { name, price, description },
+    files: fileArrayConatiner,
+    user: { userID },
+    params: { id: productID },
+  } = req;
 
-  const { name, price, description } = req.body;
-
-  const imageArray = req.files.imageArray;
+  const imageArray = fileArrayConatiner.imageArray;
   const imageURLS = [];
   const imageResultOne = await cloudinary.uploader.upload(
-    req.files.imageArray[0].tempFilePath,
+    fileArrayConatiner.imageArray[0].tempFilePath,
     {
       use_filename: true,
       folder: "Store_Images_uploader"
     },
   );
-  fs.unlinkSync(req.files.imageArray[0].tempFilePath);
+  fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
   imageURLS.push(imageResultOne.secure_url);
 
   const imageResultTwo = await cloudinary.uploader.upload(
-    req.files.imageArray[1].tempFilePath,
+    fileArrayConatiner.imageArray[1].tempFilePath,
     {
       use_filename: true,
       folder: "Store_Images_uploader"
     },
   );
-  fs.unlinkSync(req.files.imageArray[1].tempFilePath);
+  fs.unlinkSync(fileArrayConatiner.imageArray[1].tempFilePath);
   imageURLS.push(imageResultTwo.secure_url);
-  
+
 
   // console.log({ name: name, price: price, description: description, $push: {image: imageURLS} })
-  const product = await Product.create({ name: name, price: price, description: description, imageArray: imageURLS  });
+  const product = await Product.create({ name: name, price: price, description: description, imageArray: imageURLS });
   res.status(200).json({ product })
 }
 
@@ -55,7 +58,7 @@ const deleteProduct = async (req, res) => {
     user: { userID },
   } = req;
 
-  const product = await Product.findByIdAndRemove({ _id: productID });
+  const product = await Product.findByIdAndRemove({ _id: productID, user: { userID } });
 
   if (!product) {
     throw new NotFoundError(`No attraction with id: ${productID} found.`);
@@ -68,38 +71,42 @@ const updateProduct = async (req, res) => {
 
   // need to make it so that you can upadte the images in the imageARrray
   // try to make it so that the stuff in the image array gets delete
-    // also that the images in cloudnary get delete too.
+  // also that the images in cloudnary get delete too.
 
   const {
     body: { name, price, description, },
-    files: imageArray,
+    files: fileArrayConatiner,
     user: { userID },
     params: { id: productID },
   } = req;
 
-  if (!name || !price || !description ) {
+  // console.log(imageArray)
+
+  if (!name || !price || !description) {
     throw new BadRequestError(
       "Every product needs to have a name, price, and description. So please make sure they have all of them."
     );
   }
-  console.log(imageArray);
+  // console.log(`image array: ${imageArray}`);
 
   const imageURLS = [];
+
   const imageResultOne = await cloudinary.uploader.upload(
-    imageArray[0].tempFilePath,
+    fileArrayConatiner.imageArray[0].tempFilePath,
     {
       use_filename: true,
       folder: "Store_Images_uploader"
     },
   );
-  fs.unlinkSync(imageArray[0].tempFilePath);
+  fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
   imageURLS.push(imageResultOne.secure_url);
 
   const product = await Product.findByIdAndUpdate(
-    { _id: productID }, // How we are finding the product
-    {name, price, description, imageURLS}, // Whats changing in the product
+    { _id: productID, createdBy: userID }, // How we are finding the product
+    { name, price, description, imageURLS }, // Whats changing in the product
     { new: true, runValidators: true } // options
   );
+  // console.log(`Image URLS: ${imageURLS}`)
 
   if (!product) {
     throw new NotFoundError(`No product with id ${productID}`);
@@ -109,7 +116,18 @@ const updateProduct = async (req, res) => {
 }
 
 const getSingleProduct = async (req, res) => {
-  res.json({ data: "GetSingleProduct" });
+  const {
+    user: { userID },
+    params: { id: productID },
+  } = req;
+
+  const product = await Product.findOne({ createdBy: userID, _id: productID });
+
+  if (!product) {
+    throw new NotFoundError(`No product with the ID ${productID}`);
+  }
+
+  res.status(StatusCodes.OK).json({ product });
 }
 
 module.exports = { createProduct, getAllProduct, deleteProduct, updateProduct, getSingleProduct };

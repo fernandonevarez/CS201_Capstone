@@ -1,7 +1,7 @@
 
 
 const express = require('express');
-const { uploadImage } = require('../Controllers/ImageUploadController');
+
 const { getAllProduct, createProduct, getSingleProduct, deleteProduct, updateProduct } = require('../Controllers/ProductController');
 
 
@@ -13,6 +13,8 @@ productRouter.route('/').post(createProduct)
 productRouter.route('/:id').get(getSingleProduct)
 productRouter.route('/:id').delete(deleteProduct)
 productRouter.route('/:id').put(updateProduct)
+
+productRouter.route('/:id/order').get()
 
 // productRouter.route('/upload').post(uploadImage)
 

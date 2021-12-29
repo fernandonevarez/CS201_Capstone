@@ -1,14 +1,11 @@
-
-const path = require("path")
-const fs = require("fs")
+const path = require("path");
+const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const Product = require("../Model/ProductSchema");
-
-
 
 const createProduct = async (req, res) => {
   const {
@@ -24,8 +21,8 @@ const createProduct = async (req, res) => {
     fileArrayConatiner.imageArray[0].tempFilePath,
     {
       use_filename: true,
-      folder: "Store_Images_uploader"
-    },
+      folder: "Store_Images_uploader",
+    }
   );
   fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
   imageURLS.push(imageResultOne.secure_url);
@@ -34,23 +31,27 @@ const createProduct = async (req, res) => {
     fileArrayConatiner.imageArray[1].tempFilePath,
     {
       use_filename: true,
-      folder: "Store_Images_uploader"
-    },
+      folder: "Store_Images_uploader",
+    }
   );
   fs.unlinkSync(fileArrayConatiner.imageArray[1].tempFilePath);
   imageURLS.push(imageResultTwo.secure_url);
 
-
   // console.log({ name: name, price: price, description: description, $push: {image: imageURLS} })
-  const product = await Product.create({ name: name, price: price, description: description, imageArray: imageURLS });
-  res.status(200).json({ product })
-}
+  const product = await Product.create({
+    name: name,
+    price: price,
+    description: description,
+    imageArray: imageURLS,
+  });
+  res.status(200).json({ product });
+};
 
 const getAllProduct = async (req, res) => {
   const products = await Product.find({}).sort("Created at");
 
   res.status(StatusCodes.OK).json({ products, length: products.length });
-}
+};
 
 const deleteProduct = async (req, res) => {
   const {
@@ -58,47 +59,48 @@ const deleteProduct = async (req, res) => {
     user: { userID },
   } = req;
 
-  const product = await Product.findByIdAndRemove({ _id: productID, user: { userID } });
+  const product = await Product.findByIdAndRemove({
+    _id: productID,
+    user: { userID },
+  });
 
   if (!product) {
     throw new NotFoundError(`No attraction with id: ${productID} found.`);
   }
 
   res.status(StatusCodes.OK).json({ product });
-}
+};
 
 const updateProduct = async (req, res) => {
-
   // need to make it so that you can upadte the images in the imageARrray
   // try to make it so that the stuff in the image array gets delete
   // also that the images in cloudnary get delete too.
 
   const {
-    body: { name, price, description, },
-    files: fileArrayConatiner,
+    body: { name, price, description },
+    files: fileArrayContainer,
     user: { userID },
     params: { id: productID },
   } = req;
 
-  // console.log(imageArray)
-
-  if (!name || !price || !description) {
+  if (!name && !price && !description) {
     throw new BadRequestError(
       "Every product needs to have a name, price, and description. So please make sure they have all of them."
     );
   }
-  // console.log(`image array: ${imageArray}`);
+  console.log(name, price, description);
 
   const imageURLS = [];
+  console.log(fileArrayContainer);
 
   const imageResultOne = await cloudinary.uploader.upload(
-    fileArrayConatiner.imageArray[0].tempFilePath,
+    fileArrayContainer.imageArray[0].tempFilePath,
     {
       use_filename: true,
-      folder: "Store_Images_uploader"
-    },
+      folder: "Store_Images_uploader",
+    }
   );
-  fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
+  fs.unlinkSync(fileArrayContainer.imageArray[0].tempFilePath);
   imageURLS.push(imageResultOne.secure_url);
 
   const product = await Product.findByIdAndUpdate(
@@ -113,7 +115,7 @@ const updateProduct = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ product });
-}
+};
 
 const getSingleProduct = async (req, res) => {
   const {
@@ -128,6 +130,12 @@ const getSingleProduct = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ product });
-}
+};
 
-module.exports = { createProduct, getAllProduct, deleteProduct, updateProduct, getSingleProduct };
+module.exports = {
+  createProduct,
+  getAllProduct,
+  deleteProduct,
+  updateProduct,
+  getSingleProduct,
+};

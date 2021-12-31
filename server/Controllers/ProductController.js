@@ -90,13 +90,9 @@ const deleteProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  // need to make it so that you can upadte the images in the imageARrray
-  // try to make it so that the stuff in the image array gets delete
-  // also that the images in cloudnary get delete too.
-
   const {
     body: { name, price, description },
-    files: fileArrayContainer,
+    files: fileArrayConatiner,
     user: { userID },
     params: { id: productID },
   } = req;
@@ -106,33 +102,56 @@ const updateProduct = async (req, res) => {
       "Every product needs to have a name, price, and description. So please make sure they have all of them."
     );
   }
-  console.log(name, price, description);
 
-  const imageURLS = [];
-  console.log(fileArrayContainer);
-
-  const imageResultOne = await cloudinary.uploader.upload(
-    fileArrayContainer.imageArray[0].tempFilePath,
-    {
-      use_filename: true,
-      folder: "Store_Images_uploader",
+  if (Array.isArray(fileArrayConatiner.imageArray) == true) {
+    const imageURLS = [];
+    async function uploadImages() {
+      // loops through every image the user uploaded and uploads them to cloudinary
+      for (let i = 0; i < fileArrayConatiner.imageArray.length; i++) {
+        // GET THE IMAGE
+        const file = fileArrayConatiner.imageArray[i];
+        // UPLOAD THE IMAGE
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+          use_filename: true,
+          folder: "Store_Images_uploader",
+        });
+        // REMOVE THE TEMP FILE
+        fs.unlinkSync(file.tempFilePath);
+        // PUSH THE IMAGE URL TO THE ARRAY
+        imageURLS.push(result.secure_url);
+      }
+      // UPDATES THE PRODUCT
+      const product = await Product.findByIdAndUpdate(
+        { _id: productID, createdBy: userID }, // How we are finding the product
+        { name, price, description, imageArray: imageURLS }, // Whats changing in the product
+        { new: true, runValidators: true } // options
+      );
+      if (!product) {
+        throw new NotFoundError(`No product with id ${productID}`);
+      }
+      res.status(200).json({ product });
     }
-  );
-  fs.unlinkSync(fileArrayContainer.imageArray[0].tempFilePath);
-  imageURLS.push(imageResultOne.secure_url);
-
-  const product = await Product.findByIdAndUpdate(
-    { _id: productID, createdBy: userID }, // How we are finding the product
-    { name, price, description, imageURLS }, // Whats changing in the product
-    { new: true, runValidators: true } // options
-  );
-  // console.log(`Image URLS: ${imageURLS}`)
-
-  if (!product) {
-    throw new NotFoundError(`No product with id ${productID}`);
+    uploadImages();
+  } else {
+    // if the user is only submitting one image for the product
+    const imageResult = await cloudinary.uploader.upload(
+      fileArrayConatiner.imageArray.tempFilePath,
+      {
+        use_filename: true,
+        folder: "Store_Images_uploader",
+      }
+    );
+    fs.unlinkSync(fileArrayConatiner.imageArray.tempFilePath);
+    const product = await Product.findByIdAndUpdate(
+      { _id: productID, createdBy: userID }, // How we are finding the product
+      { name, price, description, imageArray: imageResult.secure_url }, // Whats changing in the product
+      { new: true, runValidators: true } // options
+    );
+    if (!product) {
+      throw new NotFoundError(`No product with id ${productID}`);
+    }
+    res.status(200).json({ product });
   }
-
-  res.status(StatusCodes.OK).json({ product });
 };
 
 const getSingleProduct = async (req, res) => {

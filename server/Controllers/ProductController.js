@@ -18,10 +18,6 @@ const createProduct = async (req, res) => {
     params: { id: productID },
   } = req;
 
-  // const imageArray = fileArrayConatiner.imageArray;
-
-  console.log(fileArrayConatiner);
-
   if (Array.isArray(fileArrayConatiner.imageArray) == true) {
     const imageURLS = [];
     async function uploadImages() {

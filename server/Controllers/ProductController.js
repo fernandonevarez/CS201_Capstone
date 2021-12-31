@@ -6,9 +6,6 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const Product = require("../Model/ProductSchema");
-const { Console, log } = require("console");
-
-// NEED TO WORK ON MAKING IT SO THAT USERS CAN PUT 1 OR MORE PRODUCT IMAGES IN THE IMAGE ARRAY INPUT.
 
 const createProduct = async (req, res) => {
   const {

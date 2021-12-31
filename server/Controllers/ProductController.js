@@ -6,6 +6,9 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const Product = require("../Model/ProductSchema");
+const { Console, log } = require("console");
+
+// NEED TO WORK ON MAKING IT SO THAT USERS CAN PUT 1 OR MORE PRODUCT IMAGES IN THE IMAGE ARRAY INPUT.
 
 const createProduct = async (req, res) => {
   const {
@@ -15,37 +18,90 @@ const createProduct = async (req, res) => {
     params: { id: productID },
   } = req;
 
-  const imageArray = fileArrayConatiner.imageArray;
-  const imageURLS = [];
-  const imageResultOne = await cloudinary.uploader.upload(
-    fileArrayConatiner.imageArray[0].tempFilePath,
-    {
-      use_filename: true,
-      folder: "Store_Images_uploader",
-    }
-  );
-  fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
-  imageURLS.push(imageResultOne.secure_url);
+  // const imageArray = fileArrayConatiner.imageArray;
 
-  const imageResultTwo = await cloudinary.uploader.upload(
-    fileArrayConatiner.imageArray[1].tempFilePath,
-    {
-      use_filename: true,
-      folder: "Store_Images_uploader",
-    }
-  );
-  fs.unlinkSync(fileArrayConatiner.imageArray[1].tempFilePath);
-  imageURLS.push(imageResultTwo.secure_url);
+  console.log(fileArrayConatiner);
 
-  // console.log({ name: name, price: price, description: description, $push: {image: imageURLS} })
-  const product = await Product.create({
-    name: name,
-    price: price,
-    description: description,
-    imageArray: imageURLS,
-  });
-  res.status(200).json({ product });
+  // console.log(`file: ${fileArrayConatiner.imageArray.tempFilePath}`);
+
+  if (Array.isArray(fileArrayConatiner.imageArray) == true) {
+    if ((fileArrayConatiner.imageArray.length = 2)) {
+      const imageURLS = [];
+
+      // console.log(fileArrayConatiner.imageArray[0].tempFilePath);
+
+      const imageResultOne = await cloudinary.uploader.upload(
+        fileArrayConatiner.imageArray[0].tempFilePath,
+        {
+          use_filename: true,
+          folder: "Store_Images_uploader",
+        }
+      );
+      fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
+      imageURLS.push(imageResultOne.secure_url);
+      const imageResultTwo = await cloudinary.uploader.upload(
+        fileArrayConatiner.imageArray[1].tempFilePath,
+        {
+          use_filename: true,
+          folder: "Store_Images_uploader",
+        }
+      );
+      fs.unlinkSync(fileArrayConatiner.imageArray[1].tempFilePath);
+      imageURLS.push(imageResultTwo.secure_url);
+      const product = await Product.create({
+        name: name,
+        price: price,
+        description: description,
+        imageArray: imageURLS,
+      });
+      // console.log(`Product: ${{ product }}`);
+      res.status(200).json({ product });
+    }
+  } else {
+    const imageResult = await cloudinary.uploader.upload(
+      fileArrayConatiner.imageArray.tempFilePath,
+      {
+        use_filename: true,
+        folder: "Store_Images_uploader",
+      }
+    );
+
+    fs.unlinkSync(fileArrayConatiner.imageArray.tempFilePath);
+    console.log(imageResult);
+    const product = await Product.create({
+      name: name,
+      price: price,
+      description: description,
+      imageArray: imageResult.secure_url,
+    });
+    console.log({ product });
+    res.status(200).json({ product });
+  }
+
+  // if (fileArrayConatiner.imageArray.typeof === "object") {
+  //   const imageResult = await cloudinary.uploader.upload(
+  //     fileArrayConatiner.imageArray.tempFilePath,
+  //     {
+  //       use_filename: true,
+  //       folder: "Store_Images_uploader",
+  //     }
+  //   );
+
+  //   fs.unlinkSync(fileArrayConatiner.imageArray.tempFilePath);
+  //   console.log(imageResult);
+  //   const product = await Product.create({
+  //     name: name,
+  //     price: price,
+  //     description: description,
+  //     imageArray: imageResult.secure_url,
+  //   });
+  //   console.log({ product });
+  //   res.status(200).json({ product });
+  // }
 };
+
+// console.log({ name: name, price: price, description: description, $push: {image: imageURLS} })
+// };
 
 const getAllProduct = async (req, res) => {
   const products = await Product.find({}).sort("Created at");

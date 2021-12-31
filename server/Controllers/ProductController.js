@@ -22,42 +22,35 @@ const createProduct = async (req, res) => {
 
   console.log(fileArrayConatiner);
 
-  // console.log(`file: ${fileArrayConatiner.imageArray.tempFilePath}`);
-
   if (Array.isArray(fileArrayConatiner.imageArray) == true) {
-    if ((fileArrayConatiner.imageArray.length = 2)) {
-      const imageURLS = [];
-
-      // console.log(fileArrayConatiner.imageArray[0].tempFilePath);
-
-      const imageResultOne = await cloudinary.uploader.upload(
-        fileArrayConatiner.imageArray[0].tempFilePath,
-        {
+    const imageURLS = [];
+    async function uploadImages() {
+      // loops through every image the user uploaded and uploads them to cloudinary
+      for (let i = 0; i < fileArrayConatiner.imageArray.length; i++) {
+        // GET THE IMAGE
+        const file = fileArrayConatiner.imageArray[i];
+        // UPLOAD THE IMAGE
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
           use_filename: true,
           folder: "Store_Images_uploader",
-        }
-      );
-      fs.unlinkSync(fileArrayConatiner.imageArray[0].tempFilePath);
-      imageURLS.push(imageResultOne.secure_url);
-      const imageResultTwo = await cloudinary.uploader.upload(
-        fileArrayConatiner.imageArray[1].tempFilePath,
-        {
-          use_filename: true,
-          folder: "Store_Images_uploader",
-        }
-      );
-      fs.unlinkSync(fileArrayConatiner.imageArray[1].tempFilePath);
-      imageURLS.push(imageResultTwo.secure_url);
+        });
+        // REMOVE THE TEMP FILE
+        fs.unlinkSync(file.tempFilePath);
+        // PUSH THE IMAGE URL TO THE ARRAY
+        imageURLS.push(result.secure_url);
+      }
+      // CREATE THE PRODUCT
       const product = await Product.create({
         name: name,
         price: price,
         description: description,
         imageArray: imageURLS,
       });
-      // console.log(`Product: ${{ product }}`);
       res.status(200).json({ product });
     }
+    uploadImages();
   } else {
+    // if the user is only submitting one image for the product
     const imageResult = await cloudinary.uploader.upload(
       fileArrayConatiner.imageArray.tempFilePath,
       {
@@ -65,43 +58,16 @@ const createProduct = async (req, res) => {
         folder: "Store_Images_uploader",
       }
     );
-
     fs.unlinkSync(fileArrayConatiner.imageArray.tempFilePath);
-    console.log(imageResult);
     const product = await Product.create({
       name: name,
       price: price,
       description: description,
       imageArray: imageResult.secure_url,
     });
-    console.log({ product });
     res.status(200).json({ product });
   }
-
-  // if (fileArrayConatiner.imageArray.typeof === "object") {
-  //   const imageResult = await cloudinary.uploader.upload(
-  //     fileArrayConatiner.imageArray.tempFilePath,
-  //     {
-  //       use_filename: true,
-  //       folder: "Store_Images_uploader",
-  //     }
-  //   );
-
-  //   fs.unlinkSync(fileArrayConatiner.imageArray.tempFilePath);
-  //   console.log(imageResult);
-  //   const product = await Product.create({
-  //     name: name,
-  //     price: price,
-  //     description: description,
-  //     imageArray: imageResult.secure_url,
-  //   });
-  //   console.log({ product });
-  //   res.status(200).json({ product });
-  // }
 };
-
-// console.log({ name: name, price: price, description: description, $push: {image: imageURLS} })
-// };
 
 const getAllProduct = async (req, res) => {
   const products = await Product.find({}).sort("Created at");

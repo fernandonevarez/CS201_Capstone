@@ -1,21 +1,49 @@
-
 require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const chart = new Map([
+  [1, { priceInCents: 10000, name: "Learn React Today" }],
+  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
+]);
 
-const stripeController = async(req, res) => {
-  const {totalAmount, shippingFee, purchase} = req.body;
+const stripeCheckoutController = async (req, res) => {
+  // let { amount, id } = req.body;
+  // try {
+  //   const payment = await stripe.paymentIntents.create({
+  //     amount,
+  //     currency: "USD",
+  //     description: "3D Printing company",
+  //     payment_method: id,
+  //     confirm: true,
+  //   });
+  //   console.log("Payment", payment);
+  //   res.json({
+  //     message: "Payment successful",
+  //     success: true,
+  //   });
+  // } catch (error) {
+  //   console.log("Error", error);
+  //   res.json({
+  //     message: "Payment failed",
+  //     success: false,
+  //   });
+  // }
+  const YOUR_DOMAIN = "http://localhost:3001/api/v1/products";
 
-  const calcTotal = () => {
-    return totalAmount + shippingFee
-  }
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: "price_1KD0sxKGSc301ehTnx6iWakX",
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `${YOUR_DOMAIN}/?success=true`,
+    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+  });
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: calcTotal(),
-    currency: "usd",
-  })
+  res.redirect(303, session.url);
+};
 
-  res.json({clientSecret: paymentIntent.client_secret})
-}
-
-module.exports = stripeController;
+module.exports = { stripeCheckoutController };

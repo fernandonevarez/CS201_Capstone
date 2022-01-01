@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stripe Payments</title>
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    
+
+    <section class="section section-center conatiner">
+      <h1>Payment</h1>
+      <form id="payment-form">
+        <p>Test Card Number: 4242 4242 4242 4242</p>
+        <!-- Div below will be the amount for stripe.js custom card -->
+        <div id="card-element"></div>
+        <button id="submit">
+          <div class="spinner hidden" id="spinner"></div>
+          <span id="button-text">Pay</span>
+        </button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payement Succeed, see the results in your
+          <a href="#" target="_blank" rel="noopener norefence"
+            >Stripe Dashboard.</a
+          >Refresh the page to pay again
+        </p>
+      </form>
+    </section>
+
+    <script src="./main.js"></script>
+  </body>
+</html>

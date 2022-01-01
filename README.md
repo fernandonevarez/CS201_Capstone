@@ -3,15 +3,17 @@
 ## Models
 
 ### Add item page
+
 - allow customers to be able to add items to the store.
   - only needs a item of it(for the project)
   - if i have time, make it so that they will need this stuff for a product
     - name
     - price
     - description
-- 
+-
 
 ### Product Model
+
 - Name
   - string
   - required
@@ -28,12 +30,17 @@
   - required
   - max of 10 images
 
-
 ## Routes
 
 ### product Route
+
 - "/"
   - get ALL Products
   - create Product
-  - 
+  -
 
+## What to do for next time
+
+- need to fix client side checkout problem
+  - webpage saying:
+    - "This site can’t provide a secure connection"

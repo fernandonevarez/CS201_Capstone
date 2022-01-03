@@ -6,6 +6,7 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const Product = require("../Model/ProductSchema");
+const { log } = require("console");
 
 const createProduct = async (req, res) => {
   const {
@@ -14,6 +15,8 @@ const createProduct = async (req, res) => {
     user: { userID },
     params: { id: productID },
   } = req;
+
+  console.log(Array.isArray(fileArrayConatiner.imageArray));
 
   if (Array.isArray(fileArrayConatiner.imageArray) == true) {
     const imageURLS = [];
@@ -43,6 +46,7 @@ const createProduct = async (req, res) => {
     }
     uploadImages();
   } else {
+    console.log(fileArrayConatiner.imageArray);
     // if the user is only submitting one image for the product
     const imageResult = await cloudinary.uploader.upload(
       fileArrayConatiner.imageArray.tempFilePath,

@@ -28,7 +28,8 @@ const stripeCheckoutController = async (req, res) => {
   //     success: false,
   //   });
   // }
-  const YOUR_DOMAIN = "http://localhost:3001/api/v1/products";
+  const YOUR_DOMAIN =
+    "http://localhost:3000/api/v1/products/create-checkout-session";
 
   const session = await stripe.checkout.sessions.create({
     line_items: [

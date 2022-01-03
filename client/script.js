@@ -1,6 +1,6 @@
 const button = document.querySelector("button");
 button.addEventListener("click", () => {
-  fetch("http://localhost:3000/api/v1/products/create-checkout-session", {
+  fetch("http://localhost:3000/api/v1/create-checkout-session", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +17,9 @@ button.addEventListener("click", () => {
       return res.json().then((json) => Promise.reject(json));
     })
     .then(({ url }) => {
+      console.log(url);
       window.location = url;
+      i;
     })
     .catch((e) => {
       console.error(e.error);

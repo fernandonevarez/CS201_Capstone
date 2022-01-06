@@ -12,7 +12,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 const authenticationMiddleware = require("./middleware/auth");
 
 // controllers
-const stripeController = require("./Controllers/SpriteController");
+// const stripeController = require("./Controllers/SpriteController");
 
 // Routes
 const productRouter = require("./Routes/productRoute");
@@ -119,8 +119,8 @@ const startServer = async () => {
       .listen(port, () => {
         console.log(`LISTENING => ${port}`);
       });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 };
 

@@ -44,3 +44,6 @@
 - need to fix client side checkout problem
   - webpage saying:
     - "This site can’t provide a secure connection"
+
+
+- learn more about axios at home at https://axios-http.com/docs/intro

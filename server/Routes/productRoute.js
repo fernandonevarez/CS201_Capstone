@@ -8,7 +8,7 @@ const {
   updateProduct,
 } = require("../Controllers/ProductController");
 
-const { stripeCheckoutController } = require("../Controllers/SpriteController");
+// const { stripeCheckoutController } = require("../Controllers/SpriteController");
 
 const productRouter = express.Router();
 
@@ -19,6 +19,6 @@ productRouter.route("/:id").get(getSingleProduct);
 productRouter.route("/:id").delete(deleteProduct);
 productRouter.route("/:id").put(updateProduct);
 
-productRouter.route("/create-checkout-session").post(stripeCheckoutController);
+// productRouter.route("/create-checkout-session").post(stripeCheckoutController);
 
 module.exports = productRouter;

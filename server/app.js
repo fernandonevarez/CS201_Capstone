@@ -92,7 +92,7 @@ const startServer = async () => {
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             mode: "payment",
-            line_items: req.body.items.map((item) => {
+            line_items: req.body.map((item) => {
               const storeItem = storeItems.get(item.id);
               return {
                 price_data: {

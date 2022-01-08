@@ -16,7 +16,8 @@ const createProduct = async (req, res) => {
     params: { id: productID },
   } = req;
 
-  console.log(Array.isArray(fileArrayConatiner.imageArray));
+  // console.log(Array.isArray(fileArrayConatiner.imageArray));
+  console.log(fileArrayConatiner);
 
   if (Array.isArray(fileArrayConatiner.imageArray) == true) {
     const imageURLS = [];
@@ -68,6 +69,8 @@ const createProduct = async (req, res) => {
 
 const getAllProduct = async (req, res) => {
   const products = await Product.find({}).sort("Created at");
+
+  console.log(products);
 
   res.status(StatusCodes.OK).json({ products, length: products.length });
 };

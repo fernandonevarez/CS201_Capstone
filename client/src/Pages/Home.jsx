@@ -12,23 +12,26 @@ const chart = [
 
 const Home = () => {
   // call axios to get backend data
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState([]);
+  // const [productData, setProductData] = useState([]);
+  const [results, setResults] = useState({});
 
-  // useEffect(() => {
-  // axios
-  //   .get("http://localhost:3000/api/v1/products", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //   .then((res) => {
-  //     setData(res.data);
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
+  async function getProducts() {
+    const response = await axios.get("http://localhost:3000/api/v1/products", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "http://localhost:3001",
+      },
+    });
+    // console.log(response);
+    // console.log(response.data.products);
+    setResults(response.data);
+    // response.data returns an length and and array of objects
+  }
 
-  // console.log(data);
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   async function checkout() {
     const checkout = await axios.post(
@@ -37,11 +40,22 @@ const Home = () => {
       {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "http://localhost:3001",
       }
     );
     const stripeURL = checkout.data.url;
     window.location = stripeURL;
   }
+
+  // console.log(results);
+
+  // console.log(`Product Array: ${results.products}`);
+
+  const getImage = (imageArray) => {
+    const image = axios.get(imageArray[0]);
+    return image;
+    // console.log(imageArray[0]);
+  };
 
   return (
     <div>
@@ -54,6 +68,22 @@ const Home = () => {
       >
         Checkout
       </button>
+
+      {results.products?.map((product) => {
+        const { _id: id, imageArray, name, description, price } = product;
+        console.log(imageArray);
+        return (
+          <div className="product-container" key={id}>
+            <img src={imageArray[0]} alt={name} />
+            <div className="product-info">
+              <h3>{name}</h3>
+              <p>{description}</p>
+              <p>{price}</p>
+              <button>Add to cart</button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

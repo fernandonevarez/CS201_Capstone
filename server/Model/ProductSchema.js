@@ -25,6 +25,10 @@ const ProductSchema = new monogoose.Schema({
     type: Date,
     default: Date.now,
   },
+  likes: {
+    type: Number,
+    default: 0,
+  },
 });
 
 ProductSchema.pre("validate", function (next) {

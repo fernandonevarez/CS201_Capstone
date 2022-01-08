@@ -60,12 +60,15 @@ const startServer = async () => {
     await connectDB(process.env.MONGO_URL);
     app
       .set("trust proxy", 1) // 1 meaning true
+
+      // when in devlopment and run into cors errors. get rid of this first
       .use(
         rateLimiter({
           windowMs: limit,
-          max: 100,
+          max: 200,
         })
       )
+
       // .usd(express.static("./publicTwo"))
       // .use(express.static("./public"))
       .use([express.urlencoded({ extended: false }), express.json()])
@@ -76,8 +79,9 @@ const startServer = async () => {
       // .use(cors())
       .use(
         cors({
-          origin: "*",
-          methods: ["POST"],
+          origin: "http://localhost:3001",
+          credentials: true, //access-control-allow-credentials:true
+          optionSuccessStatus: 200,
         })
       )
       // xss (user sanitization) - cleans up user inputs to make sure they are safe.

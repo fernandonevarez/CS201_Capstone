@@ -33,22 +33,20 @@ const Home = () => {
   async function checkout() {
     const checkout = await axios.post(
       "http://localhost:3000/api/v1/create-checkout-session",
-
       chart,
-
       {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       }
     );
-
-    console.log(checkout.data.url);
+    const stripeURL = checkout.data.url;
+    window.location = stripeURL;
   }
 
   return (
     <div>
       <Navbar />
-      
+
       <button
         onClick={() => {
           checkout();

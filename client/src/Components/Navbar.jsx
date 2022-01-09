@@ -56,11 +56,11 @@ const Navbar = () => {
           </div>
         </div>
         <div className="bottom">
-          <div className="button">Sign Up</div>
+          <div className="hamburger-icon" onClick={() => setShowMenu(sm => !sm)}>
+            <RiMenu3Fill />
+          </div>
           <div className="side">
-            <div className="hamburger-icon" onClick={() => setShowMenu(sm => !sm)}>
-              <RiMenu3Fill />
-            </div>
+            <div className="button">Sign Up</div>
             <div className="cart-icon">
               <BsCart4 />
             </div>

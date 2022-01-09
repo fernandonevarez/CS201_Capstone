@@ -59,6 +59,14 @@ nav {
             justify-content: space-between;
             padding: .5rem;
 
+            .hamburger-icon {
+                @include box(1.75rem);
+                    
+                svg {
+                    @include box;
+                }
+            }
+
             .button {
                 @include center;
                 font-size: .85rem;
@@ -71,7 +79,7 @@ nav {
                 align-items: center;
                 gap: 1rem;
 
-                .hamburger-icon, .cart-icon {
+                .cart-icon {
                     @include box(1.75rem);
                     
                     svg {
@@ -93,12 +101,12 @@ nav {
             bottom: 0;
 
             .hide {
-                height: 6.25rem;
+                height: calc(6.25rem + 50vh);
                 background-color: adjust-color($black, $alpha: -.75);
             }
 
             .content {
-                height: calc(100vh - 6.25rem);
+                height: 50vh;
                 background-color: $white;
                 padding: 1rem;
 

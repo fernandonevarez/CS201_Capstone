@@ -29,7 +29,8 @@ const RegisterForm = () => {
   return (
     // user Register form
     <div>
-      <h1>Register Form</h1>
+      <h1>Create an Acount</h1>
+      <p>Registration is easy.</p>
       <form>
         <label>
           First Name:

@@ -79,11 +79,11 @@ const Home = () => {
         console.log(imageArray);
         return (
           <div className="product-container" key={id}>
+            <h3>{name}</h3>
             <img src={imageArray[0]} alt={name} />
             <div className="product-info">
-              <h3>{name}</h3>
               <p>{description}</p>
-              <p>{price}</p>
+              <p>&#36;{price}</p>
               <button>Add to cart</button>
             </div>
           </div>

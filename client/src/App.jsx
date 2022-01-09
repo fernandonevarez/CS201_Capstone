@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
+import "./styles/globals.scss"
 
 import Home from "./Pages/Home";
 // import SingleNew from "./Pages/SingleNew";

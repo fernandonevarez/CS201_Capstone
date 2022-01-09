@@ -1,0 +1,135 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+nav {
+    color: $blue;
+    font-family: "Raleway";
+
+    .bar {
+        box-shadow: adjust-color($black, $alpha: -.75) 0px 4px 4px;
+        padding: .5rem;
+
+        .top {
+            display: flex;
+            gap: 1rem;
+            
+            .title {
+                font-family: "Playfair Display";
+                font-size: 1.25rem;
+                font-variation-settings: "wght" 650;
+            }
+            
+            .search {
+                flex-grow: 2;
+
+                label {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    border: solid $blue 2px;
+                    border-radius: 20px;
+                    padding: 0 .5rem;
+
+                    input {
+                        flex-grow: 2;
+                        height: 100%;
+                        border-radius: 20px;
+                        font-family: "Raleway";
+                        color: $blue;
+
+                        &::placeholder {
+                            color: $blue
+                        }
+                    }
+
+                    .search-icon {
+                        @include box(2rem);
+                        padding: .25rem;
+
+                        svg {
+                            @include box;
+                        }
+                    }
+                }
+            }
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            padding: .5rem;
+
+            .button {
+                @include center;
+                font-size: .85rem;
+                color: $blue;
+                font-weight: 500;
+            }
+
+            .side {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                .hamburger-icon, .cart-icon {
+                    @include box(1.75rem);
+                    
+                    svg {
+                        @include box;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .menu {
+        display: none;
+        width: 100%;
+
+        &.show {
+            display: block;
+            position: absolute;
+            bottom: 0;
+
+            .hide {
+                height: 6.25rem;
+                background-color: adjust-color($black, $alpha: -.75);
+            }
+
+            .content {
+                height: calc(100vh - 6.25rem);
+                background-color: $white;
+                padding: 1rem;
+
+                .top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    h2 {
+                        font-family: "Playfair Display";
+                        font-size: 1.75rem;
+                    }
+
+                    .exit-icon {
+                        @include box(1.5rem);
+
+                        svg {
+                            @include box;
+                        }
+                    }
+                }
+
+                ul {
+                    li {
+                        padding: .75rem 0;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+}

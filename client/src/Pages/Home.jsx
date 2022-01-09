@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 // import axios
 import axios from "axios";
+import LoginForm from "../Components/LoginForm";
+import RegisterForm from "../Components/RegisterForm";
 
 const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWQwZWM3ODI5MmYzMjgwZDY2NzE1YTciLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkZlcm5hbmRvIiwibWlkZGxlTmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0MTU5MjQ3OCwiZXhwIjoxNjQ0MTg0NDc4fQ.ZztCiKHlAU5LSJZYK7EVPa9qwlgyMNrUwyJnZiA06Lw`;
 
@@ -68,6 +70,9 @@ const Home = () => {
       >
         Checkout
       </button>
+
+      {/* <LoginForm /> */}
+      <RegisterForm />
 
       {results.products?.map((product) => {
         const { _id: id, imageArray, name, description, price } = product;

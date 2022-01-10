@@ -1,7 +1,7 @@
 @use "../util/colors.scss" as *;
 @use "../util/mixins.scss" as *;
 
-.register-popup {
+.signin-popup {
     @include box(100vw, 100vh);
     @include center;
     position: absolute;
@@ -15,7 +15,6 @@
         background-color: adjust-color($black, $alpha: -.75);
         z-index: 98;
     }
-
 
     .content {
         @include box(90vw, 90vh);
@@ -67,11 +66,12 @@
                 gap: .25rem;
             }
 
-            .name {
-                display: flex;
-                gap: 1rem;
+            .forgot-password {
+                text-align: center;
+                text-decoration: underline;
+                flex-grow: 2;
             }
-
+            
             button[type=submit] {
                 width: 100%;
                 padding: .5rem 0;
@@ -79,7 +79,6 @@
                 color: $white;
                 font-size: 1rem;
                 border-radius: 1.5rem;
-                margin-top: auto;
             }
 
             .sep {

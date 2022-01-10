@@ -7,6 +7,7 @@ import {FaSearch, FaTimes, FaChevronRight} from "react-icons/fa"
 
 import "../styles/components/Navbar.scss"
 import Register from "./Register";
+import Signup from "./Signin";
 
 const SAMPLE_DATA_REMOVE_LATER = [
   {
@@ -39,7 +40,30 @@ const SAMPLE_DATA_REMOVE_LATER = [
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
-  const [popup, setPopup] = useState({open: false, content: <Register close={() => setPopup(pup => ({...pup, open: false}))} />});
+
+
+  const close = () => setPopup(pop => ({...pop, open: false}))
+
+  const change = () => {
+    setPopup(
+      pop => ({
+        ...pop,
+        id: (pop.id + 1) % 2,
+        content: (pop.id + 1) % 2
+          ? <Register change={change} close={close} />
+          : <Signup change={change} close={close} />
+      })
+    )
+  }
+
+  const [popup, setPopup] = useState({
+    id: 0,
+    open: false,
+    content: <Signup change={change} close={close} />
+  });
+
+
+
 
   return (
     <nav>
@@ -62,7 +86,7 @@ const Navbar = () => {
             <RiMenu3Fill />
           </div>
           <div className="side">
-            <div className="button" onClick={() => setPopup(pup => ({...pup, open: true}))}>Sign In</div>
+            <div className="button" onClick={() => setPopup(pop => ({...pop, open: true}))}>Sign In</div>
             <div className="cart-icon">
               <BsCart4 />
             </div>

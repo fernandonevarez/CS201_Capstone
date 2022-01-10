@@ -8,7 +8,7 @@ import '../styles/components/Register.scss'
 
 const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWQwZWM3ODI5MmYzMjgwZDY2NzE1YTciLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkZlcm5hbmRvIiwibWlkZGxlTmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0MTU5MjQ3OCwiZXhwIjoxNjQ0MTg0NDc4fQ.ZztCiKHlAU5LSJZYK7EVPa9qwlgyMNrUwyJnZiA06Lw`;
 
-const Register = ({close}) => {
+const Register = ({close, change}) => {
   const [error, setError] = useState("")
 
   async function registerUser() {
@@ -56,7 +56,7 @@ const Register = ({close}) => {
       <div className="content">
         <div className="title">
           <h2>Register</h2>
-          <div className="switch">
+          <div className="switch" onClick={change}>
             Sign In
           </div>
           <div className="cancel-icon" onClick={close}>

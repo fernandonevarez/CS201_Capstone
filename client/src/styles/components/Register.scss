@@ -1,0 +1,111 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.register-popup {
+    @include box(100vw, 100vh);
+    @include center;
+    position: absolute;
+    top: 0;
+    color: $blue;
+    font-family: "Raleway";
+
+    .darken {
+        @include box;
+        position: absolute;
+        background-color: adjust-color($black, $alpha: -.75);
+        z-index: 98;
+    }
+
+
+    .content {
+        @include box(90vw, 90vh);
+        position: absolute;
+        z-index: 99;
+        background-color: $white;
+        border: 2px $blue solid;
+        border-radius: 15px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            h2 {
+                font-family: "Playfair Display";
+                font-size: 1.75rem;
+            }
+
+            .switch {
+                font-size: 1rem;
+                padding: .5rem 1rem;
+                border: 2px $blue solid;
+                border-radius: 1.5rem;
+            }
+
+            .cancel-icon {
+                @include box(2rem);
+
+                svg {
+                    @include box;
+                }
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            
+            .traditional {
+                display: flex;
+                flex-direction: column;
+                gap: .25rem;
+            }
+
+            .name {
+                display: flex;
+                gap: 1rem;
+            }
+
+            button[type=submit] {
+                width: 100%;
+                padding: .5rem 0;
+                background-color: $blue;
+                color: $white;
+                font-size: 1rem;
+                border-radius: 1.5rem;
+            }
+
+            .sep {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                .dash {
+                    height: 2px;
+                    border-radius: 1px;
+                    flex-grow: 2;
+                    background-color: $blue;
+                }
+            }
+
+            .with {
+                display: flex;
+                flex-direction: column;
+                gap: 1.25rem;
+
+                > * {
+                    @include box(100%, 2rem);
+                    @include center;
+                    gap: 1rem;
+                    border: 2px $blue solid;
+                    border-radius: 1.5rem;
+                }
+            }
+        }
+    }
+}

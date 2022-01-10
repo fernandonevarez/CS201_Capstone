@@ -6,6 +6,7 @@ import {RiMenu3Fill} from "react-icons/ri"
 import {FaSearch, FaTimes, FaChevronRight} from "react-icons/fa"
 
 import "../styles/components/Navbar.scss"
+import Register from "./Register";
 
 const SAMPLE_DATA_REMOVE_LATER = [
   {
@@ -38,6 +39,7 @@ const SAMPLE_DATA_REMOVE_LATER = [
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
+  const [popup, setPopup] = useState({open: false, content: <Register close={() => setPopup(pup => ({...pup, open: false}))} />});
 
   return (
     <nav>
@@ -60,7 +62,7 @@ const Navbar = () => {
             <RiMenu3Fill />
           </div>
           <div className="side">
-            <div className="button">Sign Up</div>
+            <div className="button" onClick={() => setPopup(pup => ({...pup, open: true}))}>Sign In</div>
             <div className="cart-icon">
               <BsCart4 />
             </div>
@@ -86,6 +88,7 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+      {popup.open && popup.content}
     </nav>
   )
 

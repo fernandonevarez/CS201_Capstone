@@ -1,0 +1,44 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.input {
+    flex-grow: 2;
+
+    p {
+        margin-left: 1rem;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        border: solid $blue 2px;
+        border-radius: 20px;
+        padding: 0 .5rem;
+        height: 2rem;
+
+        input {
+            font-size: .85rem;
+            width: 100%;
+            flex-grow: 2;
+            height: 100%;
+            border-radius: 20px;
+            font-family: "Raleway";
+            color: $blue;
+
+            &::placeholder {
+                color: $blue
+            }
+        }
+
+        .icon {
+            @include box(2rem);
+            padding: .25rem;
+            color: $blue;
+
+            svg {
+                @include box;
+            }
+        }
+    }
+}

@@ -35,6 +35,7 @@ const Signin = ({ close, change }) => {
         }
       );
       const token = response.data.token;
+      localStorage.clear();
       //   stores token in local storage
       localStorage.setItem("userToken", token);
       console.log(token);

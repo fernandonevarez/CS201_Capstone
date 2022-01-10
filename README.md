@@ -41,9 +41,8 @@
 
 ## What to do for next time
 
-- need to fix client side checkout problem
-  - webpage saying:
-    - "This site can’t provide a secure connection"
-
+- finsih user login and register pop ups(D)
+- start working on getting projects and displaying them in a nice format (e & a)
+- Learn all the auth0 ethan knows
 
 - learn more about axios at home at https://axios-http.com/docs/intro

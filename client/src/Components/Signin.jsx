@@ -27,6 +27,10 @@ const Signin = ({ close, change }) => {
       //   setError("Please fill out all fields");
       console.log("Please fill out all fields");
     } else {
+
+
+
+
       const response = await axios.post(
         "http://localhost:3000/api/v1/auth/login",
         {
@@ -35,6 +39,7 @@ const Signin = ({ close, change }) => {
         }
       );
       const token = response.data.token;
+      localStorage.clear();
       //   stores token in local storage
       localStorage.setItem("userToken", token);
       console.log(token);

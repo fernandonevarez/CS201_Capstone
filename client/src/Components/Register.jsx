@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+// require("dotenv").config();
+
 import axios from "axios";
 import Input from "./Input";
 import {
@@ -18,25 +20,57 @@ const token = localStorage.getItem("userToken");
 const Register = ({ close, change }) => {
   const [error, setError] = useState("");
 
-  async function registerUser() {
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/register",
-      {
-        // DATA GOES HERE
-        name: {
-          firstName: "",
-          lastName: "",
+  const [newPassword, setNewPassword] = useState("");
+
+  async function registerUser(
+    email,
+    password,
+    passwordConfirm,
+    firstName,
+    lastName
+  ) {
+    if (password === passwordConfirm) {
+      console.log("passwords match");
+      setNewPassword(passwordConfirm);
+      const response = await axios.post(
+        `https://dev-3osqrzua.us.auth0.com/dbconnections/signup`,
+        {
+          "Content-Type": "application/json",
         },
-        username: "",
-        email: "",
-        password: "",
-      },
-      {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        // "Access-Control-Allow-Origin": "http://localhost:3001",
-      }
-    );
+        {
+          client_id: process.env.CLIENT_ID,
+          email: email,
+          password: newPassword,
+          connection: process.env.MONGO_URL,
+          name: {
+            firstName: firstName,
+            lastName: lastName,
+          },
+        }
+      );
+      console.log(response);
+    } else {
+      console.log("passwords do not match");
+    }
+
+    // const response = await axios.post(
+    //   "http://localhost:3000/api/v1/register",
+    //   {
+    //     // DATA GOES HERE
+    //     name: {
+    //       firstName: "",
+    //       lastName: "",
+    //     },
+    //     username: "",
+    //     email: "",
+    //     password: "",
+    //   },
+    //   {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //     // "Access-Control-Allow-Origin": "http://localhost:3001",
+    //   }
+    // );
   }
 
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
@@ -44,6 +78,28 @@ const Register = ({ close, change }) => {
   const formSubmit = (e) => {
     e.preventDefault();
     const { target } = e;
+    // registerUser()
+    // console.log(target.fname.value);
+
+    const email = target.email.value;
+    const password = target.password.value;
+    const passwordConfirm = target.confirm.value;
+    // const username = target.username.value;
+
+    const firstname = target.fname.value;
+    const lastname = target.lname.value;
+
+    if (
+      email === "" ||
+      password === "" ||
+      passwordConfirm === "" ||
+      firstname === "" ||
+      lastname === ""
+    ) {
+      setError("Please fill out all fields");
+    } else {
+      registerUser(email, password, passwordConfirm, firstname, lastname);
+    }
 
     // setError("some error triggered when form validation is failed")
     // To chnage styles

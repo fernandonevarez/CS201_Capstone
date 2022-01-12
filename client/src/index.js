@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // import { AppProvider } from "./utils/context";
 
 import { Auth0Provider } from "@auth0/auth0-react";
+import { UserProvider } from "./contexts/useUser";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,9 +17,11 @@ ReactDOM.render(
       clientId="WQyqDVXVtg4xf24rnoMtZlE5r6cJpZid"
       redirectUri={window.location.origin}
     >
-      <Router>
-        <App />
-      </Router>
+      <UserProvider>
+        <Router>
+          <App />
+        </Router>
+      </UserProvider>
     </Auth0Provider>
 
 

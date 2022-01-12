@@ -18,7 +18,7 @@
 
 
     .content {
-        @include box(90vw, 90vh);
+        @include box(70vw, 80vh);
         position: absolute;
         z-index: 99;
         background-color: $white;

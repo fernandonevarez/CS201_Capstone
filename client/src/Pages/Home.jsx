@@ -4,6 +4,8 @@ import Navbar from "../Components/Navbar";
 import axios from "axios";
 import LoginForm from "../Components/LoginForm";
 import Register from "../Components/Register";
+import LoginButton from "../Components/LoginButton";
+import LogoutButton from "../Components/LogoutButton";
 
 const token = localStorage.getItem("userToken");
 
@@ -70,6 +72,10 @@ const Home = () => {
       >
         Checkout
       </button>
+
+      <LoginButton/>
+      <br />
+      <LogoutButton />
 
       {/* <LoginForm /> */}
       {/* <Register /> */}

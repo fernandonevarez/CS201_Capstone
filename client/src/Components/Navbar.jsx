@@ -11,28 +11,18 @@ import Signup from "./Signin";
 
 const SAMPLE_DATA_REMOVE_LATER = [
   {
-    name: "On Sale",
+    name: "Popular",
     id: 1,
     children: [],
   },
   {
-    name: "3D Printed",
+    name: "new",
     id: 2,
     children: [],
   },
   {
-    name: "Stickers",
+    name: "Toys & Entertainment",
     id: 3,
-    children: [],
-  },
-  {
-    name: "Jewlery",
-    id: 4,
-    children: [],
-  },
-  {
-    name: "Art",
-    id: 5,
     children: [],
   },
 ]

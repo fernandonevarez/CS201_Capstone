@@ -51,8 +51,8 @@ const port = process.env.PORT || 3000;
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "Learn React Today" }],
-  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
+  [1, {priceInCents: 10000, name: "Learn React Today"}],
+  [2, {priceInCents: 20000, name: "Learn CSS Today"}],
 ]);
 
 const startServer = async () => {
@@ -71,8 +71,8 @@ const startServer = async () => {
 
       // .usd(express.static("./publicTwo"))
       // .use(express.static("./public"))
-      .use([express.urlencoded({ extended: false }), express.json()])
-      .use(fileUpload({ useTempFiles: true }))
+      .use([express.urlencoded({extended: false}), express.json()])
+      .use(fileUpload({useTempFiles: true}))
       // safety blanket
       .use(helmet())
       // cors prevents CORS errors
@@ -90,7 +90,9 @@ const startServer = async () => {
       // routes
 
       .use("/api/v1/auth", authRouter)
-      .use("/api/v1/products", authenticationMiddleware, productRouter)
+      // I commented the authenticationMiddleware so development is easier on my (Ethan's) part
+      // .use("/api/v1/products", authenticationMiddleware, productRouter)
+      .use("/api/v1/products", productRouter)
       .post("/api/v1/create-checkout-session", async (req, res) => {
         try {
           const session = await stripe.checkout.sessions.create({
@@ -112,9 +114,9 @@ const startServer = async () => {
             success_url: `${process.env.CLIENT_URL}/success.html`,
             cancel_url: `${process.env.CLIENT_URL}`,
           });
-          res.json({ url: session.url });
+          res.json({url: session.url});
         } catch (e) {
-          res.json({ error: e.message });
+          res.json({error: e.message});
         }
       })
 

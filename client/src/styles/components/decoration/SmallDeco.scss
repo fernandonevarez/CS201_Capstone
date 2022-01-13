@@ -1,0 +1,18 @@
+@use "../../util/colors.scss" as *;
+@use "../../util/mixins.scss" as *;
+
+.small-deco {
+    display: flex;
+    gap: 5px;
+
+    > .dot {
+        @include box(4px);
+        border-radius: 2px;
+        background-color: $blue;
+    }
+    > .line {
+        @include box(35px, 4px);
+        border-radius: 2px;
+        background-color: $blue;
+    }
+}

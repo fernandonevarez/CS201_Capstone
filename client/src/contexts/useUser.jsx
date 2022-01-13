@@ -1,8 +1,8 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const UserContext = createContext(null)
 
-const useUser = useContext(UserContext)
+const useUser = () => useContext(UserContext)
 
 const UserProvider = ({children}) => {
     const [user, setUser] = useState()

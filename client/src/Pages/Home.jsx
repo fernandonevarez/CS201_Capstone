@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Navbar from "../Components/Navbar";
+import "../styles/pages/Home.scss"
+
 // import axios
 import axios from "axios";
 import LoginForm from "../Components/LoginForm";
@@ -23,36 +25,42 @@ const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
     price: 10.01,
     image: duckImg,
     favorited: true,
+    id: 0,
   },
   {
     name: "Cat",
     price: 22.22,
     image: catImg,
     favorited: true,
+    id: 1,
   },
   {
     name: "Amongus Sus Imposter?",
     price: 0.5,
     image: susImg,
     favorited: true,
+    id: 2,
   },
   {
     name: "Temp",
     price: 10.01,
     image: tempImg,
     favorited: true,
+    id: 3,
   },
   {
     name: "Temp2",
     price: 10.01,
     image: temp2Img,
     favorited: true,
+    id: 4,
   },
   {
     name: "Temp3",
     price: 10.01,
     image: temp3Img,
     favorited: true,
+    id: 5,
   },
 ]
 
@@ -111,7 +119,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <main className="home">
       <Navbar />
 
       <Title name="Favorited" />
@@ -150,7 +158,7 @@ const Home = () => {
           </div>
         );
       })}
-    </div>
+    </main>
   );
 };
 

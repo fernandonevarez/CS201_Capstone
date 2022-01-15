@@ -32,23 +32,20 @@ const Register = ({ close, change }) => {
     if (password === passwordConfirm) {
       console.log("passwords match");
       setNewPassword(passwordConfirm);
-      const response = await axios.post(
-        `https://dev-3osqrzua.us.auth0.com/dbconnections/signup`,
-        {
-          "Content-Type": "application/json",
-        },
-        {
-          client_id: process.env.CLIENT_ID,
-          email: email,
-          password: newPassword,
-          connection: process.env.MONGO_URL,
-          name: {
-            firstName: firstName,
-            lastName: lastName,
-          },
-        }
-      );
-      console.log(response);
+      // const response = await axios.post(
+      //   `https://dev-3osqrzua.us.auth0.com/dbconnections/signup`,
+      //   {
+      //     "Content-Type": "application/json",
+      //   },
+      //   {
+      //     client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+      //     email: email,
+      //     password: newPassword,
+      //     connection: process.env.REACT_APP_AUTH0_CONNECTION,
+      //     name: `${firstName} ${lastName}`,
+      //   }
+      // );
+      // console.log(response);
     } else {
       console.log("passwords do not match");
     }

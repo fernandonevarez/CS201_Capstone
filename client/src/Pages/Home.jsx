@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import "../styles/pages/Home.scss"
+import "../styles/pages/Home.scss";
 
 // import axios
 import axios from "axios";
@@ -12,12 +12,14 @@ import Title from "../Components/home/Title";
 import Carousel from "../Components/home/carousel/Carousel";
 
 // Temp Images
-import duckImg from "../assets/images/temp/duck.jpg"
-import catImg from "../assets/images/temp/cat.png"
-import susImg from "../assets/images/temp/sus.png"
-import tempImg from "../assets/images/temp/temp.jpg"
-import temp2Img from "../assets/images/temp/temp2.jpg"
-import temp3Img from "../assets/images/temp/temp3.jpg"
+import duckImg from "../assets/images/temp/duck.jpg";
+import catImg from "../assets/images/temp/cat.png";
+import susImg from "../assets/images/temp/sus.png";
+import tempImg from "../assets/images/temp/temp.jpg";
+import temp2Img from "../assets/images/temp/temp2.jpg";
+import temp3Img from "../assets/images/temp/temp3.jpg";
+
+import Profile from "../Components/Profile";
 
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
@@ -62,13 +64,13 @@ const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
     favorited: true,
     id: 5,
   },
-]
+];
 
 const token = localStorage.getItem("userToken");
 
 const chart = [
-  {id: 1, quantity: 3},
-  {id: 2, quantity: 1},
+  { id: 1, quantity: 3 },
+  { id: 2, quantity: 1 },
 ];
 
 const Home = () => {
@@ -135,8 +137,8 @@ const Home = () => {
       >
         Checkout
       </button>
+      <br />
 
-      <LoginButton />
       <br />
       <LogoutButton />
 
@@ -144,7 +146,7 @@ const Home = () => {
       {/* <Register /> */}
 
       {results.products?.map((product) => {
-        const {_id: id, imageArray, name, description, price} = product;
+        const { _id: id, imageArray, name, description, price } = product;
         console.log(imageArray);
         return (
           <div className="product-container" key={id}>
@@ -158,6 +160,8 @@ const Home = () => {
           </div>
         );
       })}
+
+      <Profile />
     </main>
   );
 };

@@ -5,16 +5,14 @@ import App from "./App";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-
 import { Auth0Provider } from "@auth0/auth0-react";
 import { UserProvider } from "./contexts/useUser";
 
 ReactDOM.render(
   <React.StrictMode>
-    
     <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+      domain="dev-3osqrzua.us.auth0.com"
+      clientId="WQyqDVXVtg4xf24rnoMtZlE5r6cJpZid"
       redirectUri={window.location.origin}
     >
       <UserProvider>
@@ -23,9 +21,6 @@ ReactDOM.render(
         </Router>
       </UserProvider>
     </Auth0Provider>
-
-
-    
   </React.StrictMode>,
   document.getElementById("root")
 );

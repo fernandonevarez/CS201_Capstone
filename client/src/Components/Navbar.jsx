@@ -1,13 +1,19 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
-import {BsCart4} from "react-icons/bs";
+import { BsCart4 } from "react-icons/bs";
 // import {GiHamburgerMenu} from "react-icons/gi";
-import {RiMenu3Fill} from "react-icons/ri"
-import {FaSearch, FaTimes, FaChevronRight} from "react-icons/fa"
+import { RiMenu3Fill } from "react-icons/ri";
+import { FaSearch, FaTimes, FaChevronRight } from "react-icons/fa";
 
-import "../styles/components/Navbar.scss"
+import { CgProfile } from "react-icons/cg";
+
+import "../styles/components/Navbar.scss";
 import Register from "./Register";
 import Signup from "./Signin";
+// import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 
 const SAMPLE_DATA_REMOVE_LATER = [
   {
@@ -25,35 +31,33 @@ const SAMPLE_DATA_REMOVE_LATER = [
     id: 3,
     children: [],
   },
-]
+];
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth0();
   const [showMenu, setShowMenu] = useState(false);
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
 
-
-  const close = () => setPopup(pop => ({...pop, open: false}))
+  const close = () => setPopup((pop) => ({ ...pop, open: false }));
 
   const change = () => {
-    setPopup(
-      pop => ({
-        ...pop,
-        id: (pop.id + 1) % 2,
-        content: (pop.id + 1) % 2
-          ? <Register change={change} close={close} />
-          : <Signup change={change} close={close} />
-      })
-    )
-  }
+    setPopup((pop) => ({
+      ...pop,
+      id: (pop.id + 1) % 2,
+      content:
+        (pop.id + 1) % 2 ? (
+          <Register change={change} close={close} />
+        ) : (
+          <Signup change={change} close={close} />
+        ),
+    }));
+  };
 
   const [popup, setPopup] = useState({
     id: 0,
     open: false,
-    content: <Signup change={change} close={close} />
+    content: <Signup change={change} close={close} />,
   });
-
-
-
 
   return (
     <nav>
@@ -64,7 +68,13 @@ const Navbar = () => {
           </div>
           <div className="search">
             <label htmlFor="search">
-              <input type="text" name="search" id="search" placeholder="Lookup Items" autoCorrect="false" />
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Lookup Items"
+                autoCorrect="false"
+              />
               <div className="search-icon">
                 <FaSearch />
               </div>
@@ -72,13 +82,32 @@ const Navbar = () => {
           </div>
         </div>
         <div className="bottom">
-          <div className="hamburger-icon" onClick={() => setShowMenu(sm => !sm)}>
+          <div
+            className="hamburger-icon"
+            onClick={() => setShowMenu((sm) => !sm)}
+          >
             <RiMenu3Fill />
           </div>
           <div className="side">
-            <div className="button" onClick={() => setPopup(pop => ({...pop, open: true}))}>Sign In</div>
+            {/* <div
+              className="button"
+              onClick={() => setPopup((pop) => ({ ...pop, open: true }))}
+            >
+              Sign In
+            </div> */}
+
+            {isAuthenticated ? (
+              <div className="profile-icon">
+                <CgProfile onClick={() => console.log("pong")} />
+              </div>
+            ) : (
+              <LoginButton className="button">Sign In</LoginButton>
+            )}
+
             <div className="cart-icon">
-              <BsCart4 />
+              <Link to="/cart">
+                <BsCart4 />
+              </Link>
             </div>
           </div>
         </div>
@@ -93,18 +122,20 @@ const Navbar = () => {
             </div>
           </div>
           <ul className="navigate">
-            {catagories.map(({name, children, id}) => <li key={id}>
-              <h3>{name}</h3>
-              <div className="continue-icon">
-                <FaChevronRight />
-              </div>
-            </li>)}
+            {catagories.map(({ name, children, id }) => (
+              <li key={id}>
+                <h3>{name}</h3>
+                <div className="continue-icon">
+                  <FaChevronRight />
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
       {popup.open && popup.content}
     </nav>
-  )
+  );
 
   // return (
   //   <nav className="navbar-container">

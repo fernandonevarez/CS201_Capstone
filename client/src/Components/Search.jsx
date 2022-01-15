@@ -28,7 +28,7 @@ const Search = () => {
   // this area needs to be fixed For some reason the search is not working
 
   let filteredProducts = () => {
-    products
+    return products
       .filter((product) => {
         if (query == "") {
           return product;
@@ -41,7 +41,7 @@ const Search = () => {
 
         return (
           // this isn't being shown
-          <div className="search-suggestions-trigger" key={index}>
+          <div className="search-suggestions-item" key={index}>
             <h1>{product.name}</h1>
           </div>
         );
@@ -67,6 +67,7 @@ const Search = () => {
           <FaSearch />
         </div>
       </label>
+      <div className="search-suggestions">{filteredProducts()}</div>
     </div>
   );
 };

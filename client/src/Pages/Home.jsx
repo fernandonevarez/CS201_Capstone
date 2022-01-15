@@ -74,22 +74,14 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
 
-  async function getProducts() {
-    const response = await axios.get("http://localhost:3000/api/v1/products", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Access-Control-Allow-Origin": "http://localhost:3001",
-      },
-    });
-    // console.log(response);
-    // console.log(response.data.products);
-    setResults(response.data);
-    // response.data returns an length and and array of objects
-  }
+  // console.log(response);
+  // console.log(response.data.products);
+  // setResults(response.data);
+  // response.data returns an length and and array of objects
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   getProducts();
+  // }, []);
 
   // console.log(results);
 

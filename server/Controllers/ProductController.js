@@ -6,13 +6,13 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const Product = require("../Model/ProductSchema");
-const { log } = require("console");
+// const { log } = require("console");
 
 const createProduct = async (req, res) => {
   const {
     body: { name, price, description },
     files: fileArrayConatiner,
-    user: { userID },
+    // user: { userID },
     params: { id: productID },
   } = req;
 

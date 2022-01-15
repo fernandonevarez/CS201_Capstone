@@ -15,6 +15,7 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
 const SAMPLE_DATA_REMOVE_LATER = [
   {
@@ -72,7 +73,7 @@ const Navbar = () => {
               MSB
             </Link>
           </div>
-          <div className="search">
+          {/* <div className="search">
             <label htmlFor="search">
               <input
                 type="text"
@@ -85,7 +86,9 @@ const Navbar = () => {
                 <FaSearch />
               </div>
             </label>
-          </div>
+          </div> */}
+
+          <Search />
         </div>
         <div className="bottom">
           <div

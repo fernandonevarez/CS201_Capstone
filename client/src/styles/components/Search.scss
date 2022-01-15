@@ -1,0 +1,36 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.search {
+  flex-grow: 2;
+
+  label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border: solid $blue 2px;
+    border-radius: 20px;
+    padding: 0 0.5rem;
+
+    input {
+      flex-grow: 2;
+      height: 100%;
+      border-radius: 20px;
+      font-family: "Raleway";
+      color: $blue;
+
+      &::placeholder {
+        color: $blue;
+      }
+    }
+
+    .search-icon {
+      @include box(2rem);
+      padding: 0.25rem;
+
+      svg {
+        @include box;
+      }
+    }
+  }
+}

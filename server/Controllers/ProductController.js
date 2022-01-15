@@ -160,11 +160,11 @@ const updateProduct = async (req, res) => {
 
 const getSingleProduct = async (req, res) => {
   const {
-    user: { userID },
+    // user: { userID },
     params: { id: productID },
   } = req;
-
-  const product = await Product.findOne({ createdBy: userID, _id: productID });
+  // createdBy: userID,
+  const product = await Product.findOne({ _id: productID });
 
   if (!product) {
     throw new NotFoundError(`No product with the ID ${productID}`);

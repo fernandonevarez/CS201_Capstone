@@ -66,12 +66,7 @@ const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   },
 ];
 
-const token = localStorage.getItem("userToken");
-
-const chart = [
-  { id: 1, quantity: 3 },
-  { id: 2, quantity: 1 },
-];
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWQwZWM3ODI5MmYzMjgwZDY2NzE1YTciLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkZlcm5hbmRvIiwibWlkZGxlTmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0MTc4MzM5OSwiZXhwIjoxNjQ0Mzc1Mzk5fQ.nyRWJgHzwCCrXx4tsZl7jMLkAOZMaDkXzdsNUEs8PQg`;
 
 const Home = () => {
   // call axios to get backend data
@@ -96,20 +91,6 @@ const Home = () => {
     getProducts();
   }, []);
 
-  async function checkout() {
-    const checkout = await axios.post(
-      "http://localhost:3000/api/v1/create-checkout-session",
-      chart,
-      {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        "Access-Control-Allow-Origin": "http://localhost:3001",
-      }
-    );
-    const stripeURL = checkout.data.url;
-    window.location = stripeURL;
-  }
-
   // console.log(results);
 
   // console.log(`Product Array: ${results.products}`);
@@ -130,17 +111,9 @@ const Home = () => {
       <Title name="Recent" />
       <Title name="About" />
 
-      <button
-        onClick={() => {
-          checkout();
-        }}
-      >
-        Checkout
-      </button>
       <br />
 
       <br />
-      <LogoutButton />
 
       {/* <LoginForm /> */}
       {/* <Register /> */}

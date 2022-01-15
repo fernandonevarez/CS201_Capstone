@@ -12,6 +12,7 @@ import Register from "./Register";
 import Signup from "./Signin";
 // import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 
@@ -36,6 +37,9 @@ const SAMPLE_DATA_REMOVE_LATER = [
 const Navbar = () => {
   const { isAuthenticated } = useAuth0();
   const [showMenu, setShowMenu] = useState(false);
+
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
 
   const close = () => setPopup((pop) => ({ ...pop, open: false }));
@@ -64,7 +68,9 @@ const Navbar = () => {
       <div className="bar">
         <div className="top">
           <div className="title">
-            <h1>MSB</h1>
+            <Link to="/" className="company-name">
+              MSB
+            </Link>
           </div>
           <div className="search">
             <label htmlFor="search">
@@ -72,7 +78,7 @@ const Navbar = () => {
                 type="text"
                 name="search"
                 id="search"
-                placeholder="Lookup Items"
+                placeholder="Search Items Here"
                 autoCorrect="false"
               />
               <div className="search-icon">
@@ -98,7 +104,9 @@ const Navbar = () => {
 
             {isAuthenticated ? (
               <div className="profile-icon">
-                <CgProfile onClick={() => console.log("pong")} />
+                <CgProfile
+                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                />
               </div>
             ) : (
               <LoginButton className="button">Sign In</LoginButton>
@@ -109,6 +117,23 @@ const Navbar = () => {
                 <BsCart4 />
               </Link>
             </div>
+
+            {showProfileDropdown ? (
+              <div className="profile-dropdown">
+                <ul>
+                  <li>
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orders">Orders</Link>
+                  </li>
+                  <li>
+                    <LogoutButton />
+                  </li>
+                  <li></li>
+                </ul>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

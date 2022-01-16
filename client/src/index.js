@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 // import "./styles/main.css";
 import App from "./App";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import {BrowserRouter as Router} from "react-router-dom";
 
-import { Auth0Provider } from "@auth0/auth0-react";
-import { UserProvider } from "./contexts/useUser";
+import {Auth0Provider} from "@auth0/auth0-react";
+import {UserProvider} from "./contexts/useUser";
 
 ReactDOM.render(
   <React.StrictMode>

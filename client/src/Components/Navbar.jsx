@@ -37,11 +37,26 @@ const SAMPLE_DATA_REMOVE_LATER = [
 
 const Navbar = () => {
   const {isAuthenticated} = useAuth0();
+
   const [showMenu, setShowMenu] = useState(false);
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
+
+  const toggleMenu = () => {
+    if (showMenu) {
+      setShowMenu(false)
+
+      // What I am doing here is normally bad, but is okay in this one case
+      document.body.style.overflowY = "auto"
+    } else {
+      setShowMenu(true)
+
+      // Same here
+      document.body.style.overflowY = "hidden"
+    }
+  }
 
   const close = () => setPopup((pop) => ({...pop, open: false}));
 
@@ -93,7 +108,7 @@ const Navbar = () => {
         <div className="bottom">
           <div
             className="hamburger-icon"
-            onClick={() => setShowMenu((sm) => !sm)}
+            onClick={() => toggleMenu()}
           >
             <RiMenu3Fill />
           </div>
@@ -141,11 +156,11 @@ const Navbar = () => {
         </div>
       </div>
       <div className={`menu ${showMenu ? "show" : ""}`}>
-        <div className="hide" onClick={() => setShowMenu(false)}></div>
+        <div className="hide" onClick={() => toggleMenu()}></div>
         <div className="content">
           <div className="top">
             <h2>Browse Catagories</h2>
-            <div className="exit-icon" onClick={() => setShowMenu(false)}>
+            <div className="exit-icon" onClick={() => toggleMenu()}>
               <FaTimes />
             </div>
           </div>

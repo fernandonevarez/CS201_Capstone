@@ -80,4 +80,4 @@ const Carousel = ({items}) => {
     )
 }
 
-export default Carousel
+export default Carousel;

@@ -51,8 +51,8 @@ const port = process.env.PORT || 3000;
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const storeItems = new Map([
-  [1, {priceInCents: 10000, name: "Learn React Today"}],
-  [2, {priceInCents: 20000, name: "Learn CSS Today"}],
+  [1, { priceInCents: 10000, name: "Learn React Today" }],
+  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
 ]);
 
 const startServer = async () => {
@@ -62,17 +62,17 @@ const startServer = async () => {
       .set("trust proxy", 1) // 1 meaning true
 
       // when in devlopment and run into cors errors. get rid of this first
-      .use(
-        rateLimiter({
-          windowMs: limit,
-          max: 200,
-        })
-      )
+      // .use(
+      //   rateLimiter({
+      //     windowMs: limit,
+      //     max: 200,
+      //   })
+      // )
 
       // .usd(express.static("./publicTwo"))
       // .use(express.static("./public"))
-      .use([express.urlencoded({extended: false}), express.json()])
-      .use(fileUpload({useTempFiles: true}))
+      .use([express.urlencoded({ extended: false }), express.json()])
+      .use(fileUpload({ useTempFiles: true }))
       // safety blanket
       .use(helmet())
       // cors prevents CORS errors
@@ -114,9 +114,9 @@ const startServer = async () => {
             success_url: `${process.env.CLIENT_URL}/success.html`,
             cancel_url: `${process.env.CLIENT_URL}`,
           });
-          res.json({url: session.url});
+          res.json({ url: session.url });
         } catch (e) {
-          res.json({error: e.message});
+          res.json({ error: e.message });
         }
       })
 

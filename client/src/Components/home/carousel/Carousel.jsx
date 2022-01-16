@@ -1,29 +1,81 @@
 import Seat from "./Seat"
 import "../../../styles/components/home/carousel/Carousel.scss"
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
+
+
+// Carousel Settings
+const SLIDER_SLIDE_RESOLUTION = 10; // Smaller is more resolute
+const SLIDER_EASING_FUNCTION = num => 1 - ((1 - num) ** 3);
 
 const Carousel = ({items}) => {
-    const [slide, setSlide] = useState(0)
-    const [prev, setPrev] = useState(null)
-    const [md, setMd] = useState(false)
-    const display = items.slice(0, 5);
+    const [display, setDisplay] = useState(items);
+    const [slider, setSlider] = useState({start: null, end: null, move: null})
+    const [scroll, setScroll] = useState(0)
+    const [intervalID, setIntervalID] = useState(null)
+    const [next, setNext] = useState(null);
+    const [cartWidth, setCartWidth] = useState(0);
 
-    const move = (amt) => {
-        md && prev && setSlide(s => s + amt.clientX - prev)
-        setPrev(amt.clientX)
+    useEffect(() => {
+        setCartWidth(window.innerWidth / 100 * 60)
+        const resize = () =>
+            setCartWidth(window.innerWidth / 100 * 60)
+
+        window.addEventListener("resize", resize)
+        return () => {
+            window.removeEventListener("resize", resize)
+        }
+    }, [])
+
+    const start = e => {
+        intervalID && clearInterval(intervalID);
+        setSlider(s => ({...s, start: e.changedTouches[0].clientX}))
     }
 
+    const end = e => {
+        setSlider(s => ({...s, end: e.changedTouches[0].clientX}))
+
+        const dist = slider.start - e.changedTouches[0].clientX;
+        const origin = scroll;
+
+        let t = 0;
+        const id = setInterval(() => {
+            if (t >= 1)
+                clearInterval(id)
+            t += 0.01;
+            setScroll(s => origin - dist * SLIDER_EASING_FUNCTION(t))
+        }, SLIDER_SLIDE_RESOLUTION)
+
+        setSlider(s => ({...s, move: 0}))
+        setIntervalID(id);
+    }
+
+    const move = e => {
+        slider.move && setScroll(s => s + e.changedTouches[0].clientX - slider.move)
+        setSlider(s => ({...s, move: e.changedTouches[0].clientX}))
+    }
+
+    useEffect(() => {
+        const offscreen = Math.floor(scroll / cartWidth)
+        if (offscreen !== next) {
+            if (next - offscreen > 0) {
+                setDisplay(d => [...d.slice(1, d.length), d[0]])
+            } else {
+                setDisplay(d => [d[d.length - 1], ...d.slice(0, d.length - 1)])
+            }
+            setNext(offscreen)
+        }
+    }, [scroll])
+
     return (
-        <div 
-            className="carousel" 
-            style={{
-                transform: `translateX(${-(5 * 65) / 2 + 10 + slide}vw)`
-            }} 
-            onTouchStart={() => setMd(true)} 
-            onTouchEnd={() => setMd(false)}
-            onTouchMove={e => move(e.changedTouches[0])}
+        <div
+            className="carousel"
+            onTouchStart={start}
+            onTouchEnd={end}
+            onTouchMove={move}
         >
-            {display.map((item, index) => <Seat {...item} order={index} />)}   
+            <div className="sect" style={{transform: `translateX(calc(-${items.length / 2 * 60}vw + ${scroll - cartWidth * next}px))`}}>
+                {display.map((item, index) => <Seat {...item} order={index} key={item.id} />)}
+            </div>
         </div>
     )
 }

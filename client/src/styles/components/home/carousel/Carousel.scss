@@ -1,5 +1,9 @@
 .carousel {
     display: flex;
-    gap: 1rem;
-    flex-wrap: nowrap;
+
+    .sect {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1rem;
+    }
 }

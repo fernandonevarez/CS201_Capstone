@@ -2,9 +2,9 @@ import {FaHeart, FaRegHeart} from "react-icons/fa"
 import Price from "../Price"
 import "../../../styles/components/home/carousel/Seat.scss"
 
-const Seat = ({name, image, favorited, price, id}) => {
+const Seat = ({name, image, favorited, price}) => {
     return (
-        <div className="carousel-seat" key={id}>
+        <div className="carousel-seat">
             <div className="atop">
                 <div className="image">
                     <img src={image} alt={name} />

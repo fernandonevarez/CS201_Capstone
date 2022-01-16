@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "../Components/Navbar";
 import "../styles/pages/Home.scss";
 
@@ -64,13 +64,20 @@ const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
     favorited: true,
     id: 5,
   },
+  {
+    name: "Temp4",
+    price: 10.02,
+    image: temp3Img,
+    favorited: true,
+    id: 6,
+  },
 ];
 
 const token = localStorage.getItem("userToken");
 
 const chart = [
-  { id: 1, quantity: 3 },
-  { id: 2, quantity: 1 },
+  {id: 1, quantity: 3},
+  {id: 2, quantity: 1},
 ];
 
 const Home = () => {
@@ -124,8 +131,10 @@ const Home = () => {
     <main className="home">
       <Navbar />
 
-      <Title name="Favorited" />
-      <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+      <div className="favorited">
+        <Title name="Favorited" />
+        <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+      </div>
       <Title name="Popular" />
       <Title name="Recent" />
       <Title name="About" />
@@ -146,7 +155,7 @@ const Home = () => {
       {/* <Register /> */}
 
       {results.products?.map((product) => {
-        const { _id: id, imageArray, name, description, price } = product;
+        const {_id: id, imageArray, name, description, price} = product;
         console.log(imageArray);
         return (
           <div className="product-container" key={id}>

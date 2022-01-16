@@ -81,9 +81,10 @@ nav {
             display: block;
             position: fixed;
             bottom: 0;
+            z-index: 99;
 
             .hide {
-                height: calc(6.25rem + 50vh);
+                height: calc(100vh);
                 background-color: adjust-color($black, $alpha: -0.75);
             }
 

@@ -34,7 +34,7 @@ const Carousel = ({items}) => {
     const end = e => {
         setSlider(s => ({...s, end: e.changedTouches[0].clientX}))
 
-        const dist = slider.start - e.changedTouches[0].clientX;
+        const dist = ((slider.move || e.changedTouches[0].clientX) - e.changedTouches[0].clientX) * 100;
         const origin = scroll;
 
         let t = 0;
@@ -44,9 +44,9 @@ const Carousel = ({items}) => {
             t += 0.01;
             setScroll(s => origin - dist * SLIDER_EASING_FUNCTION(t))
         }, SLIDER_SLIDE_RESOLUTION)
+        setIntervalID(id);
 
         setSlider(s => ({...s, move: 0}))
-        setIntervalID(id);
     }
 
     const move = e => {

@@ -20,6 +20,7 @@ import temp2Img from "../assets/images/temp/temp2.jpg";
 import temp3Img from "../assets/images/temp/temp3.jpg";
 
 import Profile from "../Components/Profile";
+import {useUser} from "../contexts/useUser";
 
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
@@ -100,14 +101,16 @@ const Home = () => {
     // console.log(imageArray[0]);
   };
 
+  const {user} = useUser();
+
   return (
     <main className="home">
       <Navbar />
 
-      <div className="favorited">
+      {(user.dev.skipAuth || Object.keys(user.details).length) && <div className="favorited">
         <Title name="Favorited" />
         <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
-      </div>
+      </div>}
       <Title name="Popular" />
       <Title name="Recent" />
       <Title name="About" />

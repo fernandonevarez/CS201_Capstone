@@ -1,18 +1,23 @@
-import { createContext, useContext, useState } from "react";
+import {createContext, useContext, useState} from "react";
 
 const UserContext = createContext(null)
 
 const useUser = () => useContext(UserContext)
 
 const UserProvider = ({children}) => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState({
+        details: {},
+        dev: {
+            skipAuth: true,
+        },
+    })
 
     const loginUser = (newUser) => {
-        setUser(newUser)
+        setUser({...user, details: newUser})
     }
 
     const logoutUser = () => {
-        setUser();
+        setUser({...user, details: {}});
     }
 
     return <UserContext.Provider value={{user, loginUser, logoutUser}}>

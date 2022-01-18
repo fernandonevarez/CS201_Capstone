@@ -25,5 +25,17 @@
   },
   "engines": {
     "node": "16.x"
+<<<<<<< HEAD
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+=======
   }
 }
+>>>>>>> 3a93c3f103d2adc0ce2588cb22094f41e02b768d

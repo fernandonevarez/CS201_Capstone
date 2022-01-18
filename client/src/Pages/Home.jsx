@@ -112,8 +112,11 @@ const Home = () => {
         <Title name="Favorited" />
         <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
       </div>}
-      <Title name="Popular" />
-      <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+      <div className="popular">
+        <Title name="Popular" />
+        <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+        <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+      </div>
       <Title name="Recent" />
       <Title name="About" />
 

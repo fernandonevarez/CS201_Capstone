@@ -6,7 +6,11 @@ import "../../../styles/components/home/slideshow/Slideshow.scss"
 // Carousel Settings
 const SLIDER_SLIDE_RESOLUTION = 10; // Smaller is more resolute
 const SLIDER_FORCE = 100;
+const SLIDER_TIMEOUT = 250;
 const SLIDER_EASING_FUNCTION = num => 1 - ((1 - num) ** 3);
+
+// SLIDESHOW IS STILL BROKEN BECAUSE WHEN SLIDEING DOESN"T GO TO NEAREST PANNEL :(
+// FIX LATER, HAVE MORE PRESSING THIGNS TO ATTEND TO
 
 const Slideshow = ({items}) => {
     const [scroll, setScroll] = useState(0);
@@ -37,6 +41,9 @@ const Slideshow = ({items}) => {
     }
 
     const end = e => {
+        // This entire function is hard to understand, if I have time I should chunk it up into smaller parts
+        // make it more readable and such
+
         setSlider(s => ({...s, end: e.changedTouches[0].clientX}))
 
         const dist = ((slider.move || e.changedTouches[0].clientX) - e.changedTouches[0].clientX) * SLIDER_FORCE;
@@ -60,7 +67,7 @@ const Slideshow = ({items}) => {
                         tt += 1 / SLIDER_SLIDE_RESOLUTION;
                     }, SLIDER_SLIDE_RESOLUTION)
                     setIntervalID(idid)
-                }, 500);
+                }, SLIDER_TIMEOUT);
                 setTimeoutID(toid)
                 clearInterval(id)
             }
@@ -96,30 +103,22 @@ const Slideshow = ({items}) => {
             onTouchEnd={end}
             onTouchMove={move}
         >
-            {display.map((item, index) => <div className="sect" key={index} style={{transform: `translateX(calc(-100vw + ${scroll - screenWidth * next}px))`}}>
-                <div className="atop">
-                    <img src={item.image} alt={item.name} />
-                    <div className="top">
-                        <Price amount={item.price} />
-                        <div className="favorited">
-                            {item.favorited ? <FaHeart /> : <FaRegHeart />}
+            <div className="display">
+                {display.map((item, index) => <div className="sect" key={index} style={{transform: `translateX(calc(-100vw + ${scroll - screenWidth * next}px))`}}>
+                    <div className="atop">
+                        <img src={item.image} alt={item.name} />
+                        <div className="top">
+                            <Price amount={item.price} />
+                            <div className="favorited">
+                                {item.favorited ? <FaHeart /> : <FaRegHeart />}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="main">
-                    <h2>{item.name}</h2>
-                </div>
-            </div>)}
-            {/* <div className="center"> */}
-            {/* onClick={() => changeSlide(-1)} */}
-            {/* <div className="left">
-                    <FaChevronLeft />
-                </div> */}
-            {/* onClick={() => changeSlide(1)} */}
-            {/* <div className="right">
-                    <FaChevronRight />
-                </div>
-            </div> */}
+                    <div className="main">
+                        <h2>{item.name}</h2>
+                    </div>
+                </div>)}
+            </div>
         </div>
     )
 }

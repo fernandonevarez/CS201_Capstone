@@ -73,7 +73,7 @@ const Carousel = ({items}) => {
             onTouchStart={start}
             onTouchEnd={end}
             onTouchMove={move}
-        >
+        >-
             <div className="sect" style={{transform: `translateX(calc(-${items.length / 2 * 60}vw + ${scroll - cartWidth * next}px))`}}>
                 {display.map((item, index) => <Seat {...item} order={index} key={item.id} />)}
             </div>

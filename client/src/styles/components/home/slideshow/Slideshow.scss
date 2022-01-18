@@ -1,0 +1,56 @@
+@use "../../../util/mixins.scss" as *;
+@use "../../../util/colors.scss" as *;
+
+.main-slideshow {
+    > .atop {
+        background-color: $white;
+        display: grid;
+
+        > * {
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+        }
+
+        > img {
+            @include box(100vw);
+        } 
+
+        > .top {
+            height: fit-content;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            > .favorited {
+                @include box(1.75rem);
+
+                > svg {
+                    @include box;   
+                    color: $blue;
+                }
+            }
+        }
+
+        > .center {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            > .left, > .right {
+                @include box(2.5rem);
+                @include center;
+                border-radius: 50%;
+                background-color: $white;
+                padding: .25rem;
+                border: 4px solid $blue;
+
+                > svg {
+                    @include box;
+                    color: $blue;
+                }
+            }
+        }
+    }
+}

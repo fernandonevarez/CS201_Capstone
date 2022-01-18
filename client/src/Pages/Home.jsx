@@ -21,6 +21,7 @@ import temp3Img from "../assets/images/temp/temp3.jpg";
 
 import Profile from "../Components/Profile";
 import {useUser} from "../contexts/useUser";
+import Slideshow from "../Components/home/slideshow/Slideshow";
 
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
@@ -112,6 +113,7 @@ const Home = () => {
         <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
       </div>}
       <Title name="Popular" />
+      <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
       <Title name="Recent" />
       <Title name="About" />
 

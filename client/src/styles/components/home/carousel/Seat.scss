@@ -17,8 +17,10 @@
         > .image {
             @include box(60vw);
             object-fit: cover;  
+            background-color: $white;
             
             > img {
+                background-color: $white;
                 @include box;
                 border-radius: 10px 10px 0 0;
             }

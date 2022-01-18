@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
-import { BsCart4 } from "react-icons/bs";
+import {BsCart4} from "react-icons/bs";
 // import {GiHamburgerMenu} from "react-icons/gi";
-import { RiMenu3Fill } from "react-icons/ri";
-import { FaSearch, FaTimes, FaChevronRight } from "react-icons/fa";
+import {RiMenu3Fill} from "react-icons/ri";
+import {FaSearch, FaTimes, FaChevronRight} from "react-icons/fa";
 
-import { CgProfile } from "react-icons/cg";
+import {CgProfile} from "react-icons/cg";
 
 import "../styles/components/Navbar.scss";
 import Register from "./Register";
@@ -13,8 +13,8 @@ import Signup from "./Signin";
 // import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
+import {useAuth0} from "@auth0/auth0-react";
+import {Link} from "react-router-dom";
 import Search from "./Search";
 
 const SAMPLE_DATA_REMOVE_LATER = [
@@ -36,14 +36,29 @@ const SAMPLE_DATA_REMOVE_LATER = [
 ];
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth0();
+  const {isAuthenticated} = useAuth0();
+
   const [showMenu, setShowMenu] = useState(false);
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
 
-  const close = () => setPopup((pop) => ({ ...pop, open: false }));
+  const toggleMenu = () => {
+    if (showMenu) {
+      setShowMenu(false)
+
+      // What I am doing here is normally bad, but is okay in this one case
+      document.body.style.overflowY = "auto"
+    } else {
+      setShowMenu(true)
+
+      // Same here
+      document.body.style.overflowY = "hidden"
+    }
+  }
+
+  const close = () => setPopup((pop) => ({...pop, open: false}));
 
   const change = () => {
     setPopup((pop) => ({
@@ -93,7 +108,7 @@ const Navbar = () => {
         <div className="bottom">
           <div
             className="hamburger-icon"
-            onClick={() => setShowMenu((sm) => !sm)}
+            onClick={() => toggleMenu()}
           >
             <RiMenu3Fill />
           </div>
@@ -121,7 +136,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {showProfileDropdown ? (
+            {showProfileDropdown &&
               <div className="profile-dropdown">
                 <ul>
                   <li>
@@ -136,21 +151,21 @@ const Navbar = () => {
                   <li></li>
                 </ul>
               </div>
-            ) : null}
+            }
           </div>
         </div>
       </div>
       <div className={`menu ${showMenu ? "show" : ""}`}>
-        <div className="hide"></div>
+        <div className="hide" onClick={() => toggleMenu()}></div>
         <div className="content">
           <div className="top">
             <h2>Browse Catagories</h2>
-            <div className="exit-icon" onClick={() => setShowMenu(false)}>
+            <div className="exit-icon" onClick={() => toggleMenu()}>
               <FaTimes />
             </div>
           </div>
           <ul className="navigate">
-            {catagories.map(({ name, children, id }) => (
+            {catagories.map(({name, children, id}) => (
               <li key={id}>
                 <h3>{name}</h3>
                 <div className="continue-icon">

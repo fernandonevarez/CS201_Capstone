@@ -50,6 +50,8 @@ const port = process.env.PORT || 3000;
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
+// const Product = require("../Model/ProductSchema");
+
 const storeItems = new Map([
   [1, { priceInCents: 10000, name: "Learn React Today" }],
   [2, { priceInCents: 20000, name: "Learn CSS Today" }],
@@ -95,6 +97,7 @@ const startServer = async () => {
       .use("/api/v1/products", productRouter)
       .post("/api/v1/create-checkout-session", async (req, res) => {
         try {
+          // const storeItems = await Product.find({}).sort("Created at");
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             mode: "payment",

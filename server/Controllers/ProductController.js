@@ -73,6 +73,7 @@ const getAllProduct = async (req, res) => {
   console.log(products);
 
   res.status(StatusCodes.OK).json({ products, length: products.length });
+  return products;
 };
 
 const deleteProduct = async (req, res) => {

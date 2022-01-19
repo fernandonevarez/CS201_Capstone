@@ -79,7 +79,7 @@ const startServer = async () => {
       // .use(cors())
       .use(
         cors({
-          origin: "http://localhost:3001",
+          origin: ["http://localhost:3001", "http://localhost:3001/cart"],
           credentials: true, //access-control-allow-credentials:true
           optionSuccessStatus: 200,
         })

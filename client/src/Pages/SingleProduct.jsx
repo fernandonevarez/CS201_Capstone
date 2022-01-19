@@ -4,8 +4,12 @@ import axios from "axios";
 
 import { useParams } from "react-router-dom";
 
+// import { useUser } from "../contexts/useUser";
+
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWUzMDc1Y2IyODkxNGRmZjJjMTZkYWUiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQyMjY4NTUxLCJleHAiOjE2NDQ4NjA1NTF9.CGunPBk6voT_LHSEL1ZEZKSogjt7QoJievoi65uV7jk";
+
+// const token = userUser.userCookies.token;
 
 const SingleProduct = () => {
   const [product, setProduct] = useState({});

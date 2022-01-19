@@ -23,14 +23,14 @@ const Cart = () => {
       {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "Access-Control-Allow-Origin": "http://localhost:3001",
+        "Access-Control-Allow-Origin": "http://localhost:3001/cart",
       }
     );
     const stripeURL = checkout.data.url;
     window.location = stripeURL;
   }
 
-  console.log(isAuthenticated);
+  console.log(`User Auth Status: ${isAuthenticated}`);
 
   return (
     <main className="cart-page">

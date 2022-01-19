@@ -20,6 +20,8 @@ import temp2Img from "../assets/images/temp/temp2.jpg";
 import temp3Img from "../assets/images/temp/temp3.jpg";
 
 import Profile from "../Components/Profile";
+import { useUser } from "../contexts/useUser";
+import Slideshow from "../Components/home/slideshow/Slideshow";
 
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
@@ -105,9 +107,17 @@ const Home = () => {
     <main className="home">
       <Navbar />
 
-      <Title name="Favorited" />
-      <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
-      <Title name="Popular" />
+      {(user.dev.skipAuth || Object.keys(user.details).length) && (
+        <div className="favorited">
+          <Title name="Favorited" />
+          <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+        </div>
+      )}
+      <div className="popular">
+        <Title name="Popular" />
+        <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+        <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+      </div>
       <Title name="Recent" />
       <Title name="About" />
 

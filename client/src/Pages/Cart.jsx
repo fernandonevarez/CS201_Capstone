@@ -36,14 +36,37 @@ const Cart = () => {
     <main className="cart-page">
       <Navbar />
       <div className="cart-page-container">
-        <h1>Put the user's cart here</h1>
+
+        {/* actual cart sect */}
+        <section className="cart-div">
+          <div className="cart-title">
+            <h1>Cart</h1>
+          </div>
+          <div className="products">
+            <img src="/static/media/temp.d2cb68eb6f97044b2712.jpg" alt="placeholder" />
+            <div className="info">
+              <h2 id="product-price"> holder </h2>
+              <h2 id="product-name"> holder </h2>
+              <button id="">Save For Later</button>
+              <button id="">Remove</button>
+            </div>
+          </div>
+        </section>
+
+        {/* total price */}
+        <section className="cart-price">
+          <div> <h2>Item(s) Total</h2> <h3>8.00</h3> </div>
+          <div> <h2>Shipping</h2> <h3>79.00</h3> </div>
+          <hr />
+          <div> <h2>Total</h2> <h3>87.00</h3> </div>
+        </section>
 
         <button
           onClick={() => {
             checkout();
           }}
         >
-          Proceed to Checkout
+          <h1>Checkout</h1>
         </button>
       </div>
     </main>

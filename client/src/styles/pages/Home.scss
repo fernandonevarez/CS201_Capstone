@@ -1,3 +1,9 @@
 .home {
     overflow-x: hidden;
+
+    .popular {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 }

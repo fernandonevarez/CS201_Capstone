@@ -8,11 +8,13 @@ const Seat = ({ name, image, favorited, price }) => {
 
   console.log("favorited", favorited);
 
-  const handleFavorite = (e) => {
-    e.preventDefault();
+  const handleFavorite = () => {
+    // e.preventDefault();
+    setIsFavorited(!isFavorited);
+
+    console.log("favorite updated", isFavorited);
 
     console.log("remove from user favorites");
-
   };
 
   return (
@@ -25,9 +27,8 @@ const Seat = ({ name, image, favorited, price }) => {
           <Price amount={price} />
           <div
             className="favorited"
-            onClick={(e) => {
-              setIsFavorited(!isFavorited);
-              handleFavorite(e);
+            onClick={() => {
+              handleFavorite();
             }}
           >
             {isFavorited ? <FaHeart /> : <FaRegHeart />}

@@ -18,20 +18,18 @@ const SingleProduct = () => {
   console.log("id", id);
 
   const getProduct = async () => {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/products/${id}`,
-      {
+    const response = await axios
+      .get(`http://localhost:3000/api/v1/products/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Access-Control-Allow-Origin": "http://localhost:3001",
         },
-      }
-    ).then(
-      (response) => {
+      })
+      .then((response) => {
         console.log(response.data.product);
         setProduct(response.data.product);
-      }
-    ).catch(err => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
 
   // console.log(id);
@@ -40,11 +38,15 @@ const SingleProduct = () => {
     getProduct();
   }, []);
 
+  const pushToCart = async () => {
+    console.log("product pushed to user's cart");
+  };
+
   console.log("product", product);
 
   const { name, price, description, imageArray, likes } = product;
 
-  console.log('imageArray', imageArray);
+  console.log("imageArray", imageArray);
   // console.log(imageArray);
   return (
     <main className="single-product-page">
@@ -69,6 +71,8 @@ const SingleProduct = () => {
           <h2>&#65284;{price / 100}</h2>
           <p>{description}</p>
         </div>
+
+        <button onClick={() => pushToCart()}>Add to Cart</button>
       </div>
     </main>
   );

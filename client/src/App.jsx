@@ -8,6 +8,9 @@ import Error from "./Pages/Error";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {
+  
+  
+
   return (
     <div className="App">
       <Routes>

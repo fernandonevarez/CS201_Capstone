@@ -12,7 +12,7 @@ const {
 
 const productRouter = express.Router();
 
-productRouter.route("/").get(getAllProduct);
+productRouter.route("/").get(authenticationMiddleware, getAllProduct);
 productRouter.route("/").post(createProduct);
 
 productRouter.route("/:id").get(getSingleProduct);

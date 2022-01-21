@@ -76,6 +76,7 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
   const { user } = useUser();
+  
 
   // async function getProducts() {
   //   const response = await axios.get("http://localhost:3000/api/v1/products", {

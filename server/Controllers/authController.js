@@ -37,24 +37,8 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: { name: userLogin.name }, token });
 };
 
-// var request = require("request");
-// const getUserToken = async (req, res) => {
-//   var options = {
-//     method: "POST",
-//     url: "https://dev-3osqrzua.us.auth0.com/oauth/token",
-//     headers: { "content-type": "application/json" },
-//     body: '{"client_id":"1gGsiZFG9C7SlYlXXU8FFzAUjWyKXI1C","client_secret":"y0eDdmLNpCeKqKZTyKVzC0wLVVmyw5eUT_KJGsViQKkWc39m6R0vCGneYHoIbGud","audience":"https://dev-3osqrzua.us.auth0.com/api/v2/","grant_type":"client_credentials"}',
-//   };
-
-//   request(options, function (error, response, body) {
-//     if (error) throw new Error(error);
-
-//     console.log(body);
-//   });
-// };
 
 module.exports = {
   register,
   login,
-  // getUserToken,
 };

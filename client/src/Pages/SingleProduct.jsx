@@ -15,6 +15,8 @@ const SingleProduct = () => {
   const [product, setProduct] = useState({});
   let { id } = useParams();
 
+  console.log("id", id);
+
   const getProduct = async () => {
     const response = await axios.get(
       `http://localhost:3000/api/v1/products/${id}`,
@@ -24,9 +26,12 @@ const SingleProduct = () => {
           "Access-Control-Allow-Origin": "http://localhost:3001",
         },
       }
-    );
-    // console.log(response.data.product);
-    setProduct(response.data.product);
+    ).then(
+      (response) => {
+        console.log(response.data.product);
+        setProduct(response.data.product);
+      }
+    ).catch(err => console.log(err));
   };
 
   // console.log(id);
@@ -35,25 +40,28 @@ const SingleProduct = () => {
     getProduct();
   }, []);
 
+  console.log("product", product);
+
   const { name, price, description, imageArray, likes } = product;
 
-  console.log(imageArray);
+  console.log('imageArray', imageArray);
+  // console.log(imageArray);
   return (
     <main className="single-product-page">
       <Navbar />
 
       <div className="single-product-container">
         <div className="product-image-slide">
-          {imageArray.map((image, index) => {
+          {/* {imageArray.map((image) => {
             return (
               <img
-                key={index}
+                key={Math.random()}
                 src={image}
                 alt="image of the product"
                 className="product-image"
               />
             );
-          })}
+          })} */}
         </div>
 
         <div className="product-info">

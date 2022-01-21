@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const { UnauthError } = require("../errors");
+// const jwt = require("jsonwebtoken");
+// const { UnauthError } = require("../errors");
 require("dotenv").config();
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
@@ -32,11 +32,11 @@ const authenticationMiddleware = jwt({
 	  cache: true,
 	  rateLimit: true,
 	  jwksRequestsPerMinute: 5,
-	  jwksUri: `https://${domain}/.well-known/jwks.json`,
+	  jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
 	}),
   
-	audience: audience,
-	issuer: `https://${domain}/`,
+	audience: process.env.AUTH0_AUDIENCE,
+	issuer: `https://${process.env.AUTH0_DOMAIN}/`,
 	algorithms: ["RS256"],
   });
 

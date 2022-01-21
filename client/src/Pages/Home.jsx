@@ -23,6 +23,8 @@ import Profile from "../Components/Profile";
 import { useUser } from "../contexts/useUser";
 import Slideshow from "../Components/home/slideshow/Slideshow";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
     name: "Duck",
@@ -76,7 +78,7 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
   const { user } = useUser();
-  
+  const {getAccessTokenSilently} = useAuth0();
 
   // async function getProducts() {
   //   const response = await axios.get("http://localhost:3000/api/v1/products", {
@@ -104,6 +106,21 @@ const Home = () => {
     return image;
     // console.log(imageArray[0]);
   };
+
+  const f = async () => {
+    console.log("hit")
+    const token = await getAccessTokenSilently({
+      audience: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/`,
+      scope: "read:current_user",
+    });
+    console.log(token )
+    const res = await axios.get("http://localhost:3000/api/v1/products", {headers: {
+      Authorization: `Bearer ${token}`
+    }})
+    console.log(res)
+  }
+
+  f()
 
   return (
     <main className="home">

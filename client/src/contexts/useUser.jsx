@@ -25,7 +25,9 @@ const UserProvider = ({ children }) => {
     getIdTokenClaims,
   } = useAuth0();
 
-  console.log(getAccessTokenSilently());
+  // console.log(getAccessTokenSilently());
+
+  
 
   //   if (isAuthenticated) {
       // const getUserMetadata = async () => {

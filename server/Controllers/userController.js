@@ -3,6 +3,10 @@ const Product = require("../Model/ProductSchema");
 const { BadRequestError, UnauthError } = require("../errors");
 require("dotenv").config();
 
+// what i will have:
+// userID
+// product
+
 const addingFavorite = async (req, res) => {
   const { userID, productID } = req.params;
   const { user, product } = await Promise.all([
@@ -16,9 +20,9 @@ const addingFavorite = async (req, res) => {
 
   user.favorites.push(product);
   user.save();
-  // res.status(200).json({ user });
+  res.status(200).json({ user });
   console.log({ user });
-}
+};
 
 const removeFavorite = async (req, res) => {
   const { userID, productID } = req.params;
@@ -35,7 +39,7 @@ const removeFavorite = async (req, res) => {
   user.save();
   // res.status(200).json({ user });
   console.log({ user });
-}
+};
 
 const getAllFavorites = async (req, res) => {
   const { userID } = req.params;
@@ -47,10 +51,10 @@ const getAllFavorites = async (req, res) => {
 
   // res.status(200).json({ user });
   console.log({ user });
-}
+};
 
 module.exports = {
   addingFavorite,
   removeFavorite,
-  getAllFavorites
-}
+  getAllFavorites,
+};

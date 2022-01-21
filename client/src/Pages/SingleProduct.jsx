@@ -4,7 +4,9 @@ import axios from "axios";
 
 import { useParams } from "react-router-dom";
 
-// import { useUser } from "../contexts/useUser";
+import { useUser } from "../contexts/useUser";
+
+import { useAuth0 } from "@auth0/auth0-react";
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWUzMDc1Y2IyODkxNGRmZjJjMTZkYWUiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQyMjY4NTUxLCJleHAiOjE2NDQ4NjA1NTF9.CGunPBk6voT_LHSEL1ZEZKSogjt7QoJievoi65uV7jk";
@@ -14,6 +16,11 @@ const token =
 const SingleProduct = () => {
   const [product, setProduct] = useState({});
   let { id } = useParams();
+
+  const { userCookies } = useUser();
+  const { user } = useAuth0();
+
+  console.log("user", user);
 
   console.log("id", id);
 
@@ -40,6 +47,21 @@ const SingleProduct = () => {
 
   const pushToCart = async () => {
     console.log("product pushed to user's cart");
+
+    const { _id: productID } = product;
+
+    const userID = user.sub.split("|")[1];
+
+    const response = await axios.post(
+      `http://localhost:3000/api/v1/user/${userID}/favorites/${productID}`,
+      product,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(`cart response: ${response}`);
   };
 
   console.log("product", product);

@@ -7,6 +7,7 @@ const {
   deleteProduct,
   updateProduct,
 } = require("../Controllers/ProductController");
+const authenticationMiddleware = require("../middleware/auth")
 
 // const { stripeCheckoutController } = require("../Controllers/SpriteController");
 

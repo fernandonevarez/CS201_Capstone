@@ -78,7 +78,7 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
   const { user } = useUser();
-  const {getAccessTokenSilently} = useAuth0();
+  const {getAccessTokenSilently, isAuthenticated} = useAuth0();
 
   // async function getProducts() {
   //   const response = await axios.get("http://localhost:3000/api/v1/products", {
@@ -101,6 +101,8 @@ const Home = () => {
 
   // console.log(`Product Array: ${results.products}`);
 
+  console.log("isAuthed", isAuthenticated)
+
   const getImage = (imageArray) => {
     const image = axios.get(imageArray[0]);
     return image;
@@ -110,17 +112,20 @@ const Home = () => {
   const f = async () => {
     console.log("hit")
     const token = await getAccessTokenSilently({
-      audience: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/`,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
       scope: "read:current_user",
     });
-    console.log(token )
+    console.log(token)
     const res = await axios.get("http://localhost:3000/api/v1/products", {headers: {
       Authorization: `Bearer ${token}`
     }})
     console.log(res)
   }
 
-  f()
+  useEffect(() => {
+    f()
+  }, []);
+  
 
   return (
     <main className="home">

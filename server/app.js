@@ -9,7 +9,7 @@ const connectDB = require("./database/connect");
 
 // middleware
 const errorHandlerMiddleware = require("./middleware/error-handler");
-const authenticationMiddleware = require("./middleware/auth");
+// const authenticationMiddleware = require("./middleware/auth");
 
 // controllers
 // const stripeController = require("./Controllers/SpriteController");
@@ -17,6 +17,7 @@ const authenticationMiddleware = require("./middleware/auth");
 // Routes
 const productRouter = require("./Routes/productRoute");
 const authRouter = require("./Routes/authRoute");
+const userRouter = require("./Routes/userRoute");
 
 // sercurity libraries
 const xss = require("xss-clean");
@@ -95,6 +96,7 @@ const startServer = async () => {
       // I commented the authenticationMiddleware so development is easier on my (Ethan's) part
       // .use("/api/v1/products", authenticationMiddleware, productRouter)
       .use("/api/v1/products", productRouter)
+      .use("/api/v1/user", userRouter)
       .post("/api/v1/create-checkout-session", async (req, res) => {
         try {
           // const storeItems = await Product.find({}).sort("Created at");

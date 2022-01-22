@@ -30,17 +30,17 @@ const UserProvider = ({ children }) => {
   
 
   //   if (isAuthenticated) {
-  //     const getUserMetadata = async () => {
-  //       const domain = "dev-3osqrzua.us.auth0.com";
+      // const getUserMetadata = async () => {
+        // const domain = "dev-3osqrzua.us.auth0.com";
 
-  //       try {
-  //         const accessToken = await getAccessTokenSilently({
-  //           audience: `https://${domain}/api/v2/`,
-  //           scope: "read:current_user",
-  //         });
+        // try {
+        //   const accessToken = await getAccessTokenSilently({
+        //     audience: `https://${domain}/api/v2/`,
+        //     scope: "read:current_user",
+        //   });
   //         console.log(`userInformation.sub: ${userInformation.sub}`);
 
-  //         const userDetailsByIdUrl = `https://${domain}/api/v2/users/${userInformation.sub}`;
+          // const userDetailsByIdUrl = `https://${domain}/api/v2/users/${userInformation.sub}`;
 
   //         // const metadataResponse = await fetch(userDetailsByIdUrl, {
   //         //   headers: {
@@ -78,9 +78,9 @@ const UserProvider = ({ children }) => {
   //         // console.log(user_metadata);
 
   //         // setUserMetadata(user_metadata);
-  //       } catch (e) {
-  //         console.log(e.message);
-  //       }
+        // } catch (e) {
+        //   console.log(e.message);
+        // }
   //     };
 
   //     getUserMetadata();

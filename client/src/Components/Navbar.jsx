@@ -16,6 +16,7 @@ import LogoutButton from "./LogoutButton";
 import {useAuth0} from "@auth0/auth0-react";
 import {Link} from "react-router-dom";
 import Search from "./Search";
+import NewProducts from "../Pages/NewProducts";
 
 const SAMPLE_DATA_REMOVE_LATER = [
   {
@@ -27,6 +28,7 @@ const SAMPLE_DATA_REMOVE_LATER = [
     name: "new",
     id: 2,
     children: [],
+    src: <NewProducts/>
   },
   {
     name: "Toys & Entertainment",
@@ -167,10 +169,12 @@ const Navbar = () => {
           <ul className="navigate">
             {catagories.map(({name, children, id}) => (
               <li key={id}>
+                <Link to={`/products/catagories/${name}`} className="link">
                 <h3>{name}</h3>
                 <div className="continue-icon">
                   <FaChevronRight />
                 </div>
+                </Link>
               </li>
             ))}
           </ul>

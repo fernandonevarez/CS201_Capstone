@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import { useUser } from "../contexts/useUser";
+
 // import "../styles/components/Product.scss";
 
 /*
@@ -12,7 +14,11 @@ import { Link } from "react-router-dom";
 const Product = (product) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
+  const { user } = useUser();
+
   const { _id: id, imageArray, price, name } = product.product;
+
+  console.log("user", user);
 
   const addToFavorites = async (id) => {
     // still need to get the user's id

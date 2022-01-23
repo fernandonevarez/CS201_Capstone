@@ -2,127 +2,130 @@
 @use "../util/mixins.scss" as *;
 
 nav {
-  color: $blue;
-  font-family: "Raleway";
+    color: $blue;
+    font-family: "Raleway";
 
-  .bar {
-    box-shadow: adjust-color($black, $alpha: -0.75) 0px 4px 4px;
-    padding: 0.5rem;
-
-    .top {
-      display: flex;
-      gap: 1rem;
-
-      .title {
-        font-family: "Playfair Display";
-        font-size: 1.25rem;
-        font-variation-settings: "wght" 650;
-      }
-    }
-
-    .bottom {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem;
-
-      .hamburger-icon {
-        @include box(1.75rem);
-
-        svg {
-          @include box;
-        }
-      }
-
-      .button {
-        @include center;
-        font-size: 0.85rem;
-        color: $blue;
-        font-weight: 500;
-      }
-
-      .side {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        .cart-icon {
-          @include box(1.75rem);
-
-          svg {
-            @include box;
-          }
-        }
-
-        button {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.85rem;
-          color: hsl(196, 37%, 48%);
-          font-weight: 500;
-        }
-
-        .profile-icon {
-          @include box(1.75rem);
-
-          svg {
-            @include box;
-          }
-        }
-      }
-    }
-  }
-
-  .menu {
-    display: none;
-    width: 100%;
-
-    &.show {
-      display: block;
-      position: fixed;
-      bottom: 0;
-      z-index: 99;
-
-      .hide {
-        height: calc(100vh);
-        background-color: adjust-color($black, $alpha: -0.75);
-      }
-
-      .content {
-        height: fit-content;
-        background-color: $white;
-        padding: 1rem;
+    .bar {
+        box-shadow: adjust-color($black, $alpha: -0.75) 0px 4px 4px;
+        padding: 0.5rem;
 
         .top {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+            display: flex;
+            gap: 1rem;
 
-          h2 {
-            font-family: "Playfair Display";
-            font-size: 1.75rem;
-          }
-
-          .exit-icon {
-            @include box(1.5rem);
-
-            svg {
-              @include box;
+            .title {
+                font-family: "Playfair Display";
+                font-size: 1.25rem;
+                font-variation-settings: "wght" 650;
             }
-          }
         }
 
-        .link {
-          ul {
-            li {
-              padding: 0.75rem 0;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+
+            .hamburger-icon {
+                @include box(1.75rem);
+
+                svg {
+                    @include box;
+                }
             }
-          }
+
+            .button {
+                @include center;
+                font-size: 0.85rem;
+                color: $blue;
+                font-weight: 500;
+            }
+
+            .side {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                .cart-icon {
+                    @include box(1.75rem);
+
+                    svg {
+                        @include box;
+                    }
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.85rem;
+                    color: hsl(196, 37%, 48%);
+                    font-weight: 500;
+                }
+
+                .profile-icon {
+                    @include box(1.75rem);
+
+                    svg {
+                        @include box;
+                    }
+                }
+            }
         }
-      }
     }
-  }
+
+    .menu {
+        display: none;
+        width: 100%;
+
+        &.show {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            z-index: 99;
+
+            .hide {
+                height: calc(100vh);
+                background-color: adjust-color($black, $alpha: -0.75);
+            }
+
+            .content {
+                height: fit-content;
+                background-color: $white;
+                padding: 1rem;
+
+                .top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    h2 {
+                        font-family: "Playfair Display";
+                        font-size: 1.75rem;
+                    }
+
+                    .exit-icon {
+                        @include box(1.5rem);
+
+                        svg {
+                            @include box;
+                        }
+                    }
+                }
+
+                .link {
+                    margin: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    ul {
+                        li {
+                            padding: 0.75rem 0;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

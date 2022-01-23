@@ -1,0 +1,25 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // center the error container on the page
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $red;
+  }
+  p {
+    font-size: 1.5rem;
+    color: $red;
+    text-align: center;
+  }
+}

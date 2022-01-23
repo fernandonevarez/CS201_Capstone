@@ -16,18 +16,25 @@ import { useUser } from "../contexts/useUser";
 const Product = (product) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
-  const { user } = useUser();
+  const { user, isAuthenticated } = useUser();
 
-  const { _id: id, imageArray, price, name } = product.product;
+  const { id: userID } = user;
+
+  const { _id: productID, imageArray, price, name } = product.product;
 
   console.log("user", user);
 
-  const addToFavorites = async (id) => {
+  const addToFavorites = async (userID, productID) => {
     // still need to get the user's id
     setIsFavorited(!isFavorited);
     if (isFavorited == false) {
-      console.log("product added to user's favorites");
-      console.log("product ID:", id);
+      // console.log("product added to user's favorites");
+      console.log("product ID:", productID);
+      if (isAuthenticated) {
+        console.log("user ID:", userID);
+      } else {
+        console.log("user is not logged in");
+      }
     } else {
       console.log("product removed from user's favorites");
     }
@@ -36,7 +43,7 @@ const Product = (product) => {
   if (imageArray) {
     return (
       <div className="product-card">
-        <Link to={`/products/${id}`} key={id}>
+        <Link to={`/products/${productID}`} key={productID}>
           <img src={imageArray[0]} alt="product Image" />
 
           <div className="bottom">
@@ -49,7 +56,7 @@ const Product = (product) => {
           {isFavorited ? (
             <FaHeart
               onClick={() => {
-                addToFavorites(id);
+                addToFavorites(userID, productID);
               }}
               className="icon"
               style={{
@@ -67,7 +74,7 @@ const Product = (product) => {
             <FaRegHeart
               onClick={() => {
                 // setIsFavorited(!isFavorited);
-                addToFavorites(id);
+                addToFavorites(userID, productID);
               }}
               className="icon"
               style={{

@@ -53,7 +53,6 @@ const Product = (product) => {
               }}
               size="40px"
               color="red"
-              zIndex="1"
             />
           ) : (
             // <img src={favImage} alt="favorited" />
@@ -75,7 +74,6 @@ const Product = (product) => {
               }}
               size="40px"
               color="transparent"
-              zIndex="1"
             />
           )}
         </div>

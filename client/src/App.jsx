@@ -8,6 +8,8 @@ import NewProducts from "./Pages/NewProducts";
 import Error from "./Pages/Error";
 import Popular from "./Pages/Popular";
 import ToysAndEntertainment from "./Pages/ToysAndEntertainment";
+import TermsOfUse from "./Pages/Docs/TermsOfUse";
+import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
           path="/products/catagories/Toys%20&%20Entertainment"
           element={<ToysAndEntertainment />}
         />
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>

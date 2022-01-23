@@ -1,0 +1,33 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.footer-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: $black;
+
+  color: $white;
+
+  padding: 1rem;
+
+  .copy-right {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .docs {
+    display: flex;
+    #doc {
+      text-decoration: underline;
+    }
+  }
+
+  .divider {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

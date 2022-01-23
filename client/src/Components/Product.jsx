@@ -9,6 +9,8 @@ import { useUser } from "../contexts/useUser";
 /*
   Things that still need to be done on this conpoent:
   1. After Ethan is done with the Auth0 integration, finish the "add to favorites" feature
+  2. Might want to make it so that if the product numbers are an odd number, the last product will be centered on the screen or something.
+  3. 
 */
 
 const Product = (product) => {

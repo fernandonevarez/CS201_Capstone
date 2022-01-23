@@ -6,8 +6,8 @@ import "../styles/pages/Home.scss";
 import axios from "axios";
 import LoginForm from "../Components/LoginForm";
 import Register from "../Components/Register";
-import LoginButton from "../Components/LoginButton";
-import LogoutButton from "../Components/LogoutButton";
+// import LoginButton from "../Components/LoginButton";
+// import LogoutButton from "../Components/LogoutButton";
 import Title from "../Components/home/Title";
 import Carousel from "../Components/home/carousel/Carousel";
 
@@ -78,7 +78,7 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
   const { user } = useUser();
-  const {getAccessTokenSilently, isAuthenticated} = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   // async function getProducts() {
   //   const response = await axios.get("http://localhost:3000/api/v1/products", {
@@ -101,7 +101,7 @@ const Home = () => {
 
   // console.log(`Product Array: ${results.products}`);
 
-  console.log("isAuthed", isAuthenticated)
+  console.log("isAuthed", isAuthenticated);
 
   const getImage = (imageArray) => {
     const image = axios.get(imageArray[0]);
@@ -110,22 +110,23 @@ const Home = () => {
   };
 
   const f = async () => {
-    console.log("hit")
+    console.log("hit");
     const token = await getAccessTokenSilently({
       audience: process.env.REACT_APP_AUTH0_AUDIENCE,
       scope: "read:current_user",
     });
-    console.log(token)
-    const res = await axios.get("http://localhost:3000/api/v1/products", {headers: {
-      Authorization: `Bearer ${token}`
-    }})
-    console.log(res)
-  }
+    console.log(token);
+    const res = await axios.get("http://localhost:3000/api/v1/products", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(res);
+  };
 
   useEffect(() => {
-    f()
+    f();
   }, []);
-  
 
   return (
     <main className="home">

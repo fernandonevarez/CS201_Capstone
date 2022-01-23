@@ -1,20 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
-import {BsCart4} from "react-icons/bs";
+import { BsCart4 } from "react-icons/bs";
 // import {GiHamburgerMenu} from "react-icons/gi";
-import {RiMenu3Fill} from "react-icons/ri";
-import {FaSearch, FaTimes, FaChevronRight} from "react-icons/fa";
+import { RiMenu3Fill } from "react-icons/ri";
+import { FaSearch, FaTimes, FaChevronRight } from "react-icons/fa";
 
-import {CgProfile} from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 
 import "../styles/components/Navbar.scss";
 import Register from "./Register";
 import Signup from "./Signin";
-// import LogoutButton from "./LogoutButton";
-import LoginButton from "./LoginButton";
-import LogoutButton from "./LogoutButton";
-import {useAuth0} from "@auth0/auth0-react";
-import {Link} from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 import Search from "./Search";
 import NewProducts from "../Pages/NewProducts";
 
@@ -28,7 +25,6 @@ const SAMPLE_DATA_REMOVE_LATER = [
     name: "new",
     id: 2,
     children: [],
-    src: <NewProducts/>
   },
   {
     name: "Toys & Entertainment",
@@ -38,7 +34,7 @@ const SAMPLE_DATA_REMOVE_LATER = [
 ];
 
 const Navbar = () => {
-  const {isAuthenticated} = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -48,19 +44,19 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     if (showMenu) {
-      setShowMenu(false)
+      setShowMenu(false);
 
       // What I am doing here is normally bad, but is okay in this one case
-      document.body.style.overflowY = "auto"
+      document.body.style.overflowY = "auto";
     } else {
-      setShowMenu(true)
+      setShowMenu(true);
 
       // Same here
-      document.body.style.overflowY = "hidden"
+      document.body.style.overflowY = "hidden";
     }
-  }
+  };
 
-  const close = () => setPopup((pop) => ({...pop, open: false}));
+  const close = () => setPopup((pop) => ({ ...pop, open: false }));
 
   const change = () => {
     setPopup((pop) => ({
@@ -108,10 +104,7 @@ const Navbar = () => {
           <Search />
         </div>
         <div className="bottom">
-          <div
-            className="hamburger-icon"
-            onClick={() => toggleMenu()}
-          >
+          <div className="hamburger-icon" onClick={() => toggleMenu()}>
             <RiMenu3Fill />
           </div>
           <div className="side">
@@ -129,7 +122,9 @@ const Navbar = () => {
                 />
               </div>
             ) : (
-              <LoginButton className="button">Sign In</LoginButton>
+              <button className="button" onClick={() => loginWithRedirect()}>
+                Log In
+              </button>
             )}
 
             <div className="cart-icon">
@@ -138,7 +133,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {showProfileDropdown &&
+            {showProfileDropdown && (
               <div className="profile-dropdown">
                 <ul>
                   <li>
@@ -148,12 +143,18 @@ const Navbar = () => {
                     <Link to="/orders">Orders</Link>
                   </li>
                   <li>
-                    <LogoutButton />
+                    <button
+                      onClick={() =>
+                        logout({ returnTo: window.location.origin })
+                      }
+                    >
+                      Log Out
+                    </button>
                   </li>
                   <li></li>
                 </ul>
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
@@ -167,13 +168,13 @@ const Navbar = () => {
             </div>
           </div>
           <ul className="navigate">
-            {catagories.map(({name, children, id}) => (
+            {catagories.map(({ name, children, id }) => (
               <li key={id}>
                 <Link to={`/products/catagories/${name}`} className="link">
-                <h3>{name}</h3>
-                <div className="continue-icon">
-                  <FaChevronRight />
-                </div>
+                  <h3>{name}</h3>
+                  <div className="continue-icon">
+                    <FaChevronRight />
+                  </div>
                 </Link>
               </li>
             ))}

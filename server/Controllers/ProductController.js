@@ -12,7 +12,7 @@ const createProduct = async (req, res) => {
   const {
     body: { name, price, description },
     files: fileArrayConatiner,
-    user: { userID },
+    // user: { _id: userID },
     params: { id: productID },
   } = req;
 

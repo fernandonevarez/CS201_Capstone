@@ -1,8 +1,10 @@
 // const jwt = require("jsonwebtoken");
 // const { UnauthError } = require("../errors");
 require("dotenv").config();
-const jwt = require("express-jwt");
-const jwksRsa = require("jwks-rsa");
+// const jwt = require("express-jwt");
+// const jwksRsa = require("jwks-rsa");
+const jwt = require("jsonwebtoken");
+const axios = require("axios")
 
 // const authenticationMiddleware = async (req, res, next) => {
 // 	const authHeader = req.headers.authorization;
@@ -27,17 +29,21 @@ const jwksRsa = require("jwks-rsa");
 // 	}
 // };
 
-const authenticationMiddleware = jwt({
-	secret: jwksRsa.expressJwtSecret({
-	  cache: true,
-	  rateLimit: true,
-	  jwksRequestsPerMinute: 5,
-	  jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-	}),
-  
-	audience: process.env.AUTH0_AUDIENCE,
-	issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-	algorithms: ["RS256"],
-  });
+const authenticationMiddleware = async (req, res, next) => {
+	const auth = req.headers.authorization;
 
+	if (!auth || !auth.startsWith("Bearer ")) {
+		res.status(404).json({error: "Invalid Authoraztion Header"})
+	} else {
+		const token = auth.slice(auth.indexOf(" ") + 1, auth.length);
+		const secret = await axios.get(`https://${process.env.DOMAIN}/.well-known/jwks.json`)
+
+		console.log(secret.data.keys[0].kid)
+		if (jwt.verify(token, secret.data.keys[0].kid)) {
+			next();
+		} else {
+			res.status(401).json({error: "Unauthorized"})
+		}
+	}
+}
 module.exports = authenticationMiddleware;

@@ -24,7 +24,7 @@ const Search = () => {
       },
     });
 
-    console.log(response.data.products);
+    // console.log(response.data.products);
     setProducts(response.data.products);
   };
 

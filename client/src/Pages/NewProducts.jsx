@@ -44,7 +44,7 @@ const NewProducts = () => {
 
   // console.log("products", products);
 
-  console.log("filteredProducts", filteredProducts);
+  // console.log("filteredProducts", filteredProducts);
 
   // console.log(`filterNewProducts:`, filterNewProducts);
 

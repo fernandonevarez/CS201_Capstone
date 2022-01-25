@@ -6,7 +6,7 @@ import "../../../styles/components/home/carousel/Seat.scss";
 const Seat = ({ name, image, favorited, price }) => {
   const [isFavorited, setIsFavorited] = useState(favorited);
 
-  console.log("favorited", favorited);
+  // console.log("favorited", favorited);
 
   const handleFavorite = () => {
     // e.preventDefault();

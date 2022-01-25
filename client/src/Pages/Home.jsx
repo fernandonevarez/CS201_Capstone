@@ -110,23 +110,24 @@ const Home = () => {
   };
 
   const f = async () => {
-    console.log("hit");
-    const token = await getAccessTokenSilently({
-      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-      scope: "read:current_user",
-    });
-    console.log(token);
-    const res = await axios.get("http://localhost:3000/api/v1/products", {
+    // {
+    //   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+    //   scope: "read:current_user",
+    // }
+    console.log("me")
+    const token = await getAccessTokenSilently();
+    console.log("help")
+    const {data, error} = await axios.get("http://localhost:3000/api/v1/products", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
+    console.log(data || error);
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     f();
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <main className="home">
@@ -155,7 +156,7 @@ const Home = () => {
 
       {results.products?.map((product) => {
         const { _id: id, imageArray, name, description, price } = product;
-        console.log(imageArray);
+        // console.log(imageArray);
         return (
           <div className="product-container" key={id}>
             <h3>{name}</h3>

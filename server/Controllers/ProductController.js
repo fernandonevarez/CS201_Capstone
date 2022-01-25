@@ -17,7 +17,7 @@ const createProduct = async (req, res) => {
   } = req;
 
   // console.log(Array.isArray(fileArrayConatiner.imageArray));
-  console.log(fileArrayConatiner);
+  // console.log(fileArrayConatiner);+
 
   if (Array.isArray(fileArrayConatiner.imageArray) == true) {
     const imageURLS = [];
@@ -47,7 +47,7 @@ const createProduct = async (req, res) => {
     }
     uploadImages();
   } else {
-    console.log(fileArrayConatiner.imageArray);
+    // console.log(fileArrayConatiner.imageArray);
     // if the user is only submitting one image for the product
     const imageResult = await cloudinary.uploader.upload(
       fileArrayConatiner.imageArray.tempFilePath,
@@ -70,7 +70,7 @@ const createProduct = async (req, res) => {
 const getAllProduct = async (req, res) => {
   const products = await Product.find({}).sort("Created at");
 
-  console.log(products);
+  // console.log(products);
 
   res.status(StatusCodes.OK).json({ products, length: products.length });
   return products;

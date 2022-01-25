@@ -9,6 +9,45 @@ const ProductSchema = new monogoose.Schema({
     type: Number,
     required: [true, "Product must have a price"],
   },
+  type: [
+    {
+      type: String,
+      required: true,
+      enum: {
+        values: [
+          "toy",
+          "art",
+          "entertainment",
+          "clothing",
+          "craft supplies",
+          "Tools",
+          "party",
+          "jewelry",
+          "accessories"
+        ],
+        message: `{Value} is not supported. Also make sure that there are: no spaces in your type string and every letter is lowercase`,
+      },
+    },
+  ],
+
+  target: [
+    {
+      type: String,
+      required: true,
+      enum: {
+        values: [
+          "Kids",
+          "Teens",
+          "Adults",
+          "Netural"
+        ],
+        message: `{Value} is not supported. Also make sure that there are: no spaces in your type string and every letter is lowercase`,
+      },
+    },
+  ],
+
+
+
   description: {
     type: String,
     required: [true, "Please add a description"],

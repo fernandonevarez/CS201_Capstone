@@ -14,24 +14,53 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import NewProducts from "../Pages/NewProducts";
+import CategoryMenu from "./CategoryMenu";
 
-const SAMPLE_DATA_REMOVE_LATER = [
-  {
-    name: "Popular",
-    id: 1,
-    children: [],
-  },
-  {
-    name: "new",
-    id: 2,
-    children: [],
-  },
-  {
-    name: "Toys & Entertainment",
-    id: 3,
-    children: [],
-  },
-];
+// const SAMPLE_DATA_REMOVE_LATER = [
+//   {
+//     name: "Popular",
+//     id: 1,
+//     children: [],
+   
+//   },
+//   {
+//     name: "new",
+//     id: 2,
+//     children: [],
+ 
+//   },
+//   {
+//     name: "Toys & Entertainment",
+//     id: 3,
+   
+//     children: [
+//       {
+//         name: "Toys",
+//         // make an id with the current time in milliseconds
+//         id: 1, 
+      
+//         children: [
+//           {
+//             target: "For Kids",
+//             id: 1,
+//           },
+//           {
+//             tagert: "For Teens",
+//             id: 2,
+//           },
+//           {
+//             target: "For Adults",
+//             id: 3,
+//           },
+//           {
+//             target: "Netural",
+//             id: 4,
+//           }
+//         ]
+//       }
+//     ],
+//   },
+// ];
 
 const Navbar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -40,9 +69,12 @@ const Navbar = () => {
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
-  const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
+  // const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
+
+  
 
   const toggleMenu = () => {
+    
     if (showMenu) {
       setShowMenu(false);
 
@@ -158,29 +190,37 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+
       <div className={`menu ${showMenu ? "show" : ""}`}>
-        <div className="hide" onClick={() => toggleMenu()}></div>
+        {/* <div className="hide" onClick={() => toggleMenu()}></div>
         <div className="content">
           <div className="top">
             <h2>Browse Catagories</h2>
+        
+
             <div className="exit-icon" onClick={() => toggleMenu()}>
               <FaTimes />
             </div>
           </div>
           <ul className="navigate">
             {catagories.map(({ name, children, id }) => (
+              console.log(children),
               <li key={id}>
                 <Link to={`/products/catagories/${name}`} className="link">
                   <h3>{name}</h3>
-                  <div className="continue-icon">
+                  <div className="continue-icon" >
                     <FaChevronRight />
                   </div>
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
+        <CategoryMenu toggleMenu={toggleMenu}/>
       </div>
+
+
       {popup.open && popup.content}
     </nav>
   );

@@ -66,8 +66,8 @@ const CategoryMenu = ({ toggleMenu }) => {
   function to toggle the children
 
   */
-  console.log("catagories", catagories);
-  console.log("previousCatagories", previousCatagories);
+  // console.log("catagories", catagories);
+  // console.log("previousCatagories", previousCatagories);
 
   return (
     <>

@@ -114,9 +114,11 @@ const Home = () => {
     //   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
     //   scope: "read:current_user",
     // }
-    console.log("me")
-    const token = await getAccessTokenSilently();
-    console.log("help")
+    const token = await getAccessTokenSilently({
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+      scope: "read:current_user",
+    });
+    console.log(token)
     const {data, error} = await axios.get("http://localhost:3000/api/v1/products", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -127,7 +129,7 @@ const Home = () => {
 
   useEffect(() => { 
     f();
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <main className="home">

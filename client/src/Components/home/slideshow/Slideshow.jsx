@@ -55,7 +55,7 @@ const Slideshow = ({items}) => {
                 const toid = setTimeout(() => {
                     let tt = 0;
                     const dd = (origin - dist) % screenWidth
-                    console.log(dd)
+                    // console.log(dd)
                     const oo = (origin - dist);
                     const idid = setInterval(() => {
                         if (tt >= 1) {

@@ -57,6 +57,8 @@ const CategoryMenu = ({ toggleMenu }) => {
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [previousCatagories, setPreviousCatagories] = useState([]);
 
+
+
   const [previousCatagoryArray, setPreviousCatagoryArray] = useState([]);
 
   const [menuLevel, setMenuLevel] = useState(0);
@@ -171,14 +173,14 @@ const CategoryMenu = ({ toggleMenu }) => {
                           // setPreviousCatagoryArray(...previousCatagoryArray, category.name)
                           // push an array to previousCatagoryArray
 
-                          previousCatagoryArray.map((item) => {
-                            if (item == catagories) {
-                              setPreviousCatagoryArray([
-                                ...previousCatagoryArray,
-                                [catagories],
-                              ]);
-                            }
-                          });
+                          // previousCatagoryArray.map((item) => {
+                          //   if (item != catagories) {
+                          //     setPreviousCatagoryArray([
+                          //       ...previousCatagoryArray,
+                          //       [catagories],
+                          //     ]);
+                          //   }
+                          // });
                           // setPreviousCatagoryArray((oldArray) => [
                           //   ...oldArray,
                           //   [catagories],
@@ -214,37 +216,8 @@ const CategoryMenu = ({ toggleMenu }) => {
               );
             }
 
-            //   return (
-            //     <li key={category.id}>
-
-            //         <div
-            //           className="link"
-            //           onClick={() => {
-            //             setCatagories(category.children);
-            //           }}
-            //         >
-            //           <h3>{category.name}</h3>
-            //           {/* {category.hasOwnProperty("name") ? (
-            //             <h3>{category.name}</h3>
-            //           ) : (
-            //             (setHasChildren(!hasChildren),
-            //             (<h3>{category.target}</h3>))
-            //           )} */}
-            //           <div className="continue-icon">
-            //             <FaChevronRight
-            //               onClick={() => {
-            //                 setPreviousCatagories(catagories)
-
-            //                 // check if there are children
-
-            //               }}
-            //             />
-            //           </div>
-            //         </div>
-
-            //     </li>
-            //   );
-          })}
+            
+            })}
         </ul>
       </div>
     </>

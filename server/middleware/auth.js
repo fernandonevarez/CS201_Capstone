@@ -29,6 +29,24 @@ const axios = require("axios")
 // 	}
 // };
 
+var jwksClient = require('jwks-rsa');
+var client = jwksClient({
+  jwksUri: `https://${process.env.DOMAIN}/.well-known/jwks.json`
+});
+function getKey(header, callback){
+console.log(header)
+  client.getSigningKey(header.kid, function(err, key) {
+	if (err) {
+		console.log(err);
+	} else {
+		var signingKey = key.publicKey || key.rsaPublicKey;
+		callback(null, signingKey);
+	}
+  });
+}
+ 
+
+
 const authenticationMiddleware = async (req, res, next) => {
 	const auth = req.headers.authorization;
 
@@ -36,14 +54,17 @@ const authenticationMiddleware = async (req, res, next) => {
 		res.status(404).json({error: "Invalid Authoraztion Header"})
 	} else {
 		const token = auth.slice(auth.indexOf(" ") + 1, auth.length);
-		const secret = await axios.get(`https://${process.env.DOMAIN}/.well-known/jwks.json`)
-
-		console.log(secret.data.keys[0].kid)
-		if (jwt.verify(token, secret.data.keys[0].kid)) {
-			next();
-		} else {
-			res.status(401).json({error: "Unauthorized"})
-		}
+		console.log("Token:", token);
+		// const secret = await axios.get(`https://${process.env.DOMAIN}/.well-known/jwks.json`)
+		// console.log()
+		const verified = jwt.verify(token, process.env.JWT_SECRET, {algorithms: ["HS256"]}, function(err, decoded) {
+			console.log("Result:", err || decoded)
+		  });
+		// if (verified) {
+		// 	next();
+		// } else {
+		// 	res.status(401).json({error: "Unauthorized"})
+		// }
 	}
 }
 module.exports = authenticationMiddleware;

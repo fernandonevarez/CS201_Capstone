@@ -1,6 +1,7 @@
 @use "../util/colors.scss" as *;
 @use "../util/mixins.scss" as *;
 
+
 .page-container {
   .newProducts-conatiner {
     display: flex;
@@ -35,6 +36,8 @@
         }
       }
     }
+
+    
     .top {
       height: 0;
       display: flex;

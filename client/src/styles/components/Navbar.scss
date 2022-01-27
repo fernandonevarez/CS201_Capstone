@@ -73,6 +73,18 @@ nav {
         }
     }
 
+    .search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        label {
+            @include center;
+            font-size: 0.85rem;
+            color: hsl(196, 37%, 48%);
+            font-weight: 500;
+        }
+    }
+
     .menu {
         display: none;
         width: 100%;

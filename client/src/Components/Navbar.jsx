@@ -12,9 +12,12 @@ import Register from "./Register";
 import Signup from "./Signin";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
-import Search from "./Search";
+
 import NewProducts from "../Pages/NewProducts";
 import CategoryMenu from "./CategoryMenu";
+import axios from "axios";
+
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`
 
 // const SAMPLE_DATA_REMOVE_LATER = [
 //   {
@@ -71,7 +74,25 @@ const Navbar = () => {
 
   // const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
 
-  
+  const [products, setProducts] = useState([]);
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    console.log("ping pong")
+    const response = await axios.get("http://localhost:3000/api/v1/products", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "http://localhost:3001",
+      },
+    });
+
+    console.log("response", response.data.products);
+    setProducts(response.data.products);
+  };
 
   const toggleMenu = () => {
     
@@ -109,16 +130,44 @@ const Navbar = () => {
     content: <Signup change={change} close={close} />,
   });
 
+  const [showNavbar, setShowNavbar] = useState(true);
+
+  let filteredProducts = () => {
+    return products
+      .filter((product) => {
+        if (query === "") {
+          return product;
+        } else if (product.name.includes(query.toLowerCase())) {
+          return product;
+        }
+      })
+      .map((product, index) => {
+        // console.log(product.name);
+
+        const { _id: id, name } = product;
+
+        return (
+          <div className="search-suggestions-item" key={index}>
+            <Link to={`/products/${id}`}>{name}</Link>
+          </div>
+        );
+      });
+  };
+
   return (
     <nav>
-      <div className="bar">
+      {showNavbar ? (
+        // show navbar
+        <div className="bar">
         <div className="top">
           <div className="title">
             <Link to="/" className="company-name">
               MSB
             </Link>
           </div>
-          {/* <div className="search">
+
+
+          <div className="search">
             <label htmlFor="search">
               <input
                 type="text"
@@ -126,14 +175,17 @@ const Navbar = () => {
                 id="search"
                 placeholder="Search Items Here"
                 autoCorrect="false"
+                onClick={() => setShowNavbar(!showNavbar)}
               />
               <div className="search-icon">
                 <FaSearch />
               </div>
             </label>
-          </div> */}
+          </div>
 
-          <Search />
+          {/* <Search /> */}
+          {/* console.log("ping"); */}
+          
         </div>
         <div className="bottom">
           <div className="hamburger-icon" onClick={() => toggleMenu()}>
@@ -191,8 +243,36 @@ const Navbar = () => {
         </div>
       </div>
 
+      ): (
+        // just show the search bar and the pop content
+        <div className="search">
+      <label htmlFor="search">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          
+          onChange={(e) => {
+            setQuery(e.target.value);
+            // setShowNavBar(true);
+            filteredProducts();
+          }}
+          placeholder="Search Items Here"
+          autoCorrect="false"
+        />
+        <div className="search-icon">
+          <FaSearch onClick={() => setShowNavbar(!showNavbar)}/>
+        </div>
+      </label>
+      <FaTimes className="close-search" onClick={() => setShowNavbar(!showNavbar)}/>
+      <div className="search-suggestions">
+        {showNavbar ? console.log("not showing data") : filteredProducts()}
+      </div>
+    </div>
+      )}
 
-      <div className={`menu ${showMenu ? "show" : ""}`}>
+
+     <div className={`menu ${showMenu ? "show" : ""}`}>
         {/* <div className="hide" onClick={() => toggleMenu()}></div>
         <div className="content">
           <div className="top">

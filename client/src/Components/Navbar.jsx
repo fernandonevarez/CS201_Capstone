@@ -14,7 +14,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import NewProducts from "../Pages/NewProducts";
-import CategoryMenu from "./CategoryMenu";
+import Menu from "./Menu";
 
 // const SAMPLE_DATA_REMOVE_LATER = [
 //   {
@@ -217,7 +217,7 @@ const Navbar = () => {
             ))}
           </ul>
         </div> */}
-        <CategoryMenu toggleMenu={toggleMenu}/>
+        <Menu toggleMenu={toggleMenu}/>
       </div>
 
 

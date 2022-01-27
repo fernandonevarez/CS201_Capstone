@@ -101,8 +101,6 @@ const Home = () => {
 
   // console.log(`Product Array: ${results.products}`);
 
-  console.log("isAuthed", isAuthenticated);
-
   const getImage = (imageArray) => {
     const image = axios.get(imageArray[0]);
     return image;
@@ -128,7 +126,7 @@ const Home = () => {
   };
 
   useEffect(() => { 
-    f();
+    // f();
   }, []);
 
   return (

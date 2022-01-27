@@ -75,8 +75,12 @@ nav {
 
     .search {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        position: fixed;
+        z-index: 100;
+        flex-direction: column;
+        width: 100vw;
+        background: white;
+        height: 100vh;
         label {
             @include center;
             font-size: 0.85rem;

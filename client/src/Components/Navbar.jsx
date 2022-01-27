@@ -14,11 +14,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 
 import NewProducts from "../Pages/NewProducts";
-import CategoryMenu from "./CategoryMenu";
+// import CategoryMenu from "./CategoryMenu";
 import axios from "axios";
-
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`
 import Menu from "./Menu";
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`
+
 
 // const SAMPLE_DATA_REMOVE_LATER = [
 //   {
@@ -83,7 +83,7 @@ const Navbar = () => {
   }, []);
 
   const getProducts = async () => {
-    console.log("ping pong")
+    // console.log("ping pong")
     const response = await axios.get("http://localhost:3000/api/v1/products", {
       headers: {
         Authorization: `Bearer ${token}`,

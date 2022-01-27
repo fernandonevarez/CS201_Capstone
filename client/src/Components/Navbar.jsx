@@ -18,6 +18,7 @@ import CategoryMenu from "./CategoryMenu";
 import axios from "axios";
 
 const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`
+import Menu from "./Menu";
 
 // const SAMPLE_DATA_REMOVE_LATER = [
 //   {
@@ -297,7 +298,7 @@ const Navbar = () => {
             ))}
           </ul>
         </div> */}
-        <CategoryMenu toggleMenu={toggleMenu}/>
+        <Menu toggleMenu={toggleMenu}/>
       </div>
 
 

@@ -96,14 +96,22 @@ nav {
             z-index: 99;
 
             .hide {
-                height: calc(100vh);
+                @include box(100vw, 100vh);
+                position: absolute;
+                top: 0;
+                left: 0;
                 background-color: adjust-color($black, $alpha: -0.75);
             }
 
             .content {
-                height: fit-content;
+                box-shadow: adjust-color($black, $alpha: -0.75) 4px 0px 4px;
+                position: relative;
+                height: 100vh;
+                width: 80%;
                 background-color: $white;
                 padding: 1rem;
+                display: flex;
+                flex-direction: column;
 
                 .top {
                     display: flex;
@@ -112,11 +120,11 @@ nav {
 
                     h2 {
                         font-family: "Playfair Display";
-                        font-size: 1.75rem;
+                        font-size: 1.5rem;
                     }
 
-                    .exit-icon {
-                        @include box(1.5rem);
+                    .exit, .back {
+                        @include box(1.25rem);
 
                         svg {
                             @include box;
@@ -124,34 +132,32 @@ nav {
                     }
                 }
 
-                // li{
-                //     display: flex;
-                //     justify-content: space-between;
-                //     align-items: center;
-                //     margin: 10px;
-                // }
-
-                li {
-                    // .category-link {
-                        // text-align: center;
-                        margin: 10px 0;
-                        font-size: 18px;
-                        font-family: "Playfair Display";
-                    // }
-                }
-
-                .link {
-                    margin: 10px 0;
+                ul {
+                    flex-grow: 2;
+                    overflow: scroll;
+                    padding: .75rem .25rem;
                     display: flex;
-                    justify-content: space-between;
-                    // ul {
-                    //     li {
-                    //         padding: 0.75rem 0;
-                    //         display: flex;
-                    //         justify-content: space-between;
-                    //         align-items: center;
-                    //     }
-                    // }
+                    flex-direction: column;
+                    gap: 1rem;
+
+                    li {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 18px;
+                        font-family: "Raleway";
+                        // .category-link {
+                            // text-align: center;
+                        // }
+    
+                        h3 {
+                            flex-grow: 2;
+                        }
+    
+                        .continue {
+                            @include center;
+                        }
+                    }
                 }
             }
         }

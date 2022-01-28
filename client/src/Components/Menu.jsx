@@ -94,11 +94,17 @@ const Menu = ({ toggleMenu }) => {
         </div>
         <ul className="navigate">
           {display.map(({name, id, children}) => <li key={id}>
-            <Link to={`/products/catagories/${name}`}>
+            <Link to={`/products/catagories/${name}`} onClick={() => {
+                contuine(children)
+
+              }}>
               <h3>{name}</h3>
             </Link>
             <div className="continue">
-              {children.length ? <FaChevronRight onClick={() => contuine(children)}/> : null}
+              {children.length ? <FaChevronRight onClick={() => contuine(children)
+
+              
+              }/> : null}
             </div>
           </li>)}
         </ul>

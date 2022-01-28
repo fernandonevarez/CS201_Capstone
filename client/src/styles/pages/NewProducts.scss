@@ -7,6 +7,7 @@
     display: flex;
     flex-wrap: wrap;
     .product-card {
+      position: relative;
       width: 47vw;
       border-radius: 1rem;
       margin: 5px;
@@ -23,6 +24,7 @@
         // display: none;
 
         h3 {
+          width: 47vw;
           position: relative;
           top: -5px;
           padding: 10px;
@@ -30,7 +32,7 @@
           border-bottom-right-radius: 1rem;
 
           background: $blue;
-          width: 100%;
+          // width: 100%;
           text-align: center;
           color: $white;
         }
@@ -40,12 +42,13 @@
     
     .top {
       height: 0;
-      display: flex;
-      position: relative;
-      top: -250px;
-      width: 45vw;
-      right: -2px;
-      justify-content: space-between;
+    display: flex;
+    position: absolute;
+    top: 10px;
+    width: 45vw;
+    z-index: 1;
+    right: 2px;
+    justify-content: space-between;
       .price-tag {
         font-size: 1.5rem;
         font-weight: bold;

@@ -46,6 +46,8 @@ const Product = (product) => {
         <Link to={`/products/${productID}`} key={productID}>
           <img src={imageArray[0]} alt="product Image" />
 
+          
+
           <div className="bottom">
             <h3>{name}</h3>
           </div>
@@ -92,7 +94,10 @@ const Product = (product) => {
             />
           )}
         </div>
+        
       </div>
+
+      
     );
   } else {
     console.log("imageArray is empty");

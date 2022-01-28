@@ -52,7 +52,6 @@ const NewProducts = () => {
 
   return (
     <div className="page-container">
-      <Navbar />
       <div className="newProducts-conatiner">
         {isLoading ? (
           <Loading />

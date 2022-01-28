@@ -72,8 +72,6 @@ const SingleProduct = () => {
   // console.log(imageArray);
   return (
     <main className="single-product-page">
-      <Navbar />
-
       <div className="single-product-container">
         <div className="product-image-slide">
           {/* {imageArray.map((image) => {

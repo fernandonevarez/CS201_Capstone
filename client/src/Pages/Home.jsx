@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../Components/Navbar";
 import "../styles/pages/Home.scss";
 
 // import axios
@@ -131,8 +130,6 @@ const Home = () => {
   
   return (
     <main className="home">
-      <Navbar />
-
       {(user.dev.skipAuth || Object.keys(user.details).length) && (
         <div className="favorited">
           <Title name="Favorited" />

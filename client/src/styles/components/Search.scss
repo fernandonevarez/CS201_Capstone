@@ -1,36 +1,73 @@
 @use "../util/colors.scss" as *;
 @use "../util/mixins.scss" as *;
 
-.search {
+.search-conatiner {
   flex-grow: 2;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100 !important;
+  background: $white;
 
-  label {
+  .row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    height: 100%;
-    border: solid $blue 2px;
-    border-radius: 20px;
-    padding: 0 0.5rem;
 
-    input {
-      flex-grow: 2;
+    .close-search {
+      width: 2rem;
+      height: 2rem;
+    }
+    label {
+      width: 80vw;
+      display: flex;
+      align-items: center;
       height: 100%;
+      border: solid $blue 2px;
       border-radius: 20px;
-      font-family: "Raleway";
-      color: $blue;
+      padding: 0 0.5rem;
 
-      &::placeholder {
+      input {
+        flex-grow: 2;
+        height: 100%;
+        border-radius: 20px;
+        font-family: "Raleway";
         color: $blue;
+
+        &::placeholder {
+          color: $blue;
+        }
+      }
+
+      .search-icon {
+        @include box(2rem);
+        padding: 0.25rem;
+
+        svg {
+          @include box;
+        }
       }
     }
 
-    .search-icon {
-      @include box(2rem);
-      padding: 0.25rem;
-
-      svg {
-        @include box;
-      }
-    }
+    
   }
+  .search-suggestions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: scroll;
+    height: 100vh;
+    .search-suggestions-item {
+      margin: 10px 0;
+      font-size: 18px;
+      font-style: bold;
+    }
+
+
+  }
+
+ 
+
 }

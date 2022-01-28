@@ -58,6 +58,10 @@ const SAMPLE_DATA_REMOVE_LATER = [
 ];
 
 const Menu = ({ toggleMenu }) => {
+
+
+
+  
   const [display, setDisplay] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [history, setHistory] = useState([]);
 

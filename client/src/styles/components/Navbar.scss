@@ -73,21 +73,7 @@ nav {
         }
     }
 
-    .search {
-        display: flex;
-        position: fixed;
-        z-index: 100;
-        flex-direction: column;
-        width: 100vw;
-        background: white;
-        height: 100vh;
-        label {
-            @include center;
-            font-size: 0.85rem;
-            color: hsl(196, 37%, 48%);
-            font-weight: 500;
-        }
-    }
+    
 
     .menu {
         display: none;

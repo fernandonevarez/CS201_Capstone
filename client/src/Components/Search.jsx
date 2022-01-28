@@ -59,7 +59,7 @@ const Search = ({setShowNavbar, showNavbar, toggleMenu, showMenu}) => {
 
         return (
           <div className="search-suggestions-item" key={index}>
-            <Link to={`/products/${id}`}>{name}</Link>
+            <Link to={`/products/${id}`} onClick={() => setShowNavbar(!showNavbar)}>{name}</Link>
           </div>
         );
       });

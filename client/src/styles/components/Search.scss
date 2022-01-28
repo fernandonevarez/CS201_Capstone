@@ -60,9 +60,10 @@
     overflow-y: scroll;
     height: 100vh;
     .search-suggestions-item {
-      margin: 10px 0;
+      margin: .8rem 0 .8rem .5rem;
       font-size: 18px;
-      font-style: bold;
+      // font-style: bold;
+      font-weight: bold;
     }
 
 

@@ -1,33 +1,92 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useReducer } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import userReducer from "../reducers/userReducer";
 
+// Temp Images
+import duckImg from "../assets/images/temp/duck.jpg";
+import catImg from "../assets/images/temp/cat.png";
+import susImg from "../assets/images/temp/sus.png";
+import tempImg from "../assets/images/temp/temp.jpg";
+import temp2Img from "../assets/images/temp/temp2.jpg";
+import temp3Img from "../assets/images/temp/temp3.jpg";
+
+// FAKE DATA USE FOR TESTING
+const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
+  {
+    name: "Duck",
+    price: 10.01,
+    image: duckImg,
+    favorited: true,
+    id: 0,
+  },
+  {
+    name: "Cat",
+    price: 22.22,
+    image: catImg,
+    favorited: true,
+    id: 1,
+  },
+  {
+    name: "Amongus Sus Imposter?",
+    price: 0.5,
+    image: susImg,
+    favorited: true,
+    id: 2,
+  },
+  {
+    name: "Temp",
+    price: 10.01,
+    image: tempImg,
+    favorited: true,
+    id: 3,
+  },
+  {
+    name: "Temp2",
+    price: 10.01,
+    image: temp2Img,
+    favorited: true,
+    id: 4,
+  },
+  {
+    name: "Temp3",
+    price: 10.01,
+    image: temp3Img,
+    favorited: true,
+    id: 5,
+  },
+];
+
+// ACTUAL CONTEXT
 const UserContext = createContext(null);
 
 const useUser = () => useContext(UserContext);
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
+  const [user, dispatch] = useReducer(userReducer, {
     details: {},
     dev: {
       skipAuth: true,
     },
+    products: {
+      favorites: SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA,
+      cart: []
+    },
   });
 
-  const [userMetadata, setUserMetadata] = useState(null);
 
-  const {
-    user: userInformation,
-    webAuth,
-    isAuthenticated,
-    getAccessTokenSilently,
-    getIdTokenClaims,
-  } = useAuth0();
+  // const [userMetadata, setUserMetadata] = useState(null);
+
+  // const {
+  //   user: userInformation,
+  //   webAuth,
+  //   isAuthenticated,
+  //   getAccessTokenSilently,
+  //   getIdTokenClaims,
+  // } = useAuth0();
 
   // console.log(getAccessTokenSilently());
-
-  
 
   //   if (isAuthenticated) {
       // const getUserMetadata = async () => {
@@ -86,14 +145,6 @@ const UserProvider = ({ children }) => {
   //     getUserMetadata();
   //   }
 
-  const loginUser = (newUser) => {
-    setUser({ ...user, details: newUser });
-  };
-
-  const logoutUser = () => {
-    setUser({ ...user, details: {} });
-  };
-
   document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWQwZWM3ODI5MmYzMjgwZDY2NzE1YTciLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkZlcm5hbmRvIiwibWlkZGxlTmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0MTc4MzM5OSwiZXhwIjoxNjQ0Mzc1Mzk5fQ.nyRWJgHzwCCrXx4tsZl7jMLkAOZMaDkXzdsNUEs8PQg`;
 
   const userCookies = document.cookie
@@ -110,7 +161,7 @@ const UserProvider = ({ children }) => {
   //   console.log(userCookies.token);
 
   return (
-    <UserContext.Provider value={{ user, loginUser, logoutUser, userCookies }}>
+    <UserContext.Provider value={{ user, dispatch, userCookies }}>
       {children}
     </UserContext.Provider>
   );

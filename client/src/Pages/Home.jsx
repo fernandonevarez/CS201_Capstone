@@ -8,8 +8,8 @@ import LoginForm from "../Components/LoginForm";
 import Register from "../Components/Register";
 // import LoginButton from "../Components/LoginButton";
 // import LogoutButton from "../Components/LogoutButton";
-import Title from "../Components/home/Title";
-import Carousel from "../Components/home/carousel/Carousel";
+import Title from "../Components/products/Title";
+import Carousel from "../Components/products/carousel/Carousel";
 
 // Temp Images
 import duckImg from "../assets/images/temp/duck.jpg";
@@ -21,7 +21,7 @@ import temp3Img from "../assets/images/temp/temp3.jpg";
 
 import Profile from "../Components/Profile";
 import { useUser } from "../contexts/useUser";
-import Slideshow from "../Components/home/slideshow/Slideshow";
+import Slideshow from "../Components/products/slideshow/Slideshow";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -128,7 +128,7 @@ const Home = () => {
   useEffect(() => { 
     // f();
   }, []);
-
+  
   return (
     <main className="home">
       <Navbar />
@@ -136,7 +136,7 @@ const Home = () => {
       {(user.dev.skipAuth || Object.keys(user.details).length) && (
         <div className="favorited">
           <Title name="Favorited" />
-          <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+          <Carousel items={user.products.favorites} />
         </div>
       )}
       <div className="popular">

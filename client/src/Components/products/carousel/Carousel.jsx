@@ -9,6 +9,8 @@ const SLIDER_FORCE = 100;
 const SLIDER_EASING_FUNCTION = num => 1 - ((1 - num) ** 3);
 
 const Carousel = ({items}) => {
+    
+    
     const [display, setDisplay] = useState(items);
     const [slider, setSlider] = useState({start: null, end: null, move: null})
     const [scroll, setScroll] = useState(0)
@@ -16,6 +18,11 @@ const Carousel = ({items}) => {
     const [next, setNext] = useState(null);
     const [cartWidth, setCartWidth] = useState(0);
 
+    useEffect(() => {
+      setDisplay(items)
+      setScroll(s => s + 1)
+    }, [items]);
+    
     useEffect(() => {
         setCartWidth(window.innerWidth / 100 * 60)
         const resize = () =>

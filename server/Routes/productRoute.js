@@ -13,7 +13,7 @@ const authenticationMiddleware = require("../middleware/auth")
 
 const productRouter = express.Router();
 
-productRouter.route("/").get(authenticationMiddleware, getAllProduct);
+productRouter.route("/").get(getAllProduct);
 productRouter.route("/").post(createProduct);
 
 productRouter.route("/:id").get(getSingleProduct);

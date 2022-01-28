@@ -1,22 +1,33 @@
-import React, { useState, useEffect } from "react";
 
-import { FaSearch } from "react-icons/fa";
-import axios from "axios";
-import { Link } from "react-router-dom";
 
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWQwZWM3ODI5MmYzMjgwZDY2NzE1YTciLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkZlcm5hbmRvIiwibWlkZGxlTmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0MTc4MzM5OSwiZXhwIjoxNjQ0Mzc1Mzk5fQ.nyRWJgHzwCCrXx4tsZl7jMLkAOZMaDkXzdsNUEs8PQg`;
 
-const Search = () => {
+import React, {useState, useEffect} from 'react';
+
+import { Link } from 'react-router-dom';
+
+import { FaSearch, FaTimes } from 'react-icons/fa';
+
+import axios from 'axios';
+
+
+import "../styles/components/Search.scss";
+import Menu from './Menu';
+
+
+
+const token = ''
+
+const Search = ({setShowNavbar, showNavbar, toggleMenu, showMenu}) => {
+
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState("");
-
-  const [showNavBar, setShowNavBar] = useState(false);
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const getProducts = async () => {
+    // console.log("ping pong")
     const response = await axios.get("http://localhost:3000/api/v1/products", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -24,18 +35,20 @@ const Search = () => {
       },
     });
 
-    // console.log(response.data.products);
+    // console.log("response", response.data.products);
     setProducts(response.data.products);
   };
 
-  // this area needs to be fixed For some reason the search is not working
 
   let filteredProducts = () => {
     return products
       .filter((product) => {
         if (query === "") {
+
+          // chnage it in the future to where only the most popular products are shown
+
           return product;
-        } else if (product.name.includes(query.toLowerCase())) {
+        } else if (product.name.toLowerCase().startsWith(query.toLowerCase())) {
           return product;
         }
       })
@@ -46,35 +59,44 @@ const Search = () => {
 
         return (
           <div className="search-suggestions-item" key={index}>
-            <Link to={`/products/${id}`}>{name}</Link>
+            <Link to={`/products/${id}`} onClick={() => setShowNavbar(!showNavbar)}>{name}</Link>
           </div>
         );
       });
   };
 
   return (
-    <div className="search">
+    <div className="search-conatiner">
+      <div className="row">
+
       <label htmlFor="search">
         <input
           type="text"
           name="search"
           id="search"
-          onClick={() => setShowNavBar(true)}
+          
           onChange={(e) => {
             setQuery(e.target.value);
-            setShowNavBar(true);
+            // setShowNavBar(true);
             filteredProducts();
           }}
           placeholder="Search Items Here"
           autoCorrect="false"
         />
         <div className="search-icon">
-          <FaSearch />
+          <FaSearch onClick={() => setShowNavbar(!showNavbar)}/>
         </div>
+        
       </label>
-      <div className="search-suggestions">
-        {showNavBar ? filteredProducts() : null}
+      <FaTimes className="close-search" onClick={() => setShowNavbar(!showNavbar)}/>
       </div>
+
+      
+
+      <div className="search-suggestions">
+        {showNavbar ? console.log("not showing data") : filteredProducts()}
+      </div>
+
     </div>
   );
 };

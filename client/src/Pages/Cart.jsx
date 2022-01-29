@@ -39,7 +39,6 @@ const Cart = () => {
 
   return (
     <main className="cart-page">
-      <Navbar />
       <div className="cart-page-container">
         {/* actual cart sect */}
         <section className="cart-div">

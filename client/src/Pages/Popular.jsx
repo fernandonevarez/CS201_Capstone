@@ -45,7 +45,6 @@ const Popular = () => {
 
   return (
     <div className="popluar-container">
-      <Navbar />
       <div className="popular-content"></div>
     </div>
   );

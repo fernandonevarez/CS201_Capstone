@@ -5,7 +5,6 @@ import "../styles/pages/Error.scss";
 const Error = () => {
   return (
     <>
-      <Navbar />
       <div className="error-container">
         <h1>Uh Oh!</h1>
         <p>This page seems to not exist</p>

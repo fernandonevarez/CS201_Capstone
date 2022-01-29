@@ -10,11 +10,14 @@ import Popular from "./Pages/Popular";
 import ToysAndEntertainment from "./Pages/ToysAndEntertainment";
 import TermsOfUse from "./Pages/Docs/TermsOfUse";
 import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
+import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />

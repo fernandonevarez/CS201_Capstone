@@ -10,7 +10,6 @@ const ToysAndEntertainment = () => {
 
   return (
     <div className="page-conatiner">
-      <Navbar />
       <h1>Toys and Entertainment</h1>
       </div>
   );

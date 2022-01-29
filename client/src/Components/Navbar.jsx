@@ -10,7 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import "../styles/components/Navbar.scss";
 import Register from "./Register";
 import Signup from "./Signin";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 
 import NewProducts from "../Pages/NewProducts";
@@ -18,32 +18,32 @@ import NewProducts from "../Pages/NewProducts";
 import axios from "axios";
 import Menu from "./Menu";
 import Search from "./Search";
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`
-
+import { useUser } from "../contexts/useUser";
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`;
 
 // const SAMPLE_DATA_REMOVE_LATER = [
 //   {
 //     name: "Popular",
 //     id: 1,
 //     children: [],
-   
+
 //   },
 //   {
 //     name: "new",
 //     id: 2,
 //     children: [],
- 
+
 //   },
 //   {
 //     name: "Toys & Entertainment",
 //     id: 3,
-   
+
 //     children: [
 //       {
 //         name: "Toys",
 //         // make an id with the current time in milliseconds
-//         id: 1, 
-      
+//         id: 1,
+
 //         children: [
 //           {
 //             target: "For Kids",
@@ -68,11 +68,13 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4
 // ];
 
 const Navbar = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  // const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   const [showMenu, setShowMenu] = useState(false);
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
+  const { user, dispatch } = useUser();
 
   // const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
 
@@ -97,7 +99,6 @@ const Navbar = () => {
   // };
 
   const toggleMenu = () => {
-    
     if (showMenu) {
       setShowMenu(false);
 
@@ -134,54 +135,52 @@ const Navbar = () => {
 
   const [showNavbar, setShowNavbar] = useState(true);
 
-  
+  console.log("user", user);
 
   return (
     <nav>
       {showNavbar ? (
         // show navbar
         <div className="bar">
-        <div className="top">
-          <div className="title">
-            <Link to="/" className="company-name">
-              MSB
-            </Link>
-          </div>
+          <div className="top">
+            <div className="title">
+              <Link to="/" className="company-name">
+                MSB
+              </Link>
+            </div>
 
+            <div className="search">
+              <label htmlFor="search">
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  placeholder="Search Items Here"
+                  autoCorrect="false"
+                  onClick={() => setShowNavbar(!showNavbar)}
+                />
+                <div className="search-icon">
+                  <FaSearch />
+                </div>
+              </label>
+            </div>
 
-          <div className="search">
-            <label htmlFor="search">
-              <input
-                type="text"
-                name="search"
-                id="search"
-                placeholder="Search Items Here"
-                autoCorrect="false"
-                onClick={() => setShowNavbar(!showNavbar)}
-              />
-              <div className="search-icon">
-                <FaSearch />
-              </div>
-            </label>
+            {/* <Search /> */}
+            {/* console.log("ping"); */}
           </div>
-
-          {/* <Search /> */}
-          {/* console.log("ping"); */}
-          
-        </div>
-        <div className="bottom">
-          <div className="hamburger-icon" onClick={() => toggleMenu()}>
-            <RiMenu3Fill />
-          </div>
-          <div className="side">
-            {/* <div
+          <div className="bottom">
+            <div className="hamburger-icon" onClick={() => toggleMenu()}>
+              <RiMenu3Fill />
+            </div>
+            <div className="side">
+              {/* <div
               className="button"
               onClick={() => setPopup((pop) => ({ ...pop, open: true }))}
             >
               Sign In
             </div> */}
 
-            {isAuthenticated ? (
+              {/* {isAuthenticated ? (
               <div className="profile-icon">
                 <CgProfile
                   onClick={() => setShowProfileDropdown(!showProfileDropdown)}
@@ -191,51 +190,69 @@ const Navbar = () => {
               <button className="button" onClick={() => loginWithRedirect()}>
                 Log In
               </button>
-            )}
+            )} */}
 
-            <div className="cart-icon">
-              <Link to="/cart">
-                <BsCart4 />
-              </Link>
-            </div>
+              {user.details ? (
+                <div className="profile-icon">
+                  <CgProfile
+                    onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                  />
+                </div>
+              ) : (
+                <div
+                  className="button"
+                  onClick={() => setPopup((pop) => ({ ...pop, open: true }))}
+                >
+                  Sign In
+                </div>
+              )}
 
-            {showProfileDropdown && (
-              <div className="profile-dropdown">
-                <ul>
-                  <li>
-                    <Link to="/profile">Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/orders">Orders</Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() =>
-                        logout({ returnTo: window.location.origin })
-                      }
-                    >
-                      Log Out
-                    </button>
-                  </li>
-                  <li></li>
-                </ul>
+              <div className="cart-icon">
+                <Link to="/cart">
+                  <BsCart4 />
+                </Link>
               </div>
-            )}
+
+              {showProfileDropdown && (
+                <div className="profile-dropdown">
+                  <ul>
+                    <li>
+                      <Link to="/profile">Profile</Link>
+                    </li>
+                    <li>
+                      <Link to="/orders">Orders</Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => {
+                          dispatch({ type: "logout" });
+                          console.log("logout");
+                          console.log(user);
+                        }}
+                      >
+                        Log Out
+                      </button>
+                    </li>
+                    <li></li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-
-      ): (
+      ) : (
         // just show the search bar and the pop content
-        <Search showNavbar={showNavbar} setShowNavbar={setShowNavbar} toggleMenu={toggleMenu} showMenu={showMenu}/>
+        <Search
+          showNavbar={showNavbar}
+          setShowNavbar={setShowNavbar}
+          toggleMenu={toggleMenu}
+          showMenu={showMenu}
+        />
       )}
 
-
-     <div className={`menu ${showMenu ? "show" : ""}`}>
-        
-        <Menu toggleMenu={toggleMenu}/>
+      <div className={`menu ${showMenu ? "show" : ""}`}>
+        <Menu toggleMenu={toggleMenu} />
       </div>
-
 
       {popup.open && popup.content}
     </nav>

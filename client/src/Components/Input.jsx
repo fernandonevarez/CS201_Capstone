@@ -1,6 +1,8 @@
+
 import "../styles/components/Input.scss"
 
 const Input = ({name, title, type, icon, placeholder, error, ...other}) => {
+    
     return (
         <div className={`input ${name}`}>
             <div className="label"></div>

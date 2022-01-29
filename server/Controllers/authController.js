@@ -10,7 +10,20 @@ const register = async (req, res) => {
   const token = newUser.createJWT();
   res
     .status(StatusCodes.CREATED)
-    .json({ user: newUser.name, userID: newUser._id, token });
+    .json(
+      {
+        user: {
+          name: newUser.name,
+          cart: [],
+          favorite: [],
+          // will be a url link to the user profile picture
+          profile_picture: "",
+
+        },
+        userID: newUser._id,
+        token
+      }
+    );
 };
 
 const login = async (req, res) => {

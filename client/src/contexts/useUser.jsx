@@ -65,7 +65,9 @@ const useUser = () => useContext(UserContext);
 
 const UserProvider = ({ children }) => {
   const [user, dispatch] = useReducer(userReducer, {
-    details: {},
+    details: {
+      name: "Admin"
+    },
     dev: {
       skipAuth: true,
     },

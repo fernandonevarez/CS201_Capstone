@@ -86,15 +86,15 @@ const Signin = ({ close, change }) => {
 
           <div className="forgot-password">Forgot Your Password?</div>
 
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
 
-          <div className="sep">
+          {/* <div className="sep">
             <div className="dash"></div>
             <span>or</span>
             <div className="dash"></div>
-          </div>
+          </div> */}
 
-          <div className="with">
+          {/* <div className="with">
             <div className="google" onClick={() => provider("google")}>
               <FaGoogle />
               <span>Contuine with Google</span>
@@ -107,7 +107,7 @@ const Signin = ({ close, change }) => {
               <FaApple />
               <span>Contuine with Apple</span>
             </div>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

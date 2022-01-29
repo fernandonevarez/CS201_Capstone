@@ -18,7 +18,7 @@
 
 
     .content {
-        @include box(90vw, 90vh);
+        @include box(90vw, 60vh);
         max-height: 550px;
         position: absolute;
         z-index: 99;

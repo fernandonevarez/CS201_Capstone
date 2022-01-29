@@ -2,18 +2,22 @@ import React, { useState, useEffect } from "react";
 
 // require("dotenv").config();
 
+import { useUser } from "../contexts/useUser";
+
 import axios from "axios";
 import Input from "./Input";
 import {
   FaApple,
   FaEnvelope,
   FaEye,
+  FaEyeSlash,
   FaFacebookF,
   FaGoogle,
   FaTimes,
 } from "react-icons/fa";
 
 import "../styles/components/Register.scss";
+// import { useUser } from "../contexts/useUser";
 
 const token = localStorage.getItem("userToken");
 
@@ -22,6 +26,8 @@ const Register = ({ close, change }) => {
 
   const [newPassword, setNewPassword] = useState("");
 
+  const { user, dispatch } = useUser();
+
   async function registerUser(
     email,
     password,
@@ -29,9 +35,36 @@ const Register = ({ close, change }) => {
     firstName,
     lastName
   ) {
-    if (password === passwordConfirm) {
+    if (password == passwordConfirm) {
       console.log("passwords match");
       setNewPassword(passwordConfirm);
+
+      // try {
+        const response = await axios.post(
+          "http://localhost:3000/api/v1/auth/register",
+
+          {
+            name: {
+              firstName: firstName,
+              lastName: lastName,
+            },
+            email: email,
+            password: newPassword,
+          },
+          {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001",
+          }
+        );
+        console.log(response.data);
+
+        dispatch({ type: "login", payload: response.data });
+
+        console.log(user);
+      // } catch (error) {
+      //   console.log(error);
+      // }
+
       // const response = await axios.post(
       //   `https://dev-3osqrzua.us.auth0.com/dbconnections/signup`,
       //   {
@@ -45,29 +78,9 @@ const Register = ({ close, change }) => {
       //     name: `${firstName} ${lastName}`,
       //   }
       // );
-      // console.log(response);
     } else {
       console.log("passwords do not match");
     }
-
-    // const response = await axios.post(
-    //   "http://localhost:3000/api/v1/register",
-    //   {
-    //     // DATA GOES HERE
-    //     name: {
-    //       firstName: "",
-    //       lastName: "",
-    //     },
-    //     username: "",
-    //     email: "",
-    //     password: "",
-    //   },
-    //   {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //     // "Access-Control-Allow-Origin": "http://localhost:3001",
-    //   }
-    // );
   }
 
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
@@ -96,6 +109,7 @@ const Register = ({ close, change }) => {
       setError("Please fill out all fields");
     } else {
       registerUser(email, password, passwordConfirm, firstname, lastname);
+      // console.log(email, password, passwordConfirm, firstname, lastname)
     }
 
     // setError("some error triggered when form validation is failed")
@@ -109,6 +123,8 @@ const Register = ({ close, change }) => {
   const provider = (name) => {
     // Do whatever you need to do with the providers
   };
+
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="register-popup">
@@ -134,13 +150,33 @@ const Register = ({ close, change }) => {
               placeholder="example@gmail.com"
               icon={<FaEnvelope />}
             />
-            <Input name="password" type="password" icon={<FaEye />} />
-            <Input name="confirm" type="password" icon={<FaEye />} />
+            <Input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              icon={
+                showPassword ? (
+                  <FaEye onClick={() => setShowPassword(!showPassword)} />
+                ) : (
+                  <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
+                )
+              }
+            />
+            <Input
+              name="confirm"
+              type={showPassword ? "text" : "password"}
+              icon={
+                showPassword ? (
+                  <FaEye onClick={() => setShowPassword(!showPassword)} />
+                ) : (
+                  <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
+                )
+              }
+            />
           </div>
 
-          <button type="submit">Submit</button>
+          <button type="submit">Create an Account</button>
 
-          <div className="sep">
+          {/* <div className="sep">
             <div className="dash"></div>
             <span>or</span>
             <div className="dash"></div>
@@ -159,49 +195,12 @@ const Register = ({ close, change }) => {
               <FaApple />
               <span>Contuine with Apple</span>
             </div>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
   );
 
-  // return (
-  //   // user Register form
-  //   <div>
-  //     <h1>Create an Acount</h1>
-  //     <p>Registration is easy.</p>
-  //     <form>
-  //       <label>
-  //         First Name:
-  //         <input type="text" />
-  //       </label>
-  //       <label>
-  //         Last Name:
-  //         <input type="text" />
-  //       </label>
-  //       <label>
-  //         Email:
-  //         <input type="text" />
-  //       </label>
-  //       <label>
-  //         Password:
-  //         <input type="text" />
-  //       </label>
-  //       <label>
-  //         Comfirm Password:
-  //         <input type="text" />
-  //       </label>
-  //       <input
-  //         onSubmit={(e) => {
-  //           e.preventDefault();
-  //           registerUser();
-  //         }}
-  //         type="submit"
-  //         value="Submit"
-  //       />
-  //     </form>
-  //   </div>
-  // );
 };
 
 export default Register;

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { useUser } from "../contexts/useUser";
 
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWUzMDc1Y2IyODkxNGRmZjJjMTZkYWUiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQyMjY4NTUxLCJleHAiOjE2NDQ4NjA1NTF9.CGunPBk6voT_LHSEL1ZEZKSogjt7QoJievoi65uV7jk";
@@ -18,9 +18,9 @@ const SingleProduct = () => {
   let { id } = useParams();
 
   const { userCookies } = useUser();
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
 
-  console.log("user", user);
+  // console.log("user", user);
 
   console.log("id", id);
 
@@ -50,7 +50,9 @@ const SingleProduct = () => {
 
     const { _id: productID } = product;
 
-    const userID = user.sub.split("|")[1];
+    // const userID = user.sub.split("|")[1];
+
+    const userID = userCookies.userID;
 
     const response = await axios.post(
       `http://localhost:3000/api/v1/user/${userID}/favorites/${productID}`,

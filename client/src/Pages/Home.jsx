@@ -23,7 +23,7 @@ import Profile from "../Components/Profile";
 import { useUser } from "../contexts/useUser";
 import Slideshow from "../Components/products/slideshow/Slideshow";
 
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
@@ -78,7 +78,7 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
   const { user } = useUser();
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  // const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   // async function getProducts() {
   //   const response = await axios.get("http://localhost:3000/api/v1/products", {
@@ -107,23 +107,23 @@ const Home = () => {
     // console.log(imageArray[0]);
   };
 
-  const f = async () => {
-    // {
-    //   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-    //   scope: "read:current_user",
-    // }
-    const token = await getAccessTokenSilently({
-      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-      scope: "read:current_user",
-    });
-    console.log(token)
-    const {data, error} = await axios.get("http://localhost:3000/api/v1/products", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(data || error);
-  };
+  // const f = async () => {
+  //   // {
+  //   //   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  //   //   scope: "read:current_user",
+  //   // }
+  //   const token = await getAccessTokenSilently({
+  //     audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  //     scope: "read:current_user",
+  //   });
+  //   console.log(token)
+  //   const {data, error} = await axios.get("http://localhost:3000/api/v1/products", {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  //   console.log(data || error);
+  // };
 
   useEffect(() => { 
     // f();

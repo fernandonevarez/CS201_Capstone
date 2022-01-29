@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { useUser } from "../contexts/useUser";
@@ -15,7 +15,7 @@ const cart = [
 const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWQwZWM3ODI5MmYzMjgwZDY2NzE1YTciLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkZlcm5hbmRvIiwibWlkZGxlTmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0MTc4MzM5OSwiZXhwIjoxNjQ0Mzc1Mzk5fQ.nyRWJgHzwCCrXx4tsZl7jMLkAOZMaDkXzdsNUEs8PQg`;
 
 const Cart = () => {
-  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
   const { userCookies } = useUser();
 
@@ -35,7 +35,7 @@ const Cart = () => {
     window.location = stripeURL;
   }
 
-  console.log(`User Auth Status: ${isAuthenticated}`);
+  // console.log(`User Auth Status: ${isAuthenticated}`);
 
   return (
     <main className="cart-page">

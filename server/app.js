@@ -9,7 +9,7 @@ const connectDB = require("./database/connect");
 
 // middleware
 const errorHandlerMiddleware = require("./middleware/error-handler");
-// const authenticationMiddleware = require("./middleware/auth");
+const authenticationMiddleware = require("./middleware/auth");
 
 // controllers
 // const stripeController = require("./Controllers/SpriteController");
@@ -82,11 +82,13 @@ const startServer = async () => {
       // cors prevents CORS errors
       // .use(cors())
       .use(
-        cors({
-          origin: ["http://localhost:3001", "http://localhost:3001/cart"],
-          credentials: true, //access-control-allow-credentials:true
-          optionSuccessStatus: 200,
-        })
+        cors(
+        //   {
+        //   origin: ["http://localhost:3001", "http://localhost:3001/cart"],
+        //   credentials: true, //access-control-allow-credentials:true
+        //   optionSuccessStatus: 200,
+        // }
+        )
       )
       // xss (user sanitization) - cleans up user inputs to make sure they are safe.
       .use(xss())
@@ -95,8 +97,8 @@ const startServer = async () => {
 
       .use("/api/v1/auth", authRouter)
       // I commented the authenticationMiddleware so development is easier on my (Ethan's) part
-      // .use("/api/v1/products", authenticationMiddleware, productRouter)
-      .use("/api/v1/products", productRouter)
+      .use("/api/v1/products", authenticationMiddleware, productRouter)
+      // .use("/api/v1/products", productRouter)
       .use("/api/v1/user", userRouter)
       .post("/api/v1/create-checkout-session", async (req, res) => {
         try {

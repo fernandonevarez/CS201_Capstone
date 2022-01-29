@@ -2,184 +2,209 @@
 @use "../util/mixins.scss" as *;
 
 nav {
-    color: $blue;
-    font-family: "Raleway";
+  color: $blue;
+  font-family: "Raleway";
 
-    .bar {
-        box-shadow: adjust-color($black, $alpha: -0.75) 0px 4px 4px;
-        padding: 0.5rem;
+  .bar {
+    box-shadow: adjust-color($black, $alpha: -0.75) 0px 4px 4px;
+    padding: 0.5rem;
+
+    .top {
+      display: flex;
+      gap: 1rem;
+
+      .title {
+        font-family: "Playfair Display";
+        font-size: 1.25rem;
+        font-variation-settings: "wght" 650;
+      }
+      label {
+        width: 80vw;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        border: solid $blue 2px;
+        border-radius: 20px;
+        padding: 0 0.5rem;
+
+        input {
+          flex-grow: 2;
+          height: 100%;
+          border-radius: 20px;
+          font-family: "Raleway";
+          color: $blue;
+
+          &::placeholder {
+            color: $blue;
+          }
+        }
+
+        .search-icon {
+          @include box(2rem);
+          padding: 0.25rem;
+
+          svg {
+            @include box;
+          }
+        }
+      }
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem;
+
+      .hamburger-icon {
+        @include box(1.75rem);
+
+        svg {
+          @include box;
+        }
+      }
+
+      .button {
+        @include center;
+        font-size: 0.85rem;
+        color: $blue;
+        font-weight: 500;
+      }
+
+      .side {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .cart-icon {
+          @include box(1.75rem);
+
+          svg {
+            @include box;
+          }
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.85rem;
+          color: hsl(196, 37%, 48%);
+          font-weight: 500;
+        }
+
+        .profile-icon {
+          @include box(1.75rem);
+
+          svg {
+            @include box;
+          }
+        }
+
+        .profile-dropdown {
+          position: absolute;
+          top: 5rem;
+          right: 4rem;
+
+          height: 15rem;
+          background: white;
+          z-index: 10;
+          width: 10rem;
+
+          ul {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            li {
+              // background: white;
+              .dropdown-item {
+                background-color: white;
+                font-size: 24px;
+                text-decoration: none;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .menu {
+    display: none;
+    width: 100%;
+
+    &.show {
+      display: block;
+      position: fixed;
+      bottom: 0;
+      z-index: 99;
+
+      .hide {
+        @include box(100vw, 100vh);
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: adjust-color($black, $alpha: -0.75);
+      }
+
+      .content {
+        box-shadow: adjust-color($black, $alpha: -0.75) 4px 0px 4px;
+        position: relative;
+        height: 100vh;
+        width: 80%;
+        background-color: $white;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
 
         .top {
-            display: flex;
-            gap: 1rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
 
-            .title {
-                font-family: "Playfair Display";
-                font-size: 1.25rem;
-                font-variation-settings: "wght" 650;
+          h2 {
+            font-family: "Playfair Display";
+            font-size: 1.5rem;
+          }
+
+          .exit,
+          .back {
+            @include box(1.25rem);
+
+            svg {
+              @include box;
             }
-            label {
-                width: 80vw;
-                display: flex;
-                align-items: center;
-                height: 100%;
-                border: solid $blue 2px;
-                border-radius: 20px;
-                padding: 0 0.5rem;
-          
-                input {
-                  flex-grow: 2;
-                  height: 100%;
-                  border-radius: 20px;
-                  font-family: "Raleway";
-                  color: $blue;
-          
-                  &::placeholder {
-                    color: $blue;
-                  }
-                }
-          
-                .search-icon {
-                  @include box(2rem);
-                  padding: 0.25rem;
-          
-                  svg {
-                    @include box;
-                  }
-                }
-              }
+          }
         }
 
-        .bottom {
+        ul {
+          flex-grow: 2;
+          overflow: scroll;
+          padding: 0.75rem 0.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+
+          li {
             display: flex;
             justify-content: space-between;
-            padding: 0.5rem;
+            align-items: center;
+            font-size: 18px;
+            font-family: "Raleway";
+            // .category-link {
+            // text-align: center;
+            // }
 
-            .hamburger-icon {
-                @include box(1.75rem);
-
-                svg {
-                    @include box;
-                }
+            h3 {
+              flex-grow: 2;
             }
 
-            .button {
-                @include center;
-                font-size: 0.85rem;
-                color: $blue;
-                font-weight: 500;
+            .continue {
+              @include center;
             }
-
-            .side {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-
-                .cart-icon {
-                    @include box(1.75rem);
-
-                    svg {
-                        @include box;
-                    }
-                }
-
-                button {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 0.85rem;
-                    color: hsl(196, 37%, 48%);
-                    font-weight: 500;
-                }
-
-                .profile-icon {
-                    @include box(1.75rem);
-
-                    svg {
-                        @include box;
-                    }
-                }
-            }
+          }
         }
+      }
     }
-
-    
-
-    .menu {
-        display: none;
-        width: 100%;
-
-        &.show {
-            display: block;
-            position: fixed;
-            bottom: 0;
-            z-index: 99;
-
-            .hide {
-                @include box(100vw, 100vh);
-                position: absolute;
-                top: 0;
-                left: 0;
-                background-color: adjust-color($black, $alpha: -0.75);
-            }
-
-            .content {
-                box-shadow: adjust-color($black, $alpha: -0.75) 4px 0px 4px;
-                position: relative;
-                height: 100vh;
-                width: 80%;
-                background-color: $white;
-                padding: 1rem;
-                display: flex;
-                flex-direction: column;
-
-                .top {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-
-                    h2 {
-                        font-family: "Playfair Display";
-                        font-size: 1.5rem;
-                    }
-
-                    .exit, .back {
-                        @include box(1.25rem);
-
-                        svg {
-                            @include box;
-                        }
-                    }
-                }
-
-                ul {
-                    flex-grow: 2;
-                    overflow: scroll;
-                    padding: .75rem .25rem;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1rem;
-
-                    li {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        font-size: 18px;
-                        font-family: "Raleway";
-                        // .category-link {
-                            // text-align: center;
-                        // }
-    
-                        h3 {
-                            flex-grow: 2;
-                        }
-    
-                        .continue {
-                            @include center;
-                        }
-                    }
-                }
-            }
-        }
-    }
+  }
 }

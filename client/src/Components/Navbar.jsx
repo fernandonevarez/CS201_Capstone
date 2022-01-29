@@ -217,13 +217,13 @@ const Navbar = () => {
                 <div className="profile-dropdown">
                   <ul>
                     <li>
-                      <Link to="/profile">Profile</Link>
+                      <Link className="dropdown-item" to="/profile">Profile</Link>
                     </li>
                     <li>
-                      <Link to="/orders">Orders</Link>
+                      <Link className="dropdown-item" to="/orders">Orders</Link>
                     </li>
                     <li>
-                      <button
+                      <button className="dropdown-item"
                         onClick={() => {
                           dispatch({ type: "logout" });
                           console.log("logout");

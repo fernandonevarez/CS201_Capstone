@@ -16,7 +16,7 @@ const SAMPLE_DATA_REMOVE_LATER = [
     children: [],
   },
   {
-    name: "new",
+    name: "New",
     id: 2,
     children: [],
   },
@@ -95,8 +95,10 @@ const Menu = ({ toggleMenu }) => {
         <ul className="navigate">
           {display.map(({name, id, children}) => <li key={id}>
             <Link to={`/products/catagories/${name}`} onClick={() => {
-                contuine(children)
-
+                if (children.length)
+                  contuine(children)
+                else 
+                  exit();
               }}>
               <h3>{name}</h3>
             </Link>

@@ -1,5 +1,5 @@
 import SmallDeco from "../decoration/SmallDeco"
-import "../../styles/components/home/Title.scss";
+import "../../styles/components/products/Title.scss";
 
 const Title = ({name}) => {
     return (

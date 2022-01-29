@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import Price from "../Price";
-import "../../../styles/components/home/carousel/Seat.scss";
+import React from "react";
+import "../../../styles/components/products/carousel/Seat.scss";
 import Template from "../Template";
 
 const Seat = (props) => {

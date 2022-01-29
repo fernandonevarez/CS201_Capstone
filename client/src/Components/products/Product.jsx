@@ -1,7 +1,7 @@
 import Template from "./Template";
 
 const Product = (props) => {
-    <Template {...props}/>
+    return <Template {...props}/>
 }
 
 export default Product;

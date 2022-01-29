@@ -4,6 +4,8 @@
 nav {
     color: $blue;
     font-family: "Raleway";
+    position: relative;
+    z-index: 99;
 
     .bar {
         box-shadow: adjust-color($black, $alpha: -0.75) 0px 4px 4px;

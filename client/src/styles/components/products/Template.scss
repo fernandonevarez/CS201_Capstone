@@ -1,0 +1,63 @@
+@use "../../util/colors.scss" as *;
+@use "../../util/mixins.scss" as *;
+
+.product {
+    width: 60vw;
+    box-shadow: 0px 4px 4px adjust-color($black, $alpha: -0.75);
+    border-radius: 10px;
+    
+    > .atop {
+        display: grid;
+
+        > * {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+
+        > .image {
+            @include box(60vw);
+            background-color: $white;
+            
+            > img {
+                object-fit: cover;  
+                background-color: $white;
+                @include box;
+                border-radius: 10px 10px 0 0;
+            }
+        }
+
+        > .top {
+            height: fit-content;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            > .favorited {
+                @include box(1.75rem);
+
+                > svg {
+                    @include box;   
+                    color: $blue;
+                }
+            }
+        }
+    }
+
+    > .main {
+        background-color: $white;
+        padding: .5rem;
+        border-top: 4px solid $blue;
+        color: $blue;
+        font-family: "Raleway";
+        border-radius: 0 0 10px 10px;
+        
+        > h3 {
+            text-align: center;
+            font-size: 1.25rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+}

@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useUser } from "../../contexts/useUser";
 import Price from "./Price";
+import "../../styles/components/products/Template.scss"
 
-
-const Template = ({ name, image, favorited, price }) => {
-    const {dispatch} = useUser();
+const Template = ({ name, image, price }) => {
+    const {user, dispatch} = useUser();
 
     return (
-        <div className="carousel-seat">
+        <div className="product">
             <div className="atop">
                 <div className="image">
                 <img src={image} alt={name} />
@@ -17,9 +17,9 @@ const Template = ({ name, image, favorited, price }) => {
                 <Price amount={price} />
                 <div
                     className="favorited"
-                    onClick={() => dispatch({type: "favoriteToggle", payload: {name, image, favorited, price}})}
+                    onClick={() => dispatch({type: "favoriteToggle", payload: {name, image, price}})}
                 >
-                    {favorited ? <FaHeart /> : <FaRegHeart />}
+                    {user.products.favorites.findIndex(fav => fav.name === name) ? <FaHeart /> : <FaRegHeart />}
                 </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react"
 import {FaChevronLeft, FaChevronRight, FaHeart, FaRegHeart} from "react-icons/fa";
 import Price from "../Price";
-import "../../../styles/components/home/slideshow/Slideshow.scss"
+import "../../../styles/components/products/slideshow/Slideshow.scss"
 
 // Carousel Settings
 const SLIDER_SLIDE_RESOLUTION = 10; // Smaller is more resolute

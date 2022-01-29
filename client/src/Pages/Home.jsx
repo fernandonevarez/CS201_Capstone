@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../Components/Navbar";
 import "../styles/pages/Home.scss";
 
 // import axios
@@ -27,42 +28,42 @@ import { useAuth0 } from "@auth0/auth0-react";
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
     name: "Duck",
-    price: 10.01,
+    price: "1001",
     image: duckImg,
     favorited: true,
     id: 0,
   },
   {
     name: "Cat",
-    price: 22.22,
+    price: "2222",
     image: catImg,
     favorited: true,
     id: 1,
   },
   {
     name: "Amongus Sus Imposter?",
-    price: 0.5,
+    price: "05",
     image: susImg,
     favorited: true,
     id: 2,
   },
   {
     name: "Temp",
-    price: 10.01,
+    price: "1001",
     image: tempImg,
     favorited: true,
     id: 3,
   },
   {
     name: "Temp2",
-    price: 10.01,
+    price: "1001",
     image: temp2Img,
     favorited: true,
     id: 4,
   },
   {
     name: "Temp3",
-    price: 10.01,
+    price: "1001",
     image: temp3Img,
     favorited: true,
     id: 5,

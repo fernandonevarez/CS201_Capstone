@@ -4,9 +4,9 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import "../styles/pages/NewProducts.scss";
 
 import favImage from "../assets/images/favorited.svg";
-import Product from "../Components/Product";
 import Loading from "../Components/Loading";
 import Footer from "../Components/Footer";
+import Product from "../Components/products/Product";
 
 const NewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -58,20 +58,16 @@ const NewProducts = () => {
         ) : (
           <>
             {filteredProducts.length > 0
-              ? filteredProducts.map((product) => {
+              ? filteredProducts.map(({_id: id, imageArray: image, ...rest}) => <Product key={id} image={image[0]} {...rest} />)
                   // console.log("product", product);
                   // console.log(`product:`, product);
                   // <h1>hello</h1>;
-                  return <Product key={product._id} product={product} />;
-                })
               : // map over products
-                products.map((product) => {
+                products.map(({_id: id, ...rest}) => <Product key={id} {...rest} />)
                   // console.log("product", product);
                   // console.log(`product:`, product);
                   // <h1>hello</h1>;
-                  return <Product key={product._id} product={product} />;
-                })}
-
+                }
             <Footer />
           </>
         )}

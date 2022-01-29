@@ -1,5 +1,5 @@
 import Seat from "./Seat"
-import "../../../styles/components/home/carousel/Carousel.scss"
+import "../../../styles/components/products/carousel/Carousel.scss"
 import {useEffect, useRef, useState} from "react";
 
 

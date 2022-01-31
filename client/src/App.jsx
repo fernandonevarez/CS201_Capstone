@@ -12,6 +12,7 @@ import TermsOfUse from "./Pages/Docs/TermsOfUse";
 import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import Profile from "./Pages/Profile";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />

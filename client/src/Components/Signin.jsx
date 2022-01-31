@@ -5,20 +5,26 @@ import {
   FaApple,
   FaEnvelope,
   FaEye,
+  FaEyeSlash,
   FaFacebookF,
   FaGoogle,
   FaTimes,
 } from "react-icons/fa";
 import axios from "axios";
+import { useUser } from "../contexts/useUser";
 
 const Signin = ({ close, change }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { user, dispatch } = useUser();
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
   // IF YOU NEED HELP WITH THIS CONTACT ETHAN
-  async function formSubmit(e) {
+  const formSubmit = async (e) => {
     e.preventDefault();
-    const { target } = e;
+    // const { target } = e;
 
     // setError("some error triggered when form validation is failed")
     // To chnage styles
@@ -27,10 +33,6 @@ const Signin = ({ close, change }) => {
       //   setError("Please fill out all fields");
       console.log("Please fill out all fields");
     } else {
-
-
-
-
       const response = await axios.post(
         "http://localhost:3000/api/v1/auth/login",
         {
@@ -38,16 +40,20 @@ const Signin = ({ close, change }) => {
           password: userPassword,
         }
       );
-      const token = response.data.token;
-      localStorage.clear();
+
+      dispatch({ type: "login", payload: response.data });
+
+      console.log("userLoggedIn", user);
+      // const token = response.data.token;
+      // localStorage.clear();
       //   stores token in local storage
-      localStorage.setItem("userToken", token);
-      console.log(token);
+      // localStorage.setItem("userToken", token);
+      // console.log(token);
     }
 
     // Do whatever you need with the form data
-    console.log(userEmail, userPassword);
-  }
+    // console.log(userEmail, userPassword);
+  };
 
   // The valid provider names are "google", "facebook", or "apple"
   // Feel free to disassemble and reassemble however you'd like
@@ -57,7 +63,7 @@ const Signin = ({ close, change }) => {
 
   return (
     <div className="signin-popup">
-      <div className="darken"></div>
+      <div className="darken" onClick={close}></div>
       <div className="content">
         <div className="title">
           <h2>Sign In</h2>
@@ -78,15 +84,29 @@ const Signin = ({ close, change }) => {
             />
             <Input
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               onChange={(e) => setUserPassword(e.target.value)}
-              icon={<FaEye />}
+              icon={
+                showPassword ? (
+                  <FaEye onClick={() => setShowPassword(!showPassword)} />
+                ) : (
+                  <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
+                )
+              }
             />
           </div>
 
           <div className="forgot-password">Forgot Your Password?</div>
 
-          <button type="submit">Login</button>
+          <button
+            type="submit"
+            onClick={(e) => {
+              formSubmit(e);
+              close();
+            }}
+          >
+            Login
+          </button>
 
           {/* <div className="sep">
             <div className="dash"></div>

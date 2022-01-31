@@ -1,0 +1,31 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+main {
+  h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .user-info {
+    .about_you {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      align-content: center;
+
+      img {
+        height: 5rem;
+        width: 5rem;
+        border-radius: 100%;
+        border: 2px black solid;
+      }
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-left: 1rem;
+      }
+    }
+  }
+}

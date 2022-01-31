@@ -3,7 +3,8 @@ const {
   addingFavorite,
   removeFavorite,
   getAllFavorites,
-} = require("../Controllers/userFavoritesController");
+  updateUser,
+} = require("../Controllers/userController");
 const userRouter = express.Router();
 
 // api/v1/users/:userID/favorites/:productID
@@ -26,5 +27,8 @@ userRouter.route("/:userID/favorites/:productID").delete(removeFavorite);
 userRouter.route("/:userID/favorites").get(getAllFavorites);
 
 // userRouter.route("/:userID/favorites").post(favorite);
+
+// route for users to update their information
+userRouter.route("/:userID/update").put(updateUser);
 
 module.exports = userRouter;

@@ -68,9 +68,9 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProduct = async (req, res) => {
-  const products = await Product.find({}).sort("Created at");
+  const products = await Product.find({}).sort("createdAt");
 
-  // console.log(products);
+  console.log(products);
 
   res.status(StatusCodes.OK).json({ products, length: products.length });
   return products;

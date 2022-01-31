@@ -40,27 +40,27 @@ const Register = ({ close, change }) => {
       setNewPassword(passwordConfirm);
 
       // try {
-        const response = await axios.post(
-          "http://localhost:3000/api/v1/auth/register",
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/auth/register",
 
-          {
-            name: {
-              firstName: firstName,
-              lastName: lastName,
-            },
-            email: email,
-            password: newPassword,
+        {
+          name: {
+            firstName: firstName,
+            lastName: lastName,
           },
-          {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3001",
-          }
-        );
-        console.log(response.data);
+          email: email,
+          password: newPassword,
+        },
+        {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+        }
+      );
+      console.log(response.data);
 
-        dispatch({ type: "login", payload: response.data });
+      dispatch({ type: "login", payload: response.data });
 
-        console.log(user);
+      console.log(user);
       // } catch (error) {
       //   console.log(error);
       // }
@@ -128,7 +128,7 @@ const Register = ({ close, change }) => {
 
   return (
     <div className="register-popup">
-      <div className="darken"></div>
+      <div className="darken" onClick={close}></div>
       <div className="content">
         <div className="title">
           <h2>Register</h2>
@@ -200,7 +200,6 @@ const Register = ({ close, change }) => {
       </div>
     </div>
   );
-
 };
 
 export default Register;

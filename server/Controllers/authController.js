@@ -8,22 +8,18 @@ const { StatusCodes } = require("http-status-codes");
 const register = async (req, res) => {
   const newUser = await User.create(req.body);
   const token = newUser.createJWT();
-  res
-    .status(StatusCodes.CREATED)
-    .json(
-      {
-        user: {
-          name: newUser.name,
-          cart: [],
-          favorite: [],
-          // will be a url link to the user profile picture
-          profile_picture: "",
-
-        },
-        userID: newUser._id,
-        token
-      }
-    );
+  res.status(StatusCodes.CREATED).json({
+    user: {
+      name: newUser.name,
+      cart: [],
+      favorite: [],
+      // will be a url link to the user profile picture
+      profile_picture: "",
+      email: newUser.email,
+    },
+    userID: newUser._id,
+    token,
+  });
 };
 
 const login = async (req, res) => {
@@ -47,9 +43,21 @@ const login = async (req, res) => {
 
   const token = userLogin.createJWT();
 
-  res.status(StatusCodes.OK).json({ user: { name: userLogin.name }, token });
+  res.status(StatusCodes.OK).json({
+    // will hold all the datails of the user
+    user: {
+      userID: userLogin._id,
+      name: userLogin.name,
+      cart: [],
+      favorite: [],
+      // will be a url link to the user profile picture
+      profile_picture: "",
+      email: userLogin.email,
+    },
+    token: token,
+    isAuthenticated: true,
+  });
 };
-
 
 module.exports = {
   register,

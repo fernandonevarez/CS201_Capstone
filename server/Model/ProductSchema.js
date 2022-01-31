@@ -23,7 +23,7 @@ const ProductSchema = new monogoose.Schema({
           "Tools",
           "party",
           "jewelry",
-          "accessories"
+          "accessories",
         ],
         message: `{Value} is not supported. Also make sure that there are: no spaces in your type string and every letter is lowercase`,
       },
@@ -35,18 +35,11 @@ const ProductSchema = new monogoose.Schema({
       type: String,
       required: true,
       enum: {
-        values: [
-          "Kids",
-          "Teens",
-          "Adults",
-          "Netural"
-        ],
+        values: ["Kids", "Teens", "Adults", "Netural"],
         message: `{Value} is not supported. Also make sure that there are: no spaces in your type string and every letter is lowercase`,
       },
     },
   ],
-
-
 
   description: {
     type: String,
@@ -66,13 +59,15 @@ const ProductSchema = new monogoose.Schema({
   },
   likes: {
     type: Number,
-    default: 0,
+    required: false,
   },
 });
 
 ProductSchema.pre("validate", function (next) {
   if (this.imageArray.length > 10)
     throw "Amount of images submited exceeds maximum size of 10 images. Please remove some images and try again.";
+
+  this.likes = 0;
   next();
 });
 

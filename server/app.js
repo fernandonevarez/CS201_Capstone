@@ -82,13 +82,11 @@ const startServer = async () => {
       // cors prevents CORS errors
       // .use(cors())
       .use(
-        cors(
-        //   {
-        //   origin: ["http://localhost:3001", "http://localhost:3001/cart"],
-        //   credentials: true, //access-control-allow-credentials:true
-        //   optionSuccessStatus: 200,
-        // }
-        )
+        cors({
+          origin: ["http://localhost:3001", "http://localhost:3001/cart"],
+          credentials: true, //access-control-allow-credentials:true
+          optionSuccessStatus: 200,
+        })
       )
       // xss (user sanitization) - cleans up user inputs to make sure they are safe.
       .use(xss())

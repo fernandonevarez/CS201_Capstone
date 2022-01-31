@@ -19,7 +19,7 @@ import axios from "axios";
 import Menu from "./Menu";
 import Search from "./Search";
 import { useUser } from "../contexts/useUser";
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWI3Y2YwMGE4M2ZkYmI2Mjk5YzY0NzYiLCJuYW1lIjoiRGF2aWQiLCJpYXQiOjE2NDE4NTYwNDksImV4cCI6MTY0NDQ0ODA0OX0.NojoiQ4uMpaYvOlFVncHuuNJZCB7ikqGWx4LvJmHYwg`;
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3YmQzYTQ1MWJjZmUyNjAiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQzNTAxNjAwLCJleHAiOjE2NDYwOTM2MDB9.4sQiB07AI1GRc5Sp4AvE_5ds0zwe9AUo9yuQNBJN8A4`;
 
 // const SAMPLE_DATA_REMOVE_LATER = [
 //   {
@@ -192,7 +192,7 @@ const Navbar = () => {
               </button>
             )} */}
 
-              {user.details ? (
+              {user.details.isAuthenticated ? (
                 <div className="profile-icon">
                   <CgProfile
                     onClick={() => setShowProfileDropdown(!showProfileDropdown)}
@@ -217,17 +217,23 @@ const Navbar = () => {
                 <div className="profile-dropdown">
                   <ul>
                     <li>
-                      <Link className="dropdown-item" to="/profile">Profile</Link>
+                      <Link className="dropdown-item" to="/profile">
+                        Profile
+                      </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/orders">Orders</Link>
+                      <Link className="dropdown-item" to="/orders">
+                        Orders
+                      </Link>
                     </li>
                     <li>
-                      <button className="dropdown-item"
+                      <button
+                        className="dropdown-item"
                         onClick={() => {
                           dispatch({ type: "logout" });
                           console.log("logout");
                           console.log(user);
+                          setShowProfileDropdown(!showProfileDropdown);
                         }}
                       >
                         Log Out

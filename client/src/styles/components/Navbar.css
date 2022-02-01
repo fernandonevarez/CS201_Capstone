@@ -1,0 +1,191 @@
+nav {
+  color: #4D90A8;
+  font-family: "Raleway";
+}
+nav .bar {
+  box-shadow: rgba(33, 34, 27, 0.25) 0px 4px 4px;
+  padding: 0.5rem;
+}
+nav .bar .top {
+  display: flex;
+  gap: 1rem;
+}
+nav .bar .top .title {
+  font-family: "Playfair Display";
+  font-size: 1.25rem;
+  font-variation-settings: "wght" 650;
+}
+nav .bar .top label {
+  width: 80vw;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border: solid #4D90A8 2px;
+  border-radius: 20px;
+  padding: 0 0.5rem;
+}
+nav .bar .top label input {
+  flex-grow: 2;
+  height: 100%;
+  border-radius: 20px;
+  font-family: "Raleway";
+  color: #4D90A8;
+}
+nav .bar .top label input::-moz-placeholder {
+  color: #4D90A8;
+}
+nav .bar .top label input:-ms-input-placeholder {
+  color: #4D90A8;
+}
+nav .bar .top label input::placeholder {
+  color: #4D90A8;
+}
+nav .bar .top label .search-icon {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.25rem;
+}
+nav .bar .top label .search-icon svg {
+  width: 100%;
+  height: 100%;
+}
+nav .bar .bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+nav .bar .bottom .hamburger-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+nav .bar .bottom .hamburger-icon svg {
+  width: 100%;
+  height: 100%;
+}
+nav .bar .bottom .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #4D90A8;
+  font-weight: 500;
+}
+nav .bar .bottom .side {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+nav .bar .bottom .side .cart-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+nav .bar .bottom .side .cart-icon svg {
+  width: 100%;
+  height: 100%;
+}
+nav .bar .bottom .side button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #4d90a8;
+  font-weight: 500;
+}
+nav .bar .bottom .side .profile-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+nav .bar .bottom .side .profile-icon svg {
+  width: 100%;
+  height: 100%;
+}
+nav .bar .bottom .side .profile-dropdown {
+  position: absolute;
+  top: 5rem;
+  right: 4rem;
+  height: 15rem;
+  background: white;
+  z-index: 10;
+  width: 10rem;
+}
+nav .bar .bottom .side .profile-dropdown ul {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+nav .bar .bottom .side .profile-dropdown ul li .dropdown-item {
+  background-color: white;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: bold;
+}
+nav .menu {
+  display: none;
+  width: 100%;
+}
+nav .menu.show {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+}
+nav .menu.show .hide {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(33, 34, 27, 0.25);
+}
+nav .menu.show .content {
+  box-shadow: rgba(33, 34, 27, 0.25) 4px 0px 4px;
+  position: relative;
+  height: 100vh;
+  width: 80%;
+  background-color: #F7F3F5;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+nav .menu.show .content .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav .menu.show .content .top h2 {
+  font-family: "Playfair Display";
+  font-size: 1.5rem;
+}
+nav .menu.show .content .top .exit,
+nav .menu.show .content .top .back {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+nav .menu.show .content .top .exit svg,
+nav .menu.show .content .top .back svg {
+  width: 100%;
+  height: 100%;
+}
+nav .menu.show .content ul {
+  flex-grow: 2;
+  overflow: scroll;
+  padding: 0.75rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+nav .menu.show .content ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-family: "Raleway";
+}
+nav .menu.show .content ul li h3 {
+  flex-grow: 2;
+}
+nav .menu.show .content ul li .continue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}/*# sourceMappingURL=Navbar.css.map */

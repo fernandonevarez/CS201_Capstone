@@ -43,7 +43,12 @@ const Signin = ({ close, change }) => {
 
       dispatch({ type: "login", payload: response.data });
 
+      console.log("userPassword", userPassword);
+      console.log("userEmail", userEmail);
+
       console.log("userLoggedIn", user);
+
+      close();
       // const token = response.data.token;
       // localStorage.clear();
       //   stores token in local storage
@@ -102,7 +107,7 @@ const Signin = ({ close, change }) => {
             type="submit"
             onClick={(e) => {
               formSubmit(e);
-              close();
+              // close();
             }}
           >
             Login

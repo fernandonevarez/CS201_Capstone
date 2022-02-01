@@ -24,20 +24,25 @@ const token = localStorage.getItem("userToken");
 const Register = ({ close, change }) => {
   const [error, setError] = useState("");
 
-  const [newPassword, setNewPassword] = useState("");
+  // const [newPassword, setNewPassword] = useState("");
+  const [userNewPassword, setUserNewPassword] = useState("");
 
   const { user, dispatch } = useUser();
 
-  async function registerUser(
+  const registerUser = async(
     email,
     password,
     passwordConfirm,
     firstName,
     lastName
-  ) {
+  ) => {
     if (password == passwordConfirm) {
       console.log("passwords match");
-      setNewPassword(passwordConfirm);
+      // setUserNewPassword(passwordConfirm);
+
+      close();
+
+      // console.log("email", email, "password", password, "passwordConfirm", passwordConfirm, "firstName", firstName, "lastName", lastName);
 
       // try {
       const response = await axios.post(
@@ -49,18 +54,18 @@ const Register = ({ close, change }) => {
             lastName: lastName,
           },
           email: email,
-          password: newPassword,
+          password: passwordConfirm,
         },
         {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "http://localhost:3001",
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       dispatch({ type: "login", payload: response.data });
 
-      console.log(user);
+      // console.log(user);
       // } catch (error) {
       //   console.log(error);
       // }
@@ -89,7 +94,7 @@ const Register = ({ close, change }) => {
     e.preventDefault();
     const { target } = e;
     // registerUser()
-    // console.log(target.fname.value);
+    console.log( "email", target);
 
     const email = target.email.value;
     const password = target.password.value;
@@ -98,6 +103,8 @@ const Register = ({ close, change }) => {
 
     const firstname = target.fname.value;
     const lastname = target.lname.value;
+
+    // console.log(email, password, passwordConfirm, firstname, lastname);
 
     if (
       email === "" ||
@@ -139,7 +146,7 @@ const Register = ({ close, change }) => {
             <FaTimes />
           </div>
         </div>
-        <form onSubmit={formSubmit}>
+        <form onSubmit={(e) => formSubmit(e)}>
           <div className="traditional">
             <div className="name">
               <Input name="fname" title="First Name" placeholder="John" />
@@ -174,7 +181,7 @@ const Register = ({ close, change }) => {
             />
           </div>
 
-          <button type="submit">Create an Account</button>
+          <button type="submit" onSubmit={(e) => formSubmit(e)}>Create an Account</button>
 
           {/* <div className="sep">
             <div className="dash"></div>

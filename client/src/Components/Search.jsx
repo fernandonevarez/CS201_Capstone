@@ -12,7 +12,7 @@ import "../styles/components/Search.scss";
 // import Menu from "./Menu";
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3YmQzYTQ1MWJjZmUyNjAiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQzNTAxNjAwLCJleHAiOjE2NDYwOTM2MDB9.4sQiB07AI1GRc5Sp4AvE_5ds0zwe9AUo9yuQNBJN8A4";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY4N2IxOGY3N2YzNDcwYmNmOWM0MGMiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkRhdnVkIiwibGFzdE5hbWUiOiJFdGFnc2duIn0sImlhdCI6MTY0MzY3NDcxOCwiZXhwIjoxNjQ2MjY2NzE4fQ.iZOj-KAmExWiJRvgKg-kFpprl8XFmIc4Z4f14jW0qmk";
 
 const Search = ({ setShowNavbar, showNavbar, toggleMenu, showMenu }) => {
   const [products, setProducts] = useState([]);
@@ -20,13 +20,14 @@ const Search = ({ setShowNavbar, showNavbar, toggleMenu, showMenu }) => {
   const { user } = useUser();
 
   const getProducts = async () => {
-    // console.log("ping pong");
+    console.log("user token", user.details.token);
     const response = await axios.get("http://localhost:3000/api/v1/products", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${user.details.token}`,
         "Access-Control-Allow-Origin": "http://localhost:3001",
       },
     });
+    
     console.log("response", response);
     setProducts(response.data.products);
   };

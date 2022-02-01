@@ -217,12 +217,16 @@ const Navbar = () => {
                 <div className="profile-dropdown">
                   <ul>
                     <li>
-                      <Link className="dropdown-item" to="/profile">
+                      <Link className="dropdown-item" to="/profile" onClick={() => {
+                        setShowProfileDropdown(!showProfileDropdown);
+                      }}>
                         Profile
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/orders">
+                      <Link className="dropdown-item" to="/orders" onClick={() => {
+                        setShowProfileDropdown(!showProfileDropdown);
+                      }}>
                         Orders
                       </Link>
                     </li>

@@ -10,6 +10,7 @@ const register = async (req, res) => {
   const token = newUser.createJWT();
   res.status(StatusCodes.CREATED).json({
     user: {
+      userID: newUser._id,
       name: newUser.name,
       cart: [],
       favorite: [],
@@ -17,8 +18,8 @@ const register = async (req, res) => {
       profile_picture: "",
       email: newUser.email,
     },
-    userID: newUser._id,
     token,
+    isAuthenticated: true,
   });
 };
 

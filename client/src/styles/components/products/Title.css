@@ -1,0 +1,12 @@
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+.section-title h2 {
+  font-family: "Playfair Display";
+  font-size: 2rem;
+  color: #4D90A8;
+}/*# sourceMappingURL=Title.css.map */

@@ -1,0 +1,78 @@
+.main-slideshow {
+  border-top: solid 4px #4D90A8;
+  border-bottom: solid 4px #4D90A8;
+  box-shadow: 0px 4px 4px rgba(33, 34, 27, 0.25);
+}
+.main-slideshow > .display {
+  display: flex;
+  flex-wrap: nowrap;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.main-slideshow > .display > .sect {
+  width: 100vw;
+}
+.main-slideshow > .display > .sect > .atop {
+  background-color: #F7F3F5;
+  display: grid;
+}
+.main-slideshow > .display > .sect > .atop > * {
+  grid-row: 1/2;
+  grid-column: 1/2;
+}
+.main-slideshow > .display > .sect > .atop > img {
+  width: 100vw;
+  height: 100vw;
+}
+.main-slideshow > .display > .sect > .atop > .top {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-slideshow > .display > .sect > .atop > .top > .favorited {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.main-slideshow > .display > .sect > .atop > .top > .favorited > svg {
+  width: 100%;
+  height: 100%;
+  color: #4D90A8;
+}
+.main-slideshow > .display > .sect > .atop > .center {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-slideshow > .display > .sect > .atop > .center > .left, .main-slideshow > .display > .sect > .atop > .center > .right {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #F7F3F5;
+  padding: 0.25rem;
+  border: 4px solid #4D90A8;
+}
+.main-slideshow > .display > .sect > .atop > .center > .left > svg, .main-slideshow > .display > .sect > .atop > .center > .right > svg {
+  width: 100%;
+  height: 100%;
+  color: #4D90A8;
+}
+.main-slideshow > .display > .sect > .main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  background-color: #F7F3F5;
+  font-family: "Raleway";
+  color: #4D90A8;
+  font-size: 1.25rem;
+  text-align: center;
+}/*# sourceMappingURL=Slideshow.css.map */

@@ -17,12 +17,12 @@ const SingleProduct = () => {
   const [product, setProduct] = useState({});
   let { id } = useParams();
 
-  const { userCookies } = useUser();
+  const { user } = useUser();
   // const { user } = useAuth0();
 
   // console.log("user", user);
 
-  console.log("id", id);
+  // console.log("id", id);
 
   const getProduct = async () => {
     const response = await axios
@@ -45,24 +45,46 @@ const SingleProduct = () => {
     getProduct();
   }, []);
 
-  const pushToCart = async () => {
-    console.log("product pushed to user's cart");
+  // console.log("userID", user.details.user.userID)
 
-    const { _id: productID } = product;
+  const pushToCart = async () => {
+    // console.log("product pushed to user's cart");
+
+    
 
     // const userID = user.sub.split("|")[1];
 
-    const userID = userCookies.userID;
+    const userID = user.details.user.userID;
+    // const userID = "61f5d7f057bd3a451bcfe260";
 
+    
+    console.log("userID", userID);
+
+    // const response = await axios.post(
+    //   `http://localhost:3000/api/v1/user/${userID}/cart/${id}`,
+    //   product,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${user.details.user.token}`,
+    //       "Access-Control-Allow-Origin": "http://localhost:3001",
+
+    //     },
+    //   }
+    // )
+
+    // push pruduct to user's cart
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user/${userID}/favorites/${productID}`,
+      `http://localhost:3000/api/v1/user/${userID}/cart/${id}`,
       product,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Access-Control-Allow-Origin": "http://localhost:3001",
         },
       }
     );
+
+
     console.log(`cart response: ${response}`);
   };
 

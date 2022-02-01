@@ -4,6 +4,8 @@ const {
   removeFavorite,
   getAllFavorites,
   updateUser,
+  addToCart,
+  getUserCart,
 } = require("../Controllers/userController");
 const userRouter = express.Router();
 
@@ -30,5 +32,14 @@ userRouter.route("/:userID/favorites").get(getAllFavorites);
 
 // route for users to update their information
 userRouter.route("/:userID/update").put(updateUser);
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// cart routes
+
+userRouter.route("/:userID/cart/:productID").post(addToCart);
+
+userRouter.route("/:userID/cart").get(getUserCart);
 
 module.exports = userRouter;

@@ -30,6 +30,7 @@ function App() {
           path="/products/catagories/Toys%20&%20Entertainment"
           element={<ToysAndEntertainment />}
         />
+        {/* Doc Pages */}
         <Route path="/terms-of-use" element={<TermsOfUse />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<Error />} />

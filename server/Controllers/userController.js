@@ -75,9 +75,52 @@ const getAllFavorites = async (req, res) => {
   console.log({ user });
 };
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// User's cart
+
+const addToCart = async (req, res) => {
+  const { userID, productID } = req.params;
+  const { user, product } = await Promise.all([
+    User.findById(userID),
+    Product.findById(productID),
+  ]);
+
+  if (!user) {
+    throw new BadRequestError("Invalid user");
+  }
+    
+    
+  if(!product) {
+    throw new BadRequestError("Invalid product");
+  }
+
+  user.cart.push(product);
+  user.save();
+  res.status(200).json({ user });
+  console.log({ user });
+
+ 
+}
+
+const getUserCart = async (req, res) => {
+  const { userID } = req.params;
+  const user = await User.findById(userID);
+
+  if (!user) {
+    throw new BadRequestError("Invalid user");
+  }
+
+  res.status(200).json({ cart });
+  console.log({ user });
+}
+
+
 module.exports = {
   addingFavorite,
   removeFavorite,
   getAllFavorites,
   updateUser,
+  addToCart,
+  getUserCart,
 };

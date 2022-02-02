@@ -228,6 +228,13 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
+                      <Link className="dropdown-item" to={`/${user.details.user.userID}/store`} onClick={() => {
+                        setShowProfileDropdown(!showProfileDropdown);
+                      }}>
+                        Your Store
+                      </Link>
+                    </li>
+                    <li>
                       <Link className="dropdown-item" to="/orders" onClick={() => {
                         setShowProfileDropdown(!showProfileDropdown);
                       }}>

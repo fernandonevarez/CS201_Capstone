@@ -13,6 +13,7 @@ import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Profile from "./Pages/Profile";
+import UserStore from "./Pages/UserStore";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/:userID/store" element={<UserStore />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />

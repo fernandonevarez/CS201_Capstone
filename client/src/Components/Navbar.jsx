@@ -214,6 +214,10 @@ const Navbar = () => {
               </div>
 
               {showProfileDropdown && (
+                <>
+                <div className="close"
+                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                ></div>
                 <div className="profile-dropdown">
                   <ul>
                     <li>
@@ -221,6 +225,13 @@ const Navbar = () => {
                         setShowProfileDropdown(!showProfileDropdown);
                       }}>
                         Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to={`/${user.details.user.userID}/store`} onClick={() => {
+                        setShowProfileDropdown(!showProfileDropdown);
+                      }}>
+                        Your Store
                       </Link>
                     </li>
                     <li>
@@ -246,6 +257,8 @@ const Navbar = () => {
                     <li></li>
                   </ul>
                 </div>
+                </>
+                
               )}
             </div>
           </div>

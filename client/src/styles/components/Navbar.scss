@@ -19,7 +19,7 @@ nav {
         font-variation-settings: "wght" 650;
       }
       label {
-        width: 80vw;
+        width: 79vw;
         display: flex;
         align-items: center;
         height: 100%;
@@ -98,6 +98,15 @@ nav {
           svg {
             @include box;
           }
+        }
+
+        .close {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 100vw;
+          z-index: 0;
+          height: 100vh;
         }
 
         .profile-dropdown {

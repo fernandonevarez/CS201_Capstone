@@ -1,5 +1,5 @@
 // const jwt = require("jsonwebtoken");
-// const { UnauthError } = require("../errors");
+const { UnauthError } = require("../errors");
 require("dotenv").config();
 // const jwt = require("express-jwt");
 // const jwksRsa = require("jwks-rsa");

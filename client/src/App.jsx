@@ -14,6 +14,7 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Profile from "./Pages/Profile";
 import Protected from "./Components/Protected";
+import UserStore from "./Pages/UserStore";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {

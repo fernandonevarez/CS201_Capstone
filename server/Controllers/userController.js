@@ -10,7 +10,7 @@ require("dotenv").config();
 const updateUser = async (req, res) => {
   // allow user to update their email, name, password, and profile picture
   const { userID } = req.params;
-  const { email, name, password, profile_picture } = req.body;
+  const { email, name, password, profile_picture, hasStore } = req.body;
   const user = await User.findById(userID);
   // update the user
   if (email) {
@@ -25,6 +25,10 @@ const updateUser = async (req, res) => {
   if (profile_picture) {
     user.profile_picture = profile_picture;
   }
+  if(hasStore) {
+    user.hasStore = hasStore;
+  }
+
   user.save();
   res.status(200).json({ user });
 };

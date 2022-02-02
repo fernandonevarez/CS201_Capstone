@@ -95,7 +95,7 @@ const startServer = async () => {
 
       .use("/api/v1/auth", authRouter)
       // I commented the authenticationMiddleware so development is easier on my (Ethan's) part
-      .use("/api/v1/products", authenticationMiddleware, productRouter)
+      .use("/api/v1/products", productRouter)
       // .use("/api/v1/products", productRouter)
       .use("/api/v1/user", userRouter)
       .post("/api/v1/create-checkout-session", async (req, res) => {

@@ -6,6 +6,12 @@ const {
   updateUser,
   addToCart,
   getUserCart,
+  createStore,
+  getAllStores,
+  getStore,
+  deleteStore,
+  updateStore,
+  
 } = require("../Controllers/userController");
 const userRouter = express.Router();
 

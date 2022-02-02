@@ -3,6 +3,7 @@
 import React, {useState, useeffect} from 'react';
 import { useParams } from 'react-router-dom';
 import {useUser} from '../contexts/useUser';
+import axios from 'axios';
 
 const UserStore = () => {
 

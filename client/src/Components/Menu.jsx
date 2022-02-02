@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTimes, FaChevronRight, FaChevronLeft } from "react-icons/fa";
 // import { log } from "npmlog";
 
@@ -60,6 +60,7 @@ const SAMPLE_DATA_REMOVE_LATER = [
 const Menu = ({ toggleMenu }) => {
   const [display, setDisplay] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [history, setHistory] = useState([]);
+  const navigate = useNavigate();
 
   const exit = () => {
     setDisplay(SAMPLE_DATA_REMOVE_LATER)
@@ -103,10 +104,7 @@ const Menu = ({ toggleMenu }) => {
               <h3>{name}</h3>
             </Link>
             <div className="continue">
-              {children.length ? <FaChevronRight onClick={() => contuine(children)
-
-              
-              }/> : null}
+              {children.length ? <FaChevronRight onClick={() => contuine(children)}/> : null}
             </div>
           </li>)}
         </ul>

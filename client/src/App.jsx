@@ -13,6 +13,7 @@ import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Profile from "./Pages/Profile";
+import Protected from "./Components/Protected";
 import UserStore from "./Pages/UserStore";
 // import SingleNew from "./Pages/SingleNew";
 
@@ -22,9 +23,18 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/:userID/store" element={<UserStore />} />
+        <Route 
+          path="/profile"
+          element={<Protected>
+            <Profile />
+          </Protected>} 
+        />
+        <Route 
+          path="/cart" 
+          element={<Protected>
+            <Cart />
+          </Protected>} 
+        />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />

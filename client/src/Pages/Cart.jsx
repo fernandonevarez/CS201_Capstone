@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import {  } from "../styles/pages/Cart.scss";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { useUser } from "../contexts/useUser";
+
+//temp imgs
+import catImg from "../assets/images/temp/cat.png";
 
 const cart = [
   { id: 1, quantity: 3 },
@@ -43,18 +47,22 @@ const Cart = () => {
         {/* actual cart sect */}
         <section className="cart-div">
           <div className="cart-title">
-            <h1>Cart</h1>
+            <h2>Cart</h2>
           </div>
           <div className="products">
             <img
-              src="/static/media/temp.d2cb68eb6f97044b2712.jpg"
+              src={catImg}
               alt="placeholder"
             />
             <div className="info">
-              <h2 id="product-price"> holder </h2>
-              <h2 id="product-name"> holder </h2>
-              <button id="">Save For Later</button>
-              <button id="">Remove</button>
+              <div className="price-name"> 
+                <h3 id="product-price"> the sky </h3> 
+                <h3 id="product-name"> $yeah.00 </h3>
+              </div>
+              <div className="save-rmove"> 
+                <button id="svl">Save For Later</button>
+                <button id="rmve">Remove</button>
+              </div>
             </div>
           </div>
         </section>

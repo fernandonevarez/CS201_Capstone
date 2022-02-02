@@ -31,9 +31,10 @@ function App() {
         />
         <Route 
           path="/cart" 
-          element={<Protected>
-            <Cart />
-          </Protected>} 
+          element={ <Cart/> }
+          // element={<Protected>
+          //   <Cart />
+          // </Protected>} 
         />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />

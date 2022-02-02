@@ -17,6 +17,7 @@ const register = async (req, res) => {
       // will be a url link to the user profile picture
       profile_picture: "",
       email: newUser.email,
+      hasStore: false,
     },
     token,
     isAuthenticated: true,
@@ -49,11 +50,12 @@ const login = async (req, res) => {
     user: {
       userID: userLogin._id,
       name: userLogin.name,
-      cart: [],
-      favorite: [],
+      cart: userLogin.cart,
+      favorite: userLogin.favorites,
       // will be a url link to the user profile picture
       profile_picture: "",
       email: userLogin.email,
+      hasStore: userLogin.hasStore,
     },
     token: token,
     isAuthenticated: true,

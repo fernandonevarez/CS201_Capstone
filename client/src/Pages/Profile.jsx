@@ -6,29 +6,16 @@ import { useUser } from "../contexts/useUser";
 
 const Profile = () => {
   const { user } = useUser();
-
-  const [hasProfilePicture, setHasProfilePicture] = useState(false);
-
-  const userInfo = user.details;
-
-  console.log("userInfo", userInfo);
-
-  useEffect(() => {
-    if (userInfo.profile_picture) {
-      setHasProfilePicture(true);
-    }
-  }, [userInfo.profile_picture]);
+  const userDetails = user.details;
 
   return (
     <main>
       <h1>Profile</h1>
-      {userInfo.isAuthenticated ? (
-        // displayuserInfo(userInfo)
         <div className="user-info">
           <div className="about_you">
-            {hasProfilePicture ? (
+            {userDetails.user.profile_picture ? (
               <img
-                src={userInfo.user.profile_picture}
+                src={userDetails.user.profile_picture}
                 alt="user's profile picture"
               />
             ) : (
@@ -37,20 +24,20 @@ const Profile = () => {
                 alt="user's profile picture"
               />
             )}
-            <h2>{userInfo.user.name.firstName}</h2>
+            <h2>{userDetails.user.name.firstName}</h2>
           </div>
 
           <div className="email-wrapper">
-            <h3>Email: {userInfo.user.email}</h3>
+            <h3>Email: {userDetails.user.email}</h3>
           </div>
 
           <div className="password-wrapper">
-            <h3>Password: {userInfo.user.password}</h3>
+            <h3>Password: {userDetails.user.password}</h3>
           </div>
         </div>
       ) : (
         <p>You are not logged in</p>
-      )}
+      )
     </main>
   );
 };

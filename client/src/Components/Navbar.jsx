@@ -193,11 +193,18 @@ const Navbar = () => {
             )} */}
 
               {user.details.isAuthenticated ? (
+                <>
                 <div className="profile-icon">
                   <CgProfile
                     onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                   />
                 </div>
+                <div className="cart-icon">
+                <Link to="/cart">
+                  <BsCart4 />
+                </Link>
+              </div>
+              </>
               ) : (
                 <div
                   className="button"
@@ -207,11 +214,7 @@ const Navbar = () => {
                 </div>
               )}
 
-              <div className="cart-icon">
-                <Link to="/cart">
-                  <BsCart4 />
-                </Link>
-              </div>
+              
 
               {showProfileDropdown && (
                 <>
@@ -258,7 +261,6 @@ const Navbar = () => {
                   </ul>
                 </div>
                 </>
-                
               )}
             </div>
           </div>

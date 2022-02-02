@@ -8,19 +8,19 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: [true, "first name must be provided"],
       minlength: [2, "must be more than 2 characters"],
-      maxLength: [10, "must be less than 10 characters"],
+      maxLength: [20, "must be less than 10 characters"],
     },
     middleName: {
       type: String,
       required: false,
       minlength: [2, "must be more than 2 characters"],
-      maxLength: [10, "must be less than 10 characters"],
+      maxLength: [20, "must be less than 10 characters"],
     },
     lastName: {
       type: String,
       required: [false, "last name must be provided"],
       minlength: [2, "must be more than 2 characters"],
-      maxLength: [10, "must be less than 10 characters"],
+      maxLength: [20, "must be less than 10 characters"],
     },
   },
 

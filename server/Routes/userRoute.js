@@ -6,8 +6,16 @@ const {
   updateUser,
   addToCart,
   getUserCart,
+  createStore,
+  getAllStores,
+  getStore,
+  deleteStore,
+  updateStore,
+  
 } = require("../Controllers/userController");
 const userRouter = express.Router();
+
+const {authenticationMiddleware} = require("../middleware/auth");
 
 // api/v1/users/:userID/favorites/:productID
 /*
@@ -41,5 +49,20 @@ userRouter.route("/:userID/update").put(updateUser);
 userRouter.route("/:userID/cart/:productID").post(addToCart);
 
 userRouter.route("/:userID/cart").get(getUserCart);
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// user's store routes
+
+userRouter.route("/store").post(authenticationMiddleware, createStore);
+
+userRouter.route("/store").get(getAllStores);
+
+
+userRouter.route("/store/:userID").delete(authenticationMiddleware, deleteStore);
+
+userRouter.route("/store/:userID").put(authenticationMiddleware, updateStore);
+
+userRouter.route("/store/:userID").get(getStore);
 
 module.exports = userRouter;

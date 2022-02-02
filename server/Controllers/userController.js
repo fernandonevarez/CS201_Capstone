@@ -120,6 +120,55 @@ const getUserCart = async (req, res) => {
 }
 
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const createStore = async(req, res) => {
+
+  // create a store for the user
+
+  const { name, businessEmail, storeOwnerID, storeOwnerName, logo, description, products } = req.body;
+
+  const user = await User.findById(storeOwnerID);
+
+  if (!user) {
+    throw new BadRequestError("Invalid user");
+  }
+
+  const store = new Store({
+    name: name,
+    businessEmail: businessEmail,
+    storeOwnerID: storeOwnerID,
+    storeOwnerName: storeOwnerName,
+    logo: logo,
+    description: description,
+    products: products,
+  });
+
+  user.hasStore = true;
+  user.save();
+  store.save();
+
+  res.status(200).json({ store });
+  console.log({ store });
+}
+
+const getAllStores = async(req, res) => {
+
+}
+
+const getStore = async(req, res) => {
+
+}
+
+const deleteStore = async(req, res) => {
+
+}
+
+const updateStore = async(req, res) => {
+
+}
+
+
 module.exports = {
   addingFavorite,
   removeFavorite,
@@ -127,4 +176,9 @@ module.exports = {
   updateUser,
   addToCart,
   getUserCart,
+  createStore,
+  getAllStores,
+  getStore,
+  deleteStore,
+  updateStore,
 };

@@ -120,6 +120,25 @@ const getUserCart = async (req, res) => {
 }
 
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const createStore = async(req, res) => {
+
+}
+
+const getAllStores = async(req, res) => {
+
+}
+
+const deleteStore = async(req, res) => {
+
+}
+
+const updateStore = async(req, res) => {
+  
+}
+
+
 module.exports = {
   addingFavorite,
   removeFavorite,

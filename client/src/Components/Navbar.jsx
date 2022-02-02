@@ -214,6 +214,10 @@ const Navbar = () => {
               </div>
 
               {showProfileDropdown && (
+                <>
+                <div className="close"
+                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                ></div>
                 <div className="profile-dropdown">
                   <ul>
                     <li>
@@ -246,6 +250,8 @@ const Navbar = () => {
                     <li></li>
                   </ul>
                 </div>
+                </>
+                
               )}
             </div>
           </div>

@@ -10,7 +10,7 @@ const Product = require("../Model/ProductSchema");
 
 const createProduct = async (req, res) => {
   const {
-    body: { name, price, description },
+    body: { name, price, description, store, type, target },
     files: fileArrayConatiner,
     // user: { _id: userID },
     params: { id: productID },
@@ -42,6 +42,9 @@ const createProduct = async (req, res) => {
         price: price,
         description: description,
         imageArray: imageURLS,
+        target: target,
+        type: type,
+        store: store,
       });
       res.status(200).json({ product });
     }
@@ -62,6 +65,10 @@ const createProduct = async (req, res) => {
       price: price,
       description: description,
       imageArray: imageResult.secure_url,
+      target: target,
+      type: type,
+      store: store,
+
     });
     res.status(200).json({ product });
   }

@@ -23,7 +23,7 @@ const Template = ({ name, image, price, classAddition }) => {
                     onClick={() =>
                         dispatch({type: "favoriteToggle", payload: {name, image, price}})}
                 >
-                    {user.products.favorites.findIndex(fav => fav.name === name) !== -1 ? <FaHeart /> : <FaRegHeart />}
+                    {user.products.favorites.find(fav => fav.name === name) ? <FaHeart /> : <FaRegHeart />}
                 </div>
                 </div>
             </div>

@@ -50,7 +50,6 @@ const Popular = () => {
     getProducts();
   }, []);
 
-  console.log(popluarProducts)
 
   return (
     <main className="popular">

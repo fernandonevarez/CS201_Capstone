@@ -15,7 +15,7 @@ const {
 } = require("../Controllers/userController");
 const userRouter = express.Router();
 
-const {authenticationMiddleware} = require("../middleware/auth");
+const authenticationMiddleware = require("../middleware/auth");
 
 // api/v1/users/:userID/favorites/:productID
 /*
@@ -59,10 +59,10 @@ userRouter.route("/store").post(authenticationMiddleware, createStore);
 userRouter.route("/store").get(getAllStores);
 
 
-userRouter.route("/store/:userID").delete(authenticationMiddleware, deleteStore);
+userRouter.route("/store/:storeID/?userID").delete(authenticationMiddleware, deleteStore);
 
-userRouter.route("/store/:userID").put(authenticationMiddleware, updateStore);
+userRouter.route("/store/:storeID/?userID").put(authenticationMiddleware, updateStore);
 
-userRouter.route("/store/:userID").get(getStore);
+userRouter.route("/store/:storeID").get(getStore);
 
 module.exports = userRouter;

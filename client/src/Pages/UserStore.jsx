@@ -3,6 +3,7 @@
 import React, {useState, useeffect} from 'react';
 import { useParams } from 'react-router-dom';
 import {useUser} from '../contexts/useUser';
+import axios from 'axios';
 
 const UserStore = () => {
 
@@ -11,7 +12,17 @@ const UserStore = () => {
   const {user} = useUser();
 
   const createStore = async () => {
-    
+    const response = await axios
+      .post(`http://localhost:3000/api/v1/users/${userID}/stores`, {
+        headers: {
+          Authorization: `Bearer ${user.details.user.token}`,
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

@@ -31,10 +31,12 @@ function App() {
         />
         <Route 
           path="/cart" 
-          element={<Protected>
-            <Cart />
-          </Protected>} 
+          element={ <Cart/> }
+          // element={<Protected>
+          //   <Cart />
+          // </Protected>} 
         />
+        <Route path="/:userID/store" element={<UserStore />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />

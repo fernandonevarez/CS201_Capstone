@@ -1,7 +1,7 @@
-@use "../util/colors.scss" as *;
-@use "../util/mixins.scss" as *;
+@use "../../util/colors.scss" as *;
+@use "../../util/mixins.scss" as *;
 
-.signin-popup {
+.register-popup {
     @include box(100vw, 100vh);
     @include center;
     position: fixed;
@@ -14,18 +14,16 @@
         @include box;
         position: absolute;
         background-color: adjust-color($black, $alpha: -0.75);
-        // z-index: 11;
+        // z-index: 98;
     }
 
     .content {
-        @include box(90vw, 53vh);
-        //     width: 90vw;
-        // height: 53vh;
+        @include box(90vw, 60vh);
         max-height: 550px;
         position: absolute;
         // z-index: 99;
-        background-color: #f7f3f5;
-        border: 2px #4d90a8 solid;
+        background-color: $white;
+        border: 2px $blue solid;
         border-radius: 15px;
         padding: 1rem;
         display: flex;
@@ -70,11 +68,9 @@
                 gap: 0.25rem;
             }
 
-            .forgot-password {
-                text-align: center;
-                text-decoration: underline;
-                margin-top: 5rem;
-                // flex-grow: 2;
+            .name {
+                display: flex;
+                gap: 1rem;
             }
 
             button[type="submit"] {
@@ -84,6 +80,7 @@
                 color: $white;
                 font-size: 1rem;
                 border-radius: 1.5rem;
+                margin-top: auto;
             }
 
             .sep {

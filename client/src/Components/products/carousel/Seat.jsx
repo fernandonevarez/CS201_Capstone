@@ -4,7 +4,7 @@ import Template from "../Template";
 
 const Seat = (props) => {
   return (
-    <Template {...props} />
+    <Template {...props} classAddition="seat"/>
   )
 };
 

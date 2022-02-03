@@ -2,7 +2,17 @@
 @use "../util/mixins.scss" as *;
 
 
-.page-container {
+main.new {
+  .products {
+    @include center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+
+
   // .newProducts-conatiner {
   //   display: flex;
   //   flex-wrap: wrap;
@@ -65,4 +75,3 @@
   //     }
   //   }
   // }
-}

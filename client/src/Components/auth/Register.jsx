@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 
 // require("dotenv").config();
 
-import { useUser } from "../contexts/useUser";
+import { useUser } from "../../contexts/useUser";
 
 import axios from "axios";
-import Input from "./Input";
+import Input from "../Input";
 import {
   FaApple,
   FaEnvelope,
@@ -16,7 +16,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-import "../styles/components/Register.scss";
+import "../../styles/components/auth/Register.scss"
 // import { useUser } from "../contexts/useUser";
 
 const token = localStorage.getItem("userToken");

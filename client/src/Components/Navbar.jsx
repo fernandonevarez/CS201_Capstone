@@ -8,8 +8,8 @@ import { FaSearch, FaTimes, FaChevronRight } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 
 import "../styles/components/Navbar.scss";
-import Register from "./Register";
-import Signup from "./Signin";
+import Register from "./auth/Register";
+import Signup from "./auth/Signin";
 // import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 
@@ -134,8 +134,6 @@ const Navbar = () => {
   });
 
   const [showNavbar, setShowNavbar] = useState(true);
-
-  console.log("user", user);
 
   return (
     <nav>

@@ -3,23 +3,27 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useUser } from "../../contexts/useUser";
 import Price from "./Price";
 import "../../styles/components/products/Template.scss"
+import { Link } from "react-router-dom";
 
-const Template = ({ name, image, price }) => {
+const Template = ({ name, image, price, classAddition }) => {
     const {user, dispatch} = useUser();
 
     return (
-        <div className="product">
+        <div className={`product-${classAddition}`}>
             <div className="atop">
-                <div className="image">
-                <img src={image} alt={name} />
-                </div>
+                <Link to={`/products/${name}`}>
+                    <div className="image">
+                    <img src={image} alt={name} />
+                    </div>
+                </Link>
                 <div className="top">
                 <Price amount={price} />
                 <div
                     className="favorited"
-                    onClick={() => dispatch({type: "favoriteToggle", payload: {name, image, price}})}
+                    onClick={() =>
+                        dispatch({type: "favoriteToggle", payload: {name, image, price}})}
                 >
-                    {user.products.favorites.findIndex(fav => fav.name === name) ? <FaHeart /> : <FaRegHeart />}
+                    {user.products.favorites.findIndex(fav => fav.name === name) !== -1 ? <FaHeart /> : <FaRegHeart />}
                 </div>
                 </div>
             </div>

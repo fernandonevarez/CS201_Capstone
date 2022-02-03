@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../styles/components/Signin.scss";
-import Input from "./Input";
+import "../../styles/components/auth/Signin.scss";
+import Input from "../Input";
 import {
   FaApple,
   FaEnvelope,
@@ -11,7 +11,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import axios from "axios";
-import { useUser } from "../contexts/useUser";
+import { useUser } from "../../contexts/useUser";
 
 const Signin = ({ close, change }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -42,11 +42,6 @@ const Signin = ({ close, change }) => {
       );
 
       dispatch({ type: "login", payload: response.data });
-
-      console.log("userPassword", userPassword);
-      console.log("userEmail", userEmail);
-
-      console.log("userLoggedIn", user);
 
       close();
       // const token = response.data.token;

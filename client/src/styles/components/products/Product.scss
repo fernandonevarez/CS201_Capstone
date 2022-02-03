@@ -1,11 +1,11 @@
 @use "../../util/colors.scss" as *;
 @use "../../util/mixins.scss" as *;
 
-.product {
-    width: 60vw;
+.product-normal {
+    width: 40vw;
     box-shadow: 0px 4px 4px adjust-color($black, $alpha: -0.75);
     border-radius: 10px;
-    
+
     > .atop {
         display: grid;
 
@@ -15,9 +15,8 @@
         }
 
         .image {
-            @include box(60vw);
+            @include box(40vw);
             background-color: $white;
-            object-fit: cover;  
             
             > img {
                 object-fit: cover;  
@@ -55,7 +54,7 @@
         
         > h3 {
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.25rem;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;

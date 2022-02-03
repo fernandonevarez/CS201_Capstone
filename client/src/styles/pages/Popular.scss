@@ -1,0 +1,11 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+main.popular {
+    .products {
+        @include center;
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 1rem;
+    }
+}

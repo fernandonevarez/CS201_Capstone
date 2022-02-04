@@ -20,9 +20,7 @@ const CreateStorePopup = () => {
         <label>Business Email</label>
         <div className="input-details">If left blank, it will default to {yourAccountEmail}</div>
         <input type="text" />
-
-
-
+        
         <button>Create</button>
       </form>
     </main>

@@ -15,10 +15,27 @@ main {
   margin-bottom: .75rem;
 }
 
-form {
+.create-store-form {
   border-radius: 1rem;
   padding: 1rem;
   border: .2rem solid $blue;
+
+  .form-info {
+
+    font-size: 16px;
+    // text-align: center;
+    font-weight: bold;
+    color: rgb(107, 107, 107);
+    font-style: italic;
+    // vertical-align: middle;
+    span {
+      // line-height: 16px;
+      vertical-align: middle;
+      color: $red;
+      font-size: 30px;
+      // margin: 0 .2rem;
+    }
+  }
 }
 
 

@@ -33,6 +33,22 @@ const userReducer = (state, action) => {
             ...state.products,
             cart: state.products.cart.filter(item => item.name !== action.payload.name)
         }}}
+
+        // update hasStore to true
+        case "createStore": {return {...state, details: {
+            ...state.details,
+            user: {
+                ...state.details.user,
+                hasStore: true
+            }
+        }}}
+
+        // update store products
+        // case "updateStore": {return {...state, products: {
+        //     ...state.products,
+        //     : action.payload
+        // }}}
+
         case "override": {return action.payload}
     }
 }

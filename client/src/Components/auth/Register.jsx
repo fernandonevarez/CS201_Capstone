@@ -16,7 +16,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-import "../../styles/components/auth/Register.scss"
+import "../../styles/components/auth/Register.scss";
 // import { useUser } from "../contexts/useUser";
 
 const token = localStorage.getItem("userToken");
@@ -29,7 +29,7 @@ const Register = ({ close, change }) => {
 
   const { user, dispatch } = useUser();
 
-  const registerUser = async(
+  const registerUser = async (
     email,
     password,
     passwordConfirm,
@@ -49,12 +49,18 @@ const Register = ({ close, change }) => {
         "http://localhost:3000/api/v1/auth/register",
 
         {
+          // things the user submitted
           name: {
             firstName: firstName,
             lastName: lastName,
           },
           email: email,
           password: passwordConfirm,
+          // things we added to the user's account
+          cart: [],
+          favorites: [],
+          profile_picture: "",
+          hasStore: false,
         },
         {
           // "Content-Type": "application/json",
@@ -86,7 +92,7 @@ const Register = ({ close, change }) => {
     } else {
       console.log("passwords do not match");
     }
-  }
+  };
 
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
   // IF YOU NEED HELP WITH THIS CONTACT ETHAN
@@ -94,7 +100,7 @@ const Register = ({ close, change }) => {
     e.preventDefault();
     const { target } = e;
     // registerUser()
-    console.log( "email", target);
+    console.log("email", target);
 
     const email = target.email.value;
     const password = target.password.value;
@@ -181,7 +187,9 @@ const Register = ({ close, change }) => {
             />
           </div>
 
-          <button type="submit" onSubmit={(e) => formSubmit(e)}>Create an Account</button>
+          <button type="submit" onSubmit={(e) => formSubmit(e)}>
+            Create an Account
+          </button>
 
           {/* <div className="sep">
             <div className="dash"></div>

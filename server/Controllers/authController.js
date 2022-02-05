@@ -6,22 +6,76 @@ const JWT = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
 
 const register = async (req, res) => {
-  const newUser = await User.create(req.body);
-  const token = newUser.createJWT();
-  res.status(StatusCodes.CREATED).json({
-    user: {
-      userID: newUser._id,
-      name: newUser.name,
-      cart: [],
-      favorite: [],
-      // will be a url link to the user profile picture
-      profile_picture: "",
-      email: newUser.email,
-      hasStore: false,
-    },
-    token,
-    isAuthenticated: true,
-  });
+  console.log(req.body);
+
+  const { name, cart, favorites, profile_picture, email, hasStore } = req.body;
+  
+
+  // create a token for the user
+  
+
+  // console.log(token);
+
+  
+  const newUser = await User.create(
+    {
+      user: {
+        name: name,
+        cart: cart,
+        favorites: favorites,
+        // will be a url link to the user profile picture
+        profile_picture: profile_picture,
+        email: email,
+        hasStore: hasStore,
+      },
+      // create a token for the user
+      token: JWT.sign(
+        {
+          // user_id: newUser._id, 
+          email: email,
+          // name: newUser.name,
+          // cart: newUser.cart,
+          // favorites: newUser.favorites,
+          // profile_picture: newUser.profile_picture,
+          // hasStore: newUser.hasStore,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      ),
+      isAuthenticated: true,
+    }
+  );
+
+  // const token = newUser.createJWT();
+
+  // save user token
+  newUser.token = token;
+
+  await newUser.save();
+
+  console.log("token", token);
+  
+  
+  console.log(newUser);
+
+  res.status(StatusCodes.CREATED).json(newUser);
+
+  // res.status(StatusCodes.CREATED).json({
+  //   user: {
+  //     userID: newUser._id,
+  //     name: newUser.name,
+  //     cart: newUser.cart,
+  //     favorites: newUser.favorites,
+  //     // will be a url link to the user profile picture
+  //     profile_picture: newUser.profile_picture,
+  //     email: newUser.email,
+  //     hasStore: newUser.hasStore,
+  //   },
+  //   token,
+  //   isAuthenticated: true,
+  // });
 };
 
 const login = async (req, res) => {
@@ -34,13 +88,13 @@ const login = async (req, res) => {
   const userLogin = await User.findOne({ email });
 
   if (!userLogin) {
-    throw new UnauthError("Invaild Credentials");
+    throw new BadRequestError("No user with that email and password exists");
   }
 
   const isPasswordCorrect = await userLogin.comparePassword(password);
 
   if (!isPasswordCorrect) {
-    throw new UnauthError("Invaild Credentials");
+    throw new UnauthError("Incorrect password");
   }
 
   const token = userLogin.createJWT();
@@ -62,7 +116,29 @@ const login = async (req, res) => {
   });
 };
 
+const updateUser = async (req, res) => {
+  const { userID } = req.params;
+  const { wantsUpdating, data } = req.body;
+  
+  // check what the user wants to update
+  if (wantsUpdating === "hasStore") {
+    await User.findByIdAndUpdate(userID, {
+      $set: { hasStore: data },
+    });
+  } else if (wantsUpdating === "products") {
+    await User.findByIdAndUpdate(userID, {
+      $set: { favorites: [...favorites, data] },
+    });
+  }
+  res.status(StatusCodes.OK).json({
+    message: "User updated successfully",
+  });
+
+}
+
+
 module.exports = {
   register,
   login,
+  updateUser
 };

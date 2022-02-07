@@ -23,7 +23,7 @@ const UserStore = () => {
 
   const { user, dispatch } = useUser();
 
-  console.log("userInfo", user);
+  // console.log("userInfo", user);
 
   const yourName = `${user.details.user.name.firstName} ${user.details.user.name.lastName}`;
   const yourAccountEmail = user.details.user.email;
@@ -52,11 +52,11 @@ const UserStore = () => {
         },
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     dispatch({ type: "STORE_INFO", payload: response.data });
   };
 
-  console.log("userID", user.details.user._id);
+  // console.log("userID", user.details.user._id);
 
   const updateUser = async (wantsUpdating, data) => {
     const response = axios
@@ -75,14 +75,14 @@ const UserStore = () => {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch({ type: "CREATE_STORE" });
       })
       .catch((err) => {
         console.log(err);
       });
 
-    console.log("user", user);
+    // console.log("user", user);
   };
 
   const handleFormSubmit = (e) => {
@@ -116,9 +116,9 @@ const UserStore = () => {
     formData.append("storeOwnerName", yourName);
     formData.append("description", target.description.value);
 
-    for (var key of formData.entries()) {
-      console.log(key[0] + ": " + key[1]);
-    }
+    // for (var key of formData.entries()) {
+    //   console.log(key[0] + ": " + key[1]);
+    // }
 
     createStore(formData);
     // dispatch({ type: "CREATE_STORE" });
@@ -135,6 +135,10 @@ const UserStore = () => {
           <div>
             <h2>{user.storeInfo.store.name}</h2>
             <p>{user.storeInfo.store.description}</p>
+
+            <button onClick={() => dispatch({ type: "DELETE_STORE" })}>
+              Delete Store
+            </button>
           </div>
         </>
       ) : showCreateStoreForm ? (

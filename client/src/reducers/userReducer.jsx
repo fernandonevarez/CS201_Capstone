@@ -20,6 +20,19 @@ const userReducer = (state, action) => {
       };
     }
 
+    case "DELETE_STORE": {
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          user: {
+            ...state.details.user,
+            hasStore: false,
+          },
+        },
+      };
+    }
+
     case "STORE_INFO": {
       return {
         ...state,

@@ -192,17 +192,19 @@ const Navbar = () => {
 
               {user.details.isAuthenticated ? (
                 <>
-                <div className="profile-icon">
-                  <CgProfile
-                    onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                  />
-                </div>
-                <div className="cart-icon">
-                <Link to="/cart">
-                  <BsCart4 />
-                </Link>
-              </div>
-              </>
+                  <div className="profile-icon">
+                    <CgProfile
+                      onClick={() =>
+                        setShowProfileDropdown(!showProfileDropdown)
+                      }
+                    />
+                  </div>
+                  <div className="cart-icon">
+                    <Link to="/cart">
+                      <BsCart4 />
+                    </Link>
+                  </div>
+                </>
               ) : (
                 <div
                   className="button"
@@ -212,52 +214,63 @@ const Navbar = () => {
                 </div>
               )}
 
-              
-
               {showProfileDropdown && (
                 <>
-                <div className="close"
-                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                ></div>
-                <div className="profile-dropdown">
-                  <ul>
-                    <li>
-                      <Link className="dropdown-item" to="/profile" onClick={() => {
-                        setShowProfileDropdown(!showProfileDropdown);
-                      }}>
-                        Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to={`/${user.details.user.userID}/store`} onClick={() => {
-                        setShowProfileDropdown(!showProfileDropdown);
-                      }}>
-                        Your Store
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/orders" onClick={() => {
-                        setShowProfileDropdown(!showProfileDropdown);
-                      }}>
-                        Orders
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => {
-                          dispatch({ type: "logout" });
-                          console.log("logout");
-                          console.log(user);
-                          setShowProfileDropdown(!showProfileDropdown);
-                        }}
-                      >
-                        Log Out
-                      </button>
-                    </li>
-                    <li></li>
-                  </ul>
-                </div>
+                  <div
+                    className="close"
+                    onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                  ></div>
+                  <div className="profile-dropdown">
+                    <ul>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/profile"
+                          onClick={() => {
+                            setShowProfileDropdown(!showProfileDropdown);
+                          }}
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={`/${user.details.user._id}/store`}
+                          onClick={() => {
+                            setShowProfileDropdown(!showProfileDropdown);
+                          }}
+                        >
+                          Your Store
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/orders"
+                          onClick={() => {
+                            setShowProfileDropdown(!showProfileDropdown);
+                          }}
+                        >
+                          Orders
+                        </Link>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => {
+                            dispatch({ type: "logout" });
+                            console.log("logout");
+                            console.log(user);
+                            setShowProfileDropdown(!showProfileDropdown);
+                          }}
+                        >
+                          Log Out
+                        </button>
+                      </li>
+                      <li></li>
+                    </ul>
+                  </div>
                 </>
               )}
             </div>

@@ -93,14 +93,16 @@ const login = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { userID } = req.params;
+  const { id: userID } = req.params;
   const { wantsUpdating, data } = req.body;
+
+  console.log("userID", userID);
 
   // check what the user wants to update
   if (wantsUpdating === "hasStore") {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: userID },
-      { ...user, wantsUpdating: data },
+      { wantsUpdating: data },
       { new: true, runValidators: true }
     );
 

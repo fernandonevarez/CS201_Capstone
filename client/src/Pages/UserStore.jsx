@@ -30,6 +30,12 @@ const UserStore = () => {
 
   const [showCreateStoreForm, setShowCreateStoreForm] = useState(false);
 
+  const [hasStore, setHasStore] = useState(user.details.user.hasStore);
+
+  useEffect(() => {
+    setHasStore(user.details.user.hasStore);
+  }, [user.details.user.hasStore]);
+
   const [logoData, setLogoData] = useState({});
 
   console.log(user);
@@ -47,23 +53,36 @@ const UserStore = () => {
       }
     );
     console.log(response.data);
+    dispatch({ type: "STORE_INFO", payload: response.data });
   };
 
+  console.log("userID", user.details.user._id);
+
   const updateUser = async (wantsUpdating, data) => {
-    const reponse = axios.put(
-      "http://localhost:3000/api/v1/auth/updateUser",
-      {
-        wantsUpdating: wantsUpdating,
-        data: data,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "http://localhost:3001",
-          Authorization: `Bearer ${user.details.token}`,
+    const response = axios
+      .put(
+        `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
+        {
+          wantsUpdating: wantsUpdating,
+          data: data,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "http://localhost:3001",
+            Authorization: `Bearer ${user.details.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        dispatch({ type: "CREATE_STORE" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log("user", user);
   };
 
   const handleFormSubmit = (e) => {
@@ -97,13 +116,12 @@ const UserStore = () => {
     formData.append("storeOwnerName", yourName);
     formData.append("description", target.description.value);
 
-    //   for(var key of formData.entries()) {
-    //     console.log(key[0] + ', ' + key[1]);
-    // }
+    for (var key of formData.entries()) {
+      console.log(key[0] + ": " + key[1]);
+    }
 
     createStore(formData);
     // dispatch({ type: "CREATE_STORE" });
-
     updateUser("hasStore", true);
   };
 
@@ -113,9 +131,10 @@ const UserStore = () => {
     <main>
       {user.details.user.hasStore ? (
         <>
-          <h1>User's Store</h1>
+          <h1>Your Store</h1>
           <div>
-            <h2>Store name goes here</h2>
+            <h2>{user.storeInfo.store.name}</h2>
+            <p>{user.storeInfo.store.description}</p>
           </div>
         </>
       ) : showCreateStoreForm ? (

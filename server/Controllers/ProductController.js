@@ -68,7 +68,6 @@ const createProduct = async (req, res) => {
       target: target,
       type: type,
       store: store,
-
     });
     res.status(200).json({ product });
   }
@@ -157,7 +156,7 @@ const updateProduct = async (req, res) => {
     const product = await Product.findByIdAndUpdate(
       { _id: productID, createdBy: userID }, // How we are finding the product
       { name, price, description, imageArray: imageResult.secure_url }, // Whats changing in the product
-      { new: true, runValidators: true } // options
+      { new: true } // options
     );
     if (!product) {
       throw new NotFoundError(`No product with id ${productID}`);

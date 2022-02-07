@@ -23,9 +23,8 @@ const UserStore = () => {
 
   const { user, dispatch } = useUser();
 
-  
   console.log("userInfo", user);
-  
+
   const yourName = `${user.details.user.name.firstName} ${user.details.user.name.lastName}`;
   const yourAccountEmail = user.details.user.email;
 
@@ -51,18 +50,21 @@ const UserStore = () => {
   };
 
   const updateUser = async (wantsUpdating, data) => {
-    const reponse = axios.put("http://localhost:3000/api/v1/auth/updateUser",
-    {
-      wantsUpdating,
-      data
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        // "Access-Control-Allow-Origin": "http://localhost:3001",
-        Authorization: `Bearer ${user.details.token}`,
-    }});
-  }
+    const reponse = axios.put(
+      "http://localhost:3000/api/v1/auth/updateUser",
+      {
+        wantsUpdating: wantsUpdating,
+        data: data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "http://localhost:3001",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      }
+    );
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -95,18 +97,15 @@ const UserStore = () => {
     formData.append("storeOwnerName", yourName);
     formData.append("description", target.description.value);
 
-  //   for(var key of formData.entries()) {
-  //     console.log(key[0] + ', ' + key[1]);
-  // }
+    //   for(var key of formData.entries()) {
+    //     console.log(key[0] + ', ' + key[1]);
+    // }
 
     createStore(formData);
     // dispatch({ type: "CREATE_STORE" });
 
     updateUser("hasStore", true);
-    
   };
-
-  
 
   // console.log(logoData);
 

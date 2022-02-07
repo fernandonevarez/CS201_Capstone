@@ -19,7 +19,7 @@ import {
 import "../../styles/components/auth/Register.scss";
 // import { useUser } from "../contexts/useUser";
 
-const token = localStorage.getItem("userToken");
+// const token = localStorage.getItem("userToken");
 
 const Register = ({ close, change }) => {
   const [error, setError] = useState("");
@@ -33,8 +33,8 @@ const Register = ({ close, change }) => {
     email,
     password,
     passwordConfirm,
-    firstName,
-    lastName
+    firstname,
+    lastname
   ) => {
     if (password == passwordConfirm) {
       console.log("passwords match");
@@ -44,30 +44,38 @@ const Register = ({ close, change }) => {
 
       // console.log("email", email, "password", password, "passwordConfirm", passwordConfirm, "firstName", firstName, "lastName", lastName);
 
-      // try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/register",
+      // $29Q.aVloO2Z4A/l7zrpRnG
 
-        {
-          // things the user submitted
-          name: {
-            firstName: firstName,
-            lastName: lastName,
+      // try {
+      const response = await axios
+        .post(
+          "http://localhost:3000/api/v1/auth/register",
+
+          {
+            // things the user submitted
+            name: {
+              firstName: firstname,
+              // middleName: "",
+              lastName: lastname,
+            },
+            email: email,
+            password: passwordConfirm,
+            // things we added to the user's account
+            cart: [],
+            favorites: [],
+            profile_picture: "",
+            hasStore: false,
           },
-          email: email,
-          password: passwordConfirm,
-          // things we added to the user's account
-          cart: [],
-          favorites: [],
-          profile_picture: "",
-          hasStore: false,
-        },
-        {
-          // "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3001",
-        }
-      );
-      // console.log(response.data);
+          {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001",
+          }
+        )
+        .catch((err) => {
+          console.log(err);
+        });
+
+      console.log(response.data);
 
       dispatch({ type: "login", payload: response.data });
 
@@ -100,7 +108,6 @@ const Register = ({ close, change }) => {
     e.preventDefault();
     const { target } = e;
     // registerUser()
-    console.log("email", target);
 
     const email = target.email.value;
     const password = target.password.value;
@@ -109,6 +116,12 @@ const Register = ({ close, change }) => {
 
     const firstname = target.fname.value;
     const lastname = target.lname.value;
+
+    // console.log("email", email);
+    // console.log("password", password);
+    // console.log("passwordConfirm", passwordConfirm);
+    // console.log("firstName", firstname);
+    // console.log("lastName", lastname);
 
     // console.log(email, password, passwordConfirm, firstname, lastname);
 
@@ -122,7 +135,7 @@ const Register = ({ close, change }) => {
       setError("Please fill out all fields");
     } else {
       registerUser(email, password, passwordConfirm, firstname, lastname);
-      // console.log(email, password, passwordConfirm, firstname, lastname)
+      // console.log(email, password, passwordConfirm, firstname, lastname);
     }
 
     // setError("some error triggered when form validation is failed")

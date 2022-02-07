@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     middleName: {
       type: String,
       required: false,
-      minlength: [2, "must be more than 2 characters"],
+      // minlength: [2, "must be more than 2 characters"],
       maxLength: [20, "must be less than 10 characters"],
     },
     lastName: {
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "email must be provided"],
-    unique: [true, "email must be unique"],
+    unique: [true, "email already has an account"],
     // validate:
     //   /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
@@ -44,6 +44,27 @@ const userSchema = new mongoose.Schema({
     minlength: [6, "password must be more than 5 characters"],
     // validate:
     //     /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/g
+  },
+
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Favorite",
+    },
+  ],
+  profile_picture: {
+    type: String,
+    required: false,
+  },
+  hasStore: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -25,46 +25,58 @@ const UserStore = () => {
 
   // console.log("userInfo", user);
 
-  const yourName = `${user.details.user.name.firstName} ${user.details.user.name.lastName}`;
-  const yourAccountEmail = user.details.user.email;
-
+  // if (user.isAuthenticated) {
+    
+  // }
+const yourName = `${user.details.user.name.firstName} ${user.details.user.name.lastName}`;
+    const yourAccountEmail = user.details.user.email;
+    useEffect(() => {
+      setHasStore(user.details.user.hasStore);
+      // if(yourName !== undefined) {
+      //   setPassedChecker(true);
+      // }else {
+      //   user.details.isAuthenticated = false;
+      // }
+    }, [user.details.user.hasStore]);
   const [showCreateStoreForm, setShowCreateStoreForm] = useState(false);
 
   const [hasStore, setHasStore] = useState(user.details.user.hasStore);
 
-  useEffect(() => {
-    setHasStore(user.details.user.hasStore);
-  }, [user.details.user.hasStore]);
-
   const [logoData, setLogoData] = useState({});
 
-  console.log(user);
+  // const [passedChecker, setPassedChecker] = useState(false);
+
+  console.log(user.details);
 
   const createStore = async (storeInfo) => {
-    const response = await axios.post(
-      `http://localhost:3000/api/v1/user/store`,
-      storeInfo,
-      {
+    const response = await axios
+      .post(`http://localhost:3000/api/v1/user/store`, storeInfo, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Access-Control-Allow-Origin": "http://localhost:3001",
           Authorization: `Bearer ${user.details.token}`,
         },
-      }
-    );
-    // console.log(response.data);
-    dispatch({ type: "STORE_INFO", payload: response.data });
+      })
+      .then((res) => {
+        console.log("store info", res.data.store);
+        // console.log(dispatch({ type: "STORE_INFO", payload: res.data }))
+        dispatch({ type: "STORE_INFO", payload: res.data.store });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // console.log("userID", user.details.user._id);
 
   const updateUser = async (wantsUpdating, data) => {
-    const response = axios
+    const response = await axios
       .put(
         `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
         {
           wantsUpdating: wantsUpdating,
           data: data,
+          userPassword: user.details.user.password,
         },
         {
           headers: {
@@ -75,7 +87,7 @@ const UserStore = () => {
         }
       )
       .then((response) => {
-        // console.log(response.data);
+        console.log("updated user", response.data);
         dispatch({ type: "CREATE_STORE" });
       })
       .catch((err) => {
@@ -125,93 +137,98 @@ const UserStore = () => {
     updateUser("hasStore", true);
   };
 
-  // console.log(logoData);
+  console.log("user", user);
 
   return (
     <main>
-      {user.details.user.hasStore ? (
-        <>
-          <h1>Your Store</h1>
+      {user.details.isAuthenticated ? (
+        user.details.user.hasStore  ? (
+          <>
+            <h1>Your Store</h1>
+            <div>
+              <h2>---store name here---</h2>
+              <h2>{user.details.storeInfo.name}</h2>
+              {/* <p>{user.storeInfo.store.description}</p> */}
+  
+              <button onClick={() => dispatch({ type: "DELETE_STORE" })}>
+                Delete Store
+              </button>
+            </div>
+          </>
+        ) : showCreateStoreForm ? (
+          // <CreateStorePopup />
+          <>
+            <h1 className="title">Easily Create a store to start selling</h1>
+  
+            <form
+              className="create-store-form"
+              encType="multipart/form-data"
+              onSubmit={(e) => handleFormSubmit(e)}
+            >
+              <div className="form-info">
+                anything with a <span>*</span> is required
+              </div>
+              <div className="section-wrapper">
+                <label>Store Name</label>
+                <input type="text" name="storeName" />
+                <div className="input-details">
+                  * If left blank, it will default to {yourName}'s Store
+                </div>
+              </div>
+              <div className="section-wrapper">
+                <label>Business Email</label>
+                <input type="text" name="businessEmail" />
+                <div className="input-details">
+                  * If left blank, it will default to your account's email:{" "}
+                  {yourAccountEmail}
+                </div>
+              </div>
+              <div className="section-wrapper">
+                <label>
+                  logo upload <span>*</span>
+                </label>
+                <input
+                  className="image-upload-input"
+                  type="file"
+                  onChange={(e) => {
+                    // console.log(e.target.files[0]);
+                    setLogoData(e.target.files[0]);
+                  }}
+                />
+                <div className="input-details">
+                  * you need to upload a logo for your store
+                </div>
+              </div>
+              <div className="section-wrapper">
+                <label>
+                  Business description <span>*</span>
+                </label>
+                <textarea
+                  rows="5"
+                  cols="50"
+                  name="description"
+                  placeholder="write a description of your store"
+                ></textarea>
+                <div className="input-details">
+                  * Please describe your business so others can know what you sell
+                </div>
+              </div>
+  
+              <button type="submit" onSubmit={(e) => handleFormSubmit(e)}>
+                Create
+              </button>
+            </form>
+          </>
+        ) : (
           <div>
-            <h2>{user.storeInfo.store.name}</h2>
-            <p>{user.storeInfo.store.description}</p>
-
-            <button onClick={() => dispatch({ type: "DELETE_STORE" })}>
-              Delete Store
+            <h3>Your don't have a store yet</h3>
+            <button onClick={() => setShowCreateStoreForm(!showCreateStoreForm)}>
+              Create Store
             </button>
           </div>
-        </>
-      ) : showCreateStoreForm ? (
-        // <CreateStorePopup />
-        <>
-          <h1 className="title">Easily Create a store to start selling</h1>
-
-          <form
-            className="create-store-form"
-            encType="multipart/form-data"
-            onSubmit={(e) => handleFormSubmit(e)}
-          >
-            <div className="form-info">
-              anything with a <span>*</span> is required
-            </div>
-            <div className="section-wrapper">
-              <label>Store Name</label>
-              <input type="text" name="storeName" />
-              <div className="input-details">
-                * If left blank, it will default to {yourName}'s Store
-              </div>
-            </div>
-            <div className="section-wrapper">
-              <label>Business Email</label>
-              <input type="text" name="businessEmail" />
-              <div className="input-details">
-                * If left blank, it will default to your account's email:{" "}
-                {yourAccountEmail}
-              </div>
-            </div>
-            <div className="section-wrapper">
-              <label>
-                logo upload <span>*</span>
-              </label>
-              <input
-                className="image-upload-input"
-                type="file"
-                onChange={(e) => {
-                  // console.log(e.target.files[0]);
-                  setLogoData(e.target.files[0]);
-                }}
-              />
-              <div className="input-details">
-                * you need to upload a logo for your store
-              </div>
-            </div>
-            <div className="section-wrapper">
-              <label>
-                Business description <span>*</span>
-              </label>
-              <textarea
-                rows="5"
-                cols="50"
-                name="description"
-                placeholder="write a description of your store"
-              ></textarea>
-              <div className="input-details">
-                * Please describe your business so others can know what you sell
-              </div>
-            </div>
-
-            <button type="submit" onSubmit={(e) => handleFormSubmit(e)}>
-              Create
-            </button>
-          </form>
-        </>
-      ) : (
-        <div>
-          <h3>Your don't have a store yet</h3>
-          <button onClick={() => setShowCreateStoreForm(!showCreateStoreForm)}>
-            Create Store
-          </button>
-        </div>
+        )
+      ): (
+        <h1>You need to be logged in to create a store</h1>
       )}
 
       {/* <Footer className="footer"/> */}

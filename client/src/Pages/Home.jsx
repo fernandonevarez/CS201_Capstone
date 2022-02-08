@@ -4,7 +4,7 @@ import "../styles/pages/Home.scss";
 
 // import axios
 import axios from "axios";
-import LoginForm from "../Components/auth/LoginForm";
+// import LoginForm from "../Components/auth/LoginForm";
 import Register from "../Components/auth/Register";
 // import LoginButton from "../Components/LoginButton";
 // import LogoutButton from "../Components/LogoutButton";

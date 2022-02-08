@@ -51,7 +51,7 @@ const register = async (req, res) => {
 
   const user = await User.create(req.body);
   const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ user, token, isAuthenticated: true });
+  res.status(StatusCodes.CREATED).json({ user, storeInfo: {}, token, isAuthenticated: true });
 };
 
 const login = async (req, res) => {
@@ -78,23 +78,26 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({
     // will hold all the datails of the user
     user: {
-      userID: userLogin._id,
+      _id: userLogin._id,
       name: userLogin.name,
       cart: userLogin.cart,
       favorite: userLogin.favorites,
       // will be a url link to the user profile picture
+      password: userLogin.password,
       profile_picture: "",
       email: userLogin.email,
       hasStore: userLogin.hasStore,
     },
+    storeInfo: {},
     token: token,
     isAuthenticated: true,
+
   });
 };
 
 const updateUser = async (req, res) => {
   const { id: userID } = req.params;
-  const { wantsUpdating, data } = req.body;
+  const { wantsUpdating, data, userPassword } = req.body;
 
   console.log("userID", userID);
 
@@ -115,9 +118,21 @@ const updateUser = async (req, res) => {
       updatedUser,
       message: `User with id: ${userID} has been updated`,
     });
-  } else if (wantsUpdating === "products") {
-    await User.findByIdAndUpdate(userID, {
-      $set: { favorites: [...favorites, data] },
+  } else if (wantsUpdating === "storeInfo") {
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: userID },
+      { storeInfo: data },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      throw new BadRequestError(
+        `User does not exist, no user with id: ${userID}`
+      );
+    }
+    res.status(StatusCodes.OK).json({
+      updatedUser: {...updateUser, userPassword},
+      message: `User with id: ${userID} has been updated`,
     });
   }
   // res.status(StatusCodes.OK).json({

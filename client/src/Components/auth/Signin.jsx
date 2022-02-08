@@ -33,6 +33,10 @@ const Signin = ({ close, change }) => {
       //   setError("Please fill out all fields");
       console.log("Please fill out all fields");
     } else {
+
+      console.log("userEmail", userEmail);
+      console.log("userPassword", userPassword);
+
       const response = await axios.post(
         "http://localhost:3000/api/v1/auth/login",
         {

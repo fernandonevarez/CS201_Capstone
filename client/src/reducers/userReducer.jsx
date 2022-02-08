@@ -4,7 +4,7 @@ const userReducer = (state, action) => {
       return { ...state, details: action.payload };
     }
     case "logout": {
-      return { ...state, details: {} };
+      return { ...state, details: {}, storeInfo: {} };
     }
 
     case "CREATE_STORE": {
@@ -34,9 +34,13 @@ const userReducer = (state, action) => {
     }
 
     case "STORE_INFO": {
+      console.log("this is what is returning", action.payload);
       return {
         ...state,
-        storeInfo: action.payload,
+        details: {
+          ...state.details,
+          storeInfo: action.payload
+        },
       };
     }
 

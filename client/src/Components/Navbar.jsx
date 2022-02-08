@@ -267,6 +267,12 @@ const Navbar = () => {
                         >
                           Log Out
                         </button>
+                        {/* <Link onClick={() => {
+                          console.log("logout");
+                          console.log(user.details);
+                          dispatch({ type: "logout" })}} to={`/`} className="dropdown-item" >
+                        Logout
+                        </Link> */}
                       </li>
                       <li></li>
                     </ul>

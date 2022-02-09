@@ -27,5 +27,12 @@
   },
   "engines": {
     "node": "16.x"
-  }
+  },
+  "name": "7",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

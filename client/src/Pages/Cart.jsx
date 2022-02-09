@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  } from "../styles/pages/Cart.scss";
+import {} from "../styles/pages/Cart.scss";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -21,11 +21,11 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3
 const Cart = () => {
   // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
-  const { userCookies } = useUser();
+  const { user, userCookies } = useUser();
 
   console.log(userCookies.token);
 
-  async function checkout() {
+  const checkout = async () => {
     const checkout = await axios.post(
       "http://localhost:3000/api/v1/create-checkout-session",
       cart,
@@ -37,7 +37,29 @@ const Cart = () => {
     );
     const stripeURL = checkout.data.url;
     window.location = stripeURL;
-  }
+  };
+
+  const UserCart = async () => {
+
+    console.log(user.details.user);
+
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/user/${user.details.user._id}/cart`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001/cart",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      }
+    );
+    console.log("user's cart", response.data);
+  };
+
+  useEffect(() => {
+    UserCart();
+  }, []);
+
 
   // console.log(`User Auth Status: ${isAuthenticated}`);
 
@@ -50,16 +72,13 @@ const Cart = () => {
             <h2>Cart</h2>
           </div>
           <div className="products">
-            <img
-              src={catImg}
-              alt="placeholder"
-            />
+            <img src={catImg} alt="placeholder" />
             <div className="info">
-              <div className="price-name"> 
-                <h3 id="product-price"> the sky </h3> 
+              <div className="price-name">
+                <h3 id="product-price"> the sky </h3>
                 <h3 id="product-name"> $yeah.00 </h3>
               </div>
-              <div className="save-rmove"> 
+              <div className="save-rmove">
                 <button id="svl">Save For Later</button>
                 <button id="rmve">Remove</button>
               </div>

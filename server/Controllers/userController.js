@@ -115,14 +115,19 @@ const addToCart = async (req, res) => {
 
 const getUserCart = async (req, res) => {
   const { userID } = req.params;
-  const user = await User.findById(userID);
+  const user = await User.findById({_id: userID});  
 
   if (!user) {
     throw new BadRequestError("Invalid user");
   }
 
+  // find the users cart
+  const cart = user.cart;
+
+  console.log(cart);
+
   res.status(200).json({ cart });
-  console.log({ user });
+  // console.log({ user });
 }
 
 

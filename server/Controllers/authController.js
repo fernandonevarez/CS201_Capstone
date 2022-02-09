@@ -144,6 +144,25 @@ const updateUser = async (req, res) => {
       updatedUser: {...updateUser, password: userPassword},
       message: `User with id: ${userID} has been updated`,
     });
+  }else if (wantsUpdating === "addToFavorites") {
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: userID },
+      { favorite: data },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      throw new BadRequestError(
+        `User does not exist, no user with id: ${userID}`
+      );
+    }
+
+    console.log("password", userPassword);
+
+    res.status(StatusCodes.OK).json({
+      updatedUser: {...updateUser, password: userPassword},
+      message: `User with id: ${userID} has been updated`,
+    });
   }
   // res.status(StatusCodes.OK).json({
   //   message: "User updated successfully",

@@ -48,7 +48,7 @@ userRouter.route("/:userID/update").put(updateUser);
 
 userRouter.route("/:userID/cart/:productID").post(addToCart);
 
-userRouter.route("/:userID/cart").get(getUserCart);
+userRouter.route("/:userID/cart").get(authenticationMiddleware, getUserCart);
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

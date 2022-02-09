@@ -67,13 +67,20 @@ const login = async (req, res) => {
     throw new BadRequestError("No user with that email and password exists");
   }
 
+  console.log("userLogin", userLogin);
+  console.log("password", password);
+
   const isPasswordCorrect = await userLogin.comparePassword(password);
+
+  console.log("isPasswordCorrect", isPasswordCorrect);
 
   if (!isPasswordCorrect) {
     throw new UnauthError("Incorrect password");
   }
 
   const token = userLogin.createJWT();
+
+  console.log("password", userLogin.password);
 
   res.status(StatusCodes.OK).json({
     // will hold all the datails of the user
@@ -115,7 +122,7 @@ const updateUser = async (req, res) => {
       );
     }
     res.status(StatusCodes.OK).json({
-      updatedUser,
+      updatedUser: {...updateUser, userPassword},
       message: `User with id: ${userID} has been updated`,
     });
   } else if (wantsUpdating === "storeInfo") {
@@ -130,8 +137,11 @@ const updateUser = async (req, res) => {
         `User does not exist, no user with id: ${userID}`
       );
     }
+
+    console.log("password", userPassword);
+
     res.status(StatusCodes.OK).json({
-      updatedUser: {...updateUser, userPassword},
+      updatedUser: {...updateUser, password: userPassword},
       message: `User with id: ${userID} has been updated`,
     });
   }

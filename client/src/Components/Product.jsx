@@ -18,7 +18,9 @@ const Product = (product) => {
 
   const { user, isAuthenticated } = useUser();
 
-  const { id: userID } = user;
+  const { _id: userID } = user;
+
+  console.log("product", product.product);
 
   const { _id: productID, imageArray, price, name } = product.product;
 
@@ -27,17 +29,19 @@ const Product = (product) => {
   const addToFavorites = async (userID, productID) => {
     // still need to get the user's id
     setIsFavorited(!isFavorited);
-    if (isFavorited == false) {
-      // console.log("product added to user's favorites");
-      console.log("product ID:", productID);
-      if (isAuthenticated) {
-        console.log("user ID:", userID);
-      } else {
-        console.log("user is not logged in");
-      }
-    } else {
-      console.log("product removed from user's favorites");
-    }
+    // if (isFavorited == false) {
+    //   // console.log("product added to user's favorites");
+    //   console.log("product ID:", productID);
+    //   if (isAuthenticated) {
+    //     console.log("user ID:", userID);
+    //   } else {
+    //     console.log("user is not logged in");
+    //   }
+    // } else {
+    //   console.log("product removed from user's favorites");
+    // }
+
+    console.log("userID", userID);
   };
 
   if (imageArray) {
@@ -59,6 +63,7 @@ const Product = (product) => {
             <FaHeart
               onClick={() => {
                 addToFavorites(userID, productID);
+                console.log("product added to user's favorites");
               }}
               className="icon"
               style={{

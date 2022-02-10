@@ -215,6 +215,7 @@ const Navbar = () => {
               )}
 
               {showProfileDropdown && (
+                // reroute the user to the homepage if they are not logged in
                 <>
                   <div
                     className="close"

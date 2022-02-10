@@ -1,4 +1,6 @@
 const User = require("../Model/userSchema");
+
+const Product = require("../Model/ProductSchema");
 const { BadRequestError, UnauthError } = require("../errors");
 require("dotenv").config();
 const JWT = require("jsonwebtoken");
@@ -67,7 +69,12 @@ const login = async (req, res) => {
     throw new BadRequestError("No user with that email and password exists");
   }
 
+  console.log("userLogin", userLogin);
+  console.log("password", password);
+
   const isPasswordCorrect = await userLogin.comparePassword(password);
+
+  console.log("isPasswordCorrect", isPasswordCorrect);
 
   if (!isPasswordCorrect) {
     throw new UnauthError("Incorrect password");
@@ -75,13 +82,15 @@ const login = async (req, res) => {
 
   const token = userLogin.createJWT();
 
+  console.log("password", userLogin.password);
+
   res.status(StatusCodes.OK).json({
     // will hold all the datails of the user
     user: {
       _id: userLogin._id,
       name: userLogin.name,
       cart: userLogin.cart,
-      favorite: userLogin.favorites,
+      favorites: userLogin.favorites,
       // will be a url link to the user profile picture
       password: userLogin.password,
       profile_picture: "",
@@ -115,7 +124,7 @@ const updateUser = async (req, res) => {
       );
     }
     res.status(StatusCodes.OK).json({
-      updatedUser,
+      updatedUser: { ...updateUser, userPassword },
       message: `User with id: ${userID} has been updated`,
     });
   } else if (wantsUpdating === "storeInfo") {
@@ -130,14 +139,122 @@ const updateUser = async (req, res) => {
         `User does not exist, no user with id: ${userID}`
       );
     }
+
+    console.log("password", userPassword);
+
     res.status(StatusCodes.OK).json({
-      updatedUser: {...updateUser, userPassword},
+      updatedUser: { ...updateUser, password: userPassword },
       message: `User with id: ${userID} has been updated`,
     });
+  } else if (wantsUpdating === "addToFavorites") {
+
+    const { userID, productID } = data;
+
+    // find single product
+    const product = await Product.findById({ _id: productID });
+
+    if (!product) {
+      throw new BadRequestError(
+        `Product does not exist, no product with id: ${productID}`
+      );
+    }
+
+    const user = await User.findById({ _id: userID });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: userID },
+      {
+        $push: {
+          favorites: [
+            {
+              _id: product._id,
+              name: product.name,
+              price: product.price,
+              imageArray: product.imageArray,
+              description: product.description,
+              target: product.target,
+              type: product.type,
+              likes: product.likes,
+              store: product.store,
+              createdAt: product.createdAt,
+              __v: product.__v,
+            }
+          ]
+        }
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      throw new BadRequestError(
+        `User does not exist, no user with id: ${userID}`
+      );
+    }
+
+    res.status(StatusCodes.OK).json({
+      user: updatedUser
+    });
+  } else if (wantsUpdating === "removeFromFavorites") {
+
+  } else if (wantsUpdating === "addToCart") {
+
+    const { userID, productID } = data;
+
+    // find single product
+    const product = await Product.findById({ _id: productID });
+
+    if (!product) {
+      throw new BadRequestError(
+        `Product does not exist, no product with id: ${productID}`
+      );
+    }
+
+    const user = await User.findById({ _id: userID });
+
+    user.cart.map(async (item) => {
+      if (item._id === product._id) {
+        // product already in cart
+        throw new BadRequestError(
+          `product with id: ${productID} already in cart`)
+      } else {
+        // product not in cart
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: userID },
+          {
+            //push to cart array if it already doesn't exist in the array
+            $push: {
+              cart: [
+                {
+                  _id: product._id,
+                  name: product.name,
+                  price: product.price,
+                  imageArray: product.imageArray,
+                  description: product.description,
+                  target: product.target,
+                  type: product.type,
+                  likes: product.likes,
+                  store: product.store,
+                  createdAt: product.createdAt,
+                  __v: product.__v,
+                }
+              ]
+            }
+          },
+          { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+          throw new BadRequestError(
+            `User does not exist, no user with id: ${userID}`
+          );
+        }
+
+        res.status(StatusCodes.OK).json({
+          user: updatedUser
+        });
+      }
+    });
   }
-  // res.status(StatusCodes.OK).json({
-  //   message: "User updated successfully",
-  // });
 };
 
 module.exports = {

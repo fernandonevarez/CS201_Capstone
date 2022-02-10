@@ -1,0 +1,78 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.everything {
+    //align-items: center;
+    width: 100%;
+    min-height: 100vh;
+
+    .loading-container {
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        //justify-self: center;
+        //align-content: center;
+        align-items: center;
+        align-self: center;//
+
+        .load-circle {
+            z-index: 2;
+            position: absolute;
+            border: 10px solid #cfd7df;
+            border-top: 10px solid $blue;
+            width: 9em;
+            height: 9em;
+            //width: 45%;
+            //height: 50%;
+            animation: spinny 1.5s cubic-bezier(0.46, 0.12, 0.54, 0.76) infinite;
+            border-radius: 50%;
+            /*.circle{
+            stroke: $blue;
+            stroke-linecap: round;
+            animation: woosh 1.5s ease-in-out infinite;
+        }*/
+        }
+
+        @keyframes spinny {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /*@keyframes spinny {
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes woosh {
+        0%{
+            stroke-dasharray: 1, 150;
+            //stroke-dashoffset: -35;
+        }
+        50%{
+            stroke-dasharray: 90, 150;
+            //stroke-dashoffset: -35;
+        }
+        100%{
+            stroke-dasharray: 90, 150;
+            //stroke-dashoffset: -124;
+        }
+    }*/
+
+        .load-text {
+            z-index: 3;
+            position: absolute;
+            color: $blue;
+            font-family: "Playfair Display";
+            font-size: 150%;
+            font-weight: 650;
+            text-align: center;
+            margin: auto;
+            //width: 100%;
+        }
+    }
+}

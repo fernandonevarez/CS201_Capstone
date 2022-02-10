@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
+const Product = require("./ProductSchema");
+
+
+
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -46,18 +50,19 @@ const userSchema = new mongoose.Schema({
     //     /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/g
   },
 
-  cart: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-  ],
-  favorites: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Favorite",
-    },
-  ],
+  // this is how you can allow user's to be able to add object to there own schema
+  cart: {
+    type: [
+      Product.schema,
+    ],
+    required: false,
+  },
+  favorites: {
+    type: [
+      Product.schema,
+    ],
+    required: false,
+  },
   profile_picture: {
     type: String,
     required: false,

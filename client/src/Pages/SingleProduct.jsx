@@ -48,44 +48,29 @@ const SingleProduct = () => {
   // console.log("userID", user.details.user.userID)
 
   const pushToCart = async () => {
-    // console.log("product pushed to user's cart");
-
     
-
-    // const userID = user.sub.split("|")[1];
-
-    const userID = user.details.user.userID;
-    // const userID = "61f5d7f057bd3a451bcfe260";
-
-    
-    console.log("userID", userID);
-
-    // const response = await axios.post(
-    //   `http://localhost:3000/api/v1/user/${userID}/cart/${id}`,
-    //   product,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${user.details.user.token}`,
-    //       "Access-Control-Allow-Origin": "http://localhost:3001",
-
-    //     },
-    //   }
-    // )
-
-    // push pruduct to user's cart
-    const response = await axios.post(
-      `http://localhost:3000/api/v1/user/${userID}/cart/${id}`,
-      product,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Access-Control-Allow-Origin": "http://localhost:3001",
+    const response = await axios
+      .put(
+        `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
+        {
+          wantsUpdating: "addToCart",
+          data: { userID: user.details.user._id, productID: product._id },
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "http://localhost:3001",
+            Authorization: `Bearer ${user.details.token}`,
+        },
+      })
+      .then((response) => {
+        console.log("added to cart", response.data);
+        // dispatch({ type: "favorite", payload: response.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-
-    console.log(`cart response: ${response}`);
   };
 
   console.log("product", product);
@@ -112,6 +97,7 @@ const SingleProduct = () => {
 
         <div className="product-info">
           <h1>{name}</h1>
+          {/* <img src={imageArray[0]} alt="image of product" /> */}
           <h2>&#65284;{price / 100}</h2>
           <p>{description}</p>
         </div>

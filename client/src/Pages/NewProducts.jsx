@@ -8,10 +8,14 @@ import Loading from "../Components/Loading";
 import Footer from "../Components/Footer";
 import Product from "../Components/products/Product";
 
+import { useUser } from "../contexts/useUser";
+
 const NewProducts = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,7 +23,7 @@ const NewProducts = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${user.details.token}})}`,
           "Access-Control-Allow-Origin": "http://localhost:3001",
         },
       });
@@ -40,7 +44,7 @@ const NewProducts = () => {
       setIsLoading(false);
     };
     fetchProducts();
-  }, [products]);
+  }, [products, user.details]);
 
   // console.log("products", products);
 

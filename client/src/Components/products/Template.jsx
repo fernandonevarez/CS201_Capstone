@@ -8,28 +8,41 @@ import axios from "axios";
 const Template = ({ name, image, price, classAddition, id: productID }) => {
   const { user, dispatch } = useUser();
 
-//   useEffect(() => {
-//     //   gets the user's id
-//     const { _id: userID } = user.details.user;
-//   }, [user.details.user]); // updates every time user changes
-
-
+  console.log("images", image);
 
   const addToFavorites = async (userID, productID) => {
-    console.log("added to favorites");
-
-    const response = await axios.post()
-
-  }
+    // console.log("added to favorites");
+    // getProduct(productID);
+    const response = await axios
+      .put(
+        `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
+        {
+          wantsUpdating: "addToFavorites",
+          data: { userID: userID, productID: productID },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "http://localhost:3001",
+            Authorization: `Bearer ${user.details.token}`,
+        }}
+      ).then((response) => {
+        console.log("added to favorites", response.data);
+        // dispatch({ type: "favorite", payload: response.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const removeFromFavorites = async (userID, productID) => {
-      console.log("removed from favorites");
-  }
+    console.log("removed from favorites");
+  };
 
   return (
     <div className={`product-${classAddition}`}>
       <div className="atop">
-        <Link to={`/products/${name}`}>
+        <Link to={`/products/${productID}`}>
           <div className="image">
             <img src={image} alt={name} />
           </div>
@@ -46,9 +59,15 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
             }
           >
             {user.products.favorites.find((fav) => fav.name === name) ? (
-              <FaHeart onClick={() => removeFromFavorites(user.details.user._id, productID)} />
+              <FaHeart
+                onClick={() =>
+                  removeFromFavorites(user.details.user._id, productID)
+                }
+              />
             ) : (
-              <FaRegHeart onClick={() => addToFavorites(user.details.user._id, productID)} />
+              <FaRegHeart
+                onClick={() => addToFavorites(user.details.user._id, productID)}
+              />
             )}
           </div>
         </div>

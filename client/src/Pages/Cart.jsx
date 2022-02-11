@@ -9,10 +9,7 @@ import { useUser } from "../contexts/useUser";
 //temp imgs
 import catImg from "../assets/images/temp/cat.png";
 
-const cart = [
-  { id: 1, quantity: 3 },
-  { id: 2, quantity: 1 },
-];
+
 
 // const token = localStorage.getItem("userToken");
 
@@ -21,9 +18,13 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3
 const Cart = () => {
   // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
+  const [hasCartItems, setHasCartItems] = useState(false)
+
   const { user, userCookies } = useUser();
 
   console.log(userCookies.token);
+
+  const cart = user.details.user.cart;
 
   const checkout = async () => {
     const checkout = await axios.post(
@@ -58,6 +59,9 @@ const Cart = () => {
 
   useEffect(() => {
     UserCart();
+    if(cart.length > 0) {
+      setHasCartItems(true);
+    }
   }, []);
 
 
@@ -71,48 +75,67 @@ const Cart = () => {
           <div className="cart-title">
             <h2>Cart</h2>
           </div>
-          <div className="products">
-            <img src={catImg} alt="placeholder" />
-            <div className="info">
-              <div className="price-name">
-                <h3 id="product-price"> the sky </h3>
-                <h3 id="product-name"> $yeah.00 </h3>
-              </div>
-              <div className="save-rmove">
-                <button id="svl">Save For Later</button>
-                <button id="rmve">Remove</button>
+          
+
+          {
+            hasCartItems ? (
+              cart.map((product) => {
+                return (
+                   <div className="products" key={product._id}>
+              <img src={product.imageArray[0]} alt="placeholder" />
+              <div className="info">
+                <div className="price-name">
+                  <h3 id="product-price">&dollor;{product.price / 100}</h3>
+                  <h3 id="product-name">{product.name}</h3>
+                </div>
+                <div className="save-rmove">
+                  <button id="svl">Save For Later</button>
+                  <button id="rmve">Remove</button>
+                </div>
               </div>
             </div>
-          </div>
+                )
+            })
+            ) : (
+              <div className="empty-cart">
+                <h2>Your cart is empty</h2>
+                </div>
+            )
+        }
+
         </section>
+        {/* checkout sect */}
+        </div>
+        </main>)
+
 
         {/* total price */}
-        <section className="cart-price">
-          <div>
-            {" "}
-            <h2>Item(s) Total</h2> <h3>8.00</h3>{" "}
-          </div>
-          <div>
-            {" "}
-            <h2>Shipping</h2> <h3>79.00</h3>{" "}
-          </div>
-          <hr />
-          <div>
-            {" "}
-            <h2>Total</h2> <h3>87.00</h3>{" "}
-          </div>
-        </section>
+        {/* // <section className="cart-price">
+        //   <div>
+        //     {" "}
+        //     <h2>Item(s) Total</h2> <h3>8.00</h3>{" "}
+        //   </div>
+        //   <div>
+        //     {" "}
+        //     <h2>Shipping</h2> <h3>79.00</h3>{" "}
+        //   </div>
+        //   <hr />
+        //   <div>
+        //     {" "}
+        //     <h2>Total</h2> <h3>87.00</h3>{" "}
+        //   </div>
+        // </section> */}
 
-        <button
-          onClick={() => {
-            checkout();
-          }}
-        >
-          <h1>Checkout</h1>
-        </button>
-      </div>
-    </main>
-  );
+        {/* // <button */}
+        //   onClick={() => {
+        //     checkout();
+        //   }}
+        // >
+        //   <h1>Checkout</h1>
+        // </button>
+    //   </div>
+    // </main>
+        // )}
 };
 
 export default Cart;

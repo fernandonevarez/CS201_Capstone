@@ -7,6 +7,9 @@ const JWT = require("jsonwebtoken");
 
 const { StatusCodes } = require("http-status-codes");
 
+let cancel;
+
+
 const register = async (req, res) => {
   // console.log(req.body);
   // const { name, cart, favorites, profile_picture, email, hasStore } = req.body;
@@ -123,7 +126,7 @@ const updateUser = async (req, res) => {
         `User does not exist, no user with id: ${userID}`
       );
     }
-    res.status(StatusCodes.OK).json({
+    return res.status(StatusCodes.OK).json({
       updatedUser: { ...updateUser, userPassword },
       message: `User with id: ${userID} has been updated`,
     });
@@ -142,7 +145,7 @@ const updateUser = async (req, res) => {
 
     console.log("password", userPassword);
 
-    res.status(StatusCodes.OK).json({
+    return res.status(StatusCodes.OK).json({
       updatedUser: { ...updateUser, password: userPassword },
       message: `User with id: ${userID} has been updated`,
     });
@@ -191,7 +194,7 @@ const updateUser = async (req, res) => {
       );
     }
 
-    res.status(StatusCodes.OK).json({
+    return res.status(StatusCodes.OK).json({
       user: updatedUser
     });
   } else if (wantsUpdating === "removeFromFavorites") {
@@ -203,57 +206,76 @@ const updateUser = async (req, res) => {
     // find single product
     const product = await Product.findById({ _id: productID });
 
+    const user = await User.findById({ _id: userID });
+
+    console.log("productID", productID);
+
+    user.cart.map(async (item) => {
+
+      console.log("itemID", item._id);
+
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: userID },
+        {
+          $push: {
+            cart: [
+              {
+                _id: product._id,
+                name: product.name,
+                price: product.price,
+                imageArray: product.imageArray,
+                description: product.description,
+                target: product.target,
+                type: product.type,
+                likes: product.likes,
+                store: product.store,
+                createdAt: product.createdAt,
+                __v: product.__v,
+              }
+            ]
+          }
+        },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedUser) {
+        throw new BadRequestError(
+          `User does not exist, no user with id: ${userID}`
+        );
+      }
+
+      if (item._id.equals(product._id)) {
+        return res.status(200).json({
+          user,
+          message: `Product already in cart`,
+        });
+      } else {
+        return res.status(200).json({
+          user: updatedUser,
+          message: `Product added to cart`,
+        });
+      }
+    });
+
     if (!product) {
       throw new BadRequestError(
         `Product does not exist, no product with id: ${productID}`
       );
     }
+    // check if the product is already in the cart
+    // const isProductInCart = user.cart.find(item => item._id == product._id);
 
-    const user = await User.findById({ _id: userID });
+    // if (isProductInCart) {
+    //   // product already in cart
+    //   // return an error
+    //   return res.status(StatusCodes.BAD_REQUEST).json({ message: `Product already in cart, no product with id: ${productID}` });
+    // } else {
+    //   console.log("isProductInCart", isProductInCart);
+    //   res.status(StatusCodes.OK).json({
+    //     message: `Product added to cart`
+    //   });
+    // }
 
-    user.cart.map(async (item) => {
-      if (item._id === product._id) {
-        // product already in cart
-        throw new BadRequestError(
-          `product with id: ${productID} already in cart`)
-      } else {
-        // product not in cart
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: userID },
-          {
-            //push to cart array if it already doesn't exist in the array
-            $push: {
-              cart: [
-                {
-                  _id: product._id,
-                  name: product.name,
-                  price: product.price,
-                  imageArray: product.imageArray,
-                  description: product.description,
-                  target: product.target,
-                  type: product.type,
-                  likes: product.likes,
-                  store: product.store,
-                  createdAt: product.createdAt,
-                  __v: product.__v,
-                }
-              ]
-            }
-          },
-          { new: true, runValidators: true }
-        );
-
-        if (!updatedUser) {
-          throw new BadRequestError(
-            `User does not exist, no user with id: ${userID}`
-          );
-        }
-
-        res.status(StatusCodes.OK).json({
-          user: updatedUser
-        });
-      }
-    });
   }
 };
 

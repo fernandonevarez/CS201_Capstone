@@ -78,6 +78,9 @@ const Home = () => {
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
   const {user} = useUser();
+
+  console.log("user", user);
+
   // const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   // async function getProducts() {

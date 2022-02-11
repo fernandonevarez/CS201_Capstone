@@ -8,6 +8,8 @@ import { useUser } from "../contexts/useUser";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 
+let cancel;
+
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3YmQzYTQ1MWJjZmUyNjAiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQzNTAxNjAwLCJleHAiOjE2NDYwOTM2MDB9.4sQiB07AI1GRc5Sp4AvE_5ds0zwe9AUo9yuQNBJN8A4";
 
@@ -48,29 +50,57 @@ const SingleProduct = () => {
   // console.log("userID", user.details.user.userID)
 
   const pushToCart = async () => {
-    
-    const response = await axios
-      .put(
+    console.log("userToken", user.details.token);
+
+    try {
+
+      cancel && cancel();
+      const response = await axios.put(
         `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
         {
           wantsUpdating: "addToCart",
           data: { userID: user.details.user._id, productID: product._id },
         },
         {
+          cancelToken: new axios.CancelToken((canceler) => (cancel = canceler)),
           headers: {
             "Content-Type": "application/json",
             // "Access-Control-Allow-Origin": "http://localhost:3001",
             Authorization: `Bearer ${user.details.token}`,
-        },
-      })
-      .then((response) => {
-        console.log("added to cart", response.data);
-        // dispatch({ type: "favorite", payload: response.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          },
+          
+        }
+      )
 
+      console.log("response", response.data);
+
+    } catch (err) {
+      console.log(err);
+    }
+
+    // const response = await axios.put(
+    //   `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
+    //   {
+    //     wantsUpdating: "addToCart",
+    //     data: { userID: user.details.user._id, productID: product._id },
+    //   },
+    //   {
+    //     headers: {
+    //       // "Content-Type": "application/json",
+    //       // "Access-Control-Allow-Origin": "http://localhost:3001",
+    //       Authorization: `Bearer ${user.details.token}`,
+    //     },
+    //   }
+    // );
+    // .then((response) => {
+    //   console.log("added to cart", response.data);
+    //   // dispatch({ type: "favorite", payload: response.data });
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+
+    
   };
 
   console.log("product", product);

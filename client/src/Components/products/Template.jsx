@@ -8,7 +8,7 @@ import axios from "axios";
 const Template = ({ name, image, price, classAddition, id: productID }) => {
   const { user, dispatch } = useUser();
 
-  console.log("images", image);
+//   console.log("images", image);
 
   const addToFavorites = async (userID, productID) => {
     // console.log("added to favorites");
@@ -54,11 +54,11 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
             onClick={() =>
               dispatch({
                 type: "favoriteToggle",
-                payload: { name, image, price },
+                payload: { name, image, price, id: productID },
               })
             }
           >
-            {user.products.favorites.find((fav) => fav.name === name) ? (
+            {user.products.favorites.find((fav) => fav.id === productID) ? (
               <FaHeart
                 onClick={() =>
                   removeFromFavorites(user.details.user._id, productID)

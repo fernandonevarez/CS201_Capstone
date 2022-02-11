@@ -17,6 +17,7 @@
     "jwks-rsa": "^2.0.5",
     "mongoose": "^6.0.12",
     "nodemailer": "^6.7.2",
+    "npmlog": "^6.0.1",
     "stripe": "^8.191.0",
     "swagger-ui-express": "^4.1.6",
     "xss-clean": "^0.1.1",

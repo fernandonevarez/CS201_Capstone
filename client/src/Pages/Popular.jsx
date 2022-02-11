@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUser } from "../contexts/useUser";
 import axios from "axios";
 import Product from "../Components/products/Product";
@@ -14,8 +14,35 @@ import "../styles/pages/Popular.scss"
 const Popular = () => {
   const [products, setProducts] = useState([]);
   const [popluarProducts, setPopluarProducts] = useState([]);
+  const [display, setDisplay] = useState([]);
+
 
   const { userCookies } = useUser();
+
+  const productsRef = useRef(null);
+  const pRef = useRef(null);
+
+
+  useEffect(() => {
+    if (pRef.current && productsRef.current) {
+      let bounds = pRef.current.getBoundingClientRect();
+      const resize = (e) => bounds = e.innerWidth / 100 * 40;
+      const scroll = (e) => {
+        if (e.scroll % bounds > 1) {
+  
+        }
+      }
+  
+      window.addEventListener("resize", resize)
+      productsRef.current.addEventListener("scroll", scroll)
+
+      return () => {
+        window.removeEventListener("resize", resize);
+        productsRef.current.removeEventListener("scroll", scroll)
+      }
+    } 
+  }, [productsRef, pRef]);
+  
   
   useEffect(() => {
     // filter the products by popularity
@@ -37,15 +64,16 @@ const Popular = () => {
   
         // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
   
-        // -------------------------------------------- //
-        // IMPLEMENT PRODUCT LIKE SORTING FUNCTIOANLITY //
-        // THEN THIS PAGE WILL BE MOSTLY DONE           //
-        // -------------------------------------------- //
+        // --------------------------------------- //
+        // IMPLEMENT PRODUCT SORTING FUNCTIOANLITY //
+        // THEN THIS PAGE WILL BE MOSTLY DONE      //
+        // --------------------------------------- //
   
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //
   
         return true
       }))
+      setDisplay(response.data.products.slice(0, 8))
     };
     getProducts();
   }, []);
@@ -53,15 +81,15 @@ const Popular = () => {
 
   return (
     <main className="popular">
-      <div className="products">
+      <div className="products" ref={productsRef}>
       {
           popluarProducts.length > 0
-            ? popluarProducts.map(({_id: id, imageArray: image, ...rest}) => <Product key={id} image={image[0]} {...rest} />)
+            ? popluarProducts.map(({_id: id, imageArray: image, ...rest}) => <Product key={id} id={id} image={image[0]} {...rest} />)
                 // console.log("product", product);
                 // console.log(`product:`, product);
                 // <h1>hello</h1>;
             : // map over products
-              products.map(({_id: id, ...rest}) => <Product key={id} {...rest} />)
+              products.map(({_id: id, ...rest}) => <Product key={id} id={id} {...rest} />)
                 // console.log("product", product);
                 // console.log(`product:`, product);
                 // <h1>hello</h1>;

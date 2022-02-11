@@ -1,0 +1,19 @@
+@use "../util/colors.scss"as *;
+@use "../util/mixins.scss"as *;
+
+
+
+.page-container {
+    font-family: Raleway;
+    
+    .products-container {
+        height: 100vh;
+        h2 {
+            font-size: 180%;
+            margin-top: 7%;
+            text-align: center;
+            color: $blue;
+            font-weight: bold;
+        }
+    }
+}

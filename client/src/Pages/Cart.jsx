@@ -5,11 +5,9 @@ import {} from "../styles/pages/Cart.scss";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { useUser } from "../contexts/useUser";
-
+import Loading from "../Components/Loading";
 //temp imgs
 import catImg from "../assets/images/temp/cat.png";
-
-
 
 // const token = localStorage.getItem("userToken");
 
@@ -18,7 +16,9 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3
 const Cart = () => {
   // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
-  const [hasCartItems, setHasCartItems] = useState(false)
+  const [hasCartItems, setHasCartItems] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const { user, userCookies } = useUser();
 
@@ -41,7 +41,6 @@ const Cart = () => {
   };
 
   const UserCart = async () => {
-
     console.log(user.details.user);
 
     const response = await axios.get(
@@ -55,19 +54,21 @@ const Cart = () => {
       }
     );
     console.log("user's cart", response.data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
     UserCart();
-    if(cart.length > 0) {
+    if (cart.length > 0) {
       setHasCartItems(true);
     }
   }, []);
 
-
   // console.log(`User Auth Status: ${isAuthenticated}`);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <main className="cart-page">
       <div className="cart-page-container">
         {/* actual cart sect */}
@@ -75,42 +76,41 @@ const Cart = () => {
           <div className="cart-title">
             <h2>Cart</h2>
           </div>
-          
 
-          {
-            hasCartItems ? (
-              cart.map((product) => {
-                return (
-                   <div className="products" key={product._id}>
-              <img src={product.imageArray[0]} alt="placeholder" />
-              <div className="info">
-                <div className="price-name">
-                  <h3 id="product-price">&dollor;{product.price / 100}</h3>
-                  <h3 id="product-name">{product.name}</h3>
+          {hasCartItems ? (
+            cart.map((product) => {
+              return (
+                <div className="products" key={product._id}>
+                  <img src={product.imageArray[0]} alt="placeholder" />
+                  <div className="info">
+                    <div className="price-name">
+                      <h3 id="product-price">&dollor;{product.price / 100}</h3>
+                      <h3 id="product-name">{product.name}</h3>
+                    </div>
+                    <div className="save-rmove">
+                      <button id="svl">Save For Later</button>
+                      <button id="rmve">Remove</button>
+                    </div>
+                  </div>
                 </div>
-                <div className="save-rmove">
-                  <button id="svl">Save For Later</button>
-                  <button id="rmve">Remove</button>
-                </div>
-              </div>
-            </div>
-                )
+              );
             })
-            ) : (
-              <div className="empty-cart">
-                <h2>Your cart is empty</h2>
-                </div>
-            )
-        }
-
+          ) : (
+            <div className="empty-cart">
+              <h2>Your cart is empty</h2>
+            </div>
+          )}
         </section>
         {/* checkout sect */}
-        </div>
-        </main>)
+      </div>
+    </main>
+  );
 
-
-        {/* total price */}
-        {/* // <section className="cart-price">
+  {
+    /* total price */
+  }
+  {
+    /* // <section className="cart-price">
         //   <div>
         //     {" "}
         //     <h2>Item(s) Total</h2> <h3>8.00</h3>{" "}
@@ -124,18 +124,20 @@ const Cart = () => {
         //     {" "}
         //     <h2>Total</h2> <h3>87.00</h3>{" "}
         //   </div>
-        // </section> */}
+        // </section> */
+  }
 
-        {/* // <button */}
-        //   onClick={() => {
-        //     checkout();
-        //   }}
-        // >
-        //   <h1>Checkout</h1>
-        // </button>
-    //   </div>
-    // </main>
-        // )}
+  {
+    /* // <button */
+  }
+  //   onClick={() => {
+  //     checkout();
+  //   }}
+  // >
+  //   <h1>Checkout</h1>
+  // </button>
+  //   </div>
+  // </main>
 };
 
 export default Cart;

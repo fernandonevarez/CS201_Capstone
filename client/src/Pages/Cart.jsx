@@ -8,6 +8,7 @@ import { useUser } from "../contexts/useUser";
 import Loading from "../Components/Loading";
 //temp imgs
 import catImg from "../assets/images/temp/cat.png";
+import { Link } from "react-router-dom";
 
 // const token = localStorage.getItem("userToken");
 
@@ -80,19 +81,33 @@ const Cart = () => {
           {hasCartItems ? (
             cart.map((product) => {
               return (
-                <div className="products" key={product._id}>
-                  <img src={product.imageArray[0]} alt="placeholder" />
-                  <div className="info">
-                    <div className="price-name">
-                      <h3 id="product-price">&dollor;{product.price / 100}</h3>
-                      <h3 id="product-name">{product.name}</h3>
-                    </div>
-                    <div className="save-rmove">
-                      <button id="svl">Save For Later</button>
-                      <button id="rmve">Remove</button>
+                <Link
+                  to={`/products/${product._id}`}
+                  className="product-container"
+                  key={product._id}
+                >
+                  <div className="left">
+                    <img src={product.imageArray[0]} alt="placeholder" />
+
+                    <div className="product-description">
+                      <h3>{product.description}</h3>
                     </div>
                   </div>
-                </div>
+
+                  <div className="right">
+                    <div className="product-info">
+                      <div className="info-wrapper">
+                        <h3 id="product-name">{product.name}</h3>
+                        {/* <h3 id="product-quantity">{product.quantity}</h3> */}
+                        <h3 id="product-price">${product.price / 100}</h3>
+                      </div>
+                    </div>
+                    <div className="button-wrapper">
+                      <button className="button" id="svl">Save For Later</button>
+                      <button className="button" id="rmve">Remove</button>
+                    </div>
+                  </div>
+                </Link>
               );
             })
           ) : (

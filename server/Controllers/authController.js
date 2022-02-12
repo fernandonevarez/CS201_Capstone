@@ -235,8 +235,9 @@ const updateUser = async (req, res) => {
             ]
           }
         },
-        { new: true, runValidators: true }
+        { new: false, runValidators: true }
       );
+      // Try to change the new flag to false and see what happens
 
       if (!updatedUser) {
         throw new BadRequestError(
@@ -276,7 +277,7 @@ const updateUser = async (req, res) => {
     //   });
     // }
 
-  }
+  }else if (wantsUpdating === "removeFromCart") {}
 };
 
 module.exports = {

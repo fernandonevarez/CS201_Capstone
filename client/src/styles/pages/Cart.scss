@@ -1,66 +1,97 @@
-@use "../util/colors.scss"as *;
-@use "../util/mixins.scss"as *;
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
 
 .cart-div {
-    font-family: Raleway;
+  font-family: Raleway;
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+
+  box-shadow: 2px 5px 10px #c0bcbe;
+
+  h2 {
+    background-color: $blue;
+    margin: 0;
+    padding: 3%;
+    color: $white;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .product-container {
     display: flex;
-    flex-direction: column;
-    //align-items: center;
-    margin-left: .75rem;
-    margin-right: .75rem;
-
+    flex-direction: row;
+    padding: 2%;
+    border-radius: 3%;
     box-shadow: 2px 5px 10px #c0bcbe;
+    height: 15rem;
+    align-items: center;
+    justify-content: space-between;
 
-    h2 {
-        background-color: $blue;
-        margin: 0;
-        padding: 3%;
-        color: $white;
-        font-weight: bold;
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 100%;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+
+      img {
+        // width: 38%;
+        // border-radius: 5%;
+        border-radius: 8%;
+    max-width: 80%;
+    max-height: 100%;
+    display: block;
+      }
+      .product-description {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
     }
 
-    h3 {
-        font-weight: bold;
-    }
-
-    .products {
+    .right {
+        width: 60%;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-content: center;
+        align-items: flex-start;
+        justify-content: space-around;
+      .product-info {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding: 2%;
-        border-radius: 3%;
 
-        box-shadow: 2px 5px 10px #c0bcbe;
+        color: $blue;
+        background-color: #f7f3f5;
 
-
-        img {
-            width: 38%;
-            border-radius: 5%;
+        #product-price {
+          font-size: 1.15rem;
         }
 
-        .price-name {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            color: $blue;
-            background-color: #F7F3F5;
-
-            #product-price {
-                font-size: 1.15rem;
-            }
-
-            #product-name {
-                font-size: 1.35rem;
-            }
+        #product-name {
+          font-size: 1.35rem;
         }
 
-        .save-rmove {
-            display: flex;
-            flex-direction: column;
-
-            color: $blue;
-            text-decoration: underline;
+        .button {
+            margin: .2rem 0;
         }
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+
+        color: $blue;
+        text-decoration: underline;
+      }
     }
+  }
 }

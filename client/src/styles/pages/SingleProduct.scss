@@ -1,0 +1,49 @@
+@use "../util/colors.scss"as *;
+@use "../util/mixins.scss"as *;
+
+
+main{
+    min-height: 100vh;
+    .single-product-container{
+        min-height: 100vh;
+        .product-image-slide{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .product-info{
+            font-family: Raleway;
+            color: $blue;
+            margin-left: 5%;
+            margin-right: 5%;
+            h1{
+                font-weight: bold;
+            }
+            h2{
+                font-weight: bold;
+                margin-bottom: 5%;
+            }
+            p{
+                margin-top: 4%;
+                margin-bottom: 10%;
+                //padding: 10%;
+                color: black;
+            }
+            .details{
+                font-weight: bold;
+                color: black;
+            }
+            button{
+                padding-top: 6%;
+                padding-bottom: 6%;
+                margin-bottom: 5%;
+            }
+
+            .product-price-available{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    }
+}

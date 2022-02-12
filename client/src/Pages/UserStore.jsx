@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
-import {useUser} from "../contexts/useUser";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useUser } from "../contexts/useUser";
 import axios from "axios";
 
 import "../styles/pages/UserStore.scss";
@@ -19,9 +19,9 @@ import Footer from "../Components/Footer";
 */
 
 const UserStore = () => {
-  const {userID} = useParams();
+  const { userID } = useParams();
 
-  const {user, dispatch} = useUser();
+  const { user, dispatch } = useUser();
 
   // console.log("userInfo", user);
 
@@ -60,7 +60,7 @@ const UserStore = () => {
       .then((res) => {
         // console.log("store info", res.data.store);
         // console.log(dispatch({ type: "STORE_INFO", payload: res.data }))
-        dispatch({type: "STORE_INFO", payload: res.data.store});
+        dispatch({ type: "STORE_INFO", payload: res.data.store });
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +88,7 @@ const UserStore = () => {
       )
       .then((response) => {
         console.log("updated user", response.data);
-        dispatch({type: "CREATE_STORE"});
+        dispatch({ type: "CREATE_STORE" });
       })
       .catch((err) => {
         console.log(err);
@@ -100,7 +100,7 @@ const UserStore = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const {target} = e;
+    const { target } = e;
 
     // console.log(target);
 
@@ -146,11 +146,18 @@ const UserStore = () => {
           <>
             <h1>Your Store</h1>
             <div>
-              <h2>---store name here---</h2>
+              <h2>store name</h2>
               <h2>{user.details.storeInfo.name}</h2>
+
+              <h2>store description</h2>
+              <h2>{user.details.storeInfo.description}</h2>
+
+              <h2>store owner</h2>
+              <h2>{user.details.storeInfo.storeOwnerName}</h2>
+
               {/* <p>{user.storeInfo.store.description}</p> */}
 
-              <button onClick={() => dispatch({type: "DELETE_STORE"})}>
+              <button onClick={() => dispatch({ type: "DELETE_STORE" })}>
                 Delete Store
               </button>
             </div>
@@ -210,7 +217,8 @@ const UserStore = () => {
                   placeholder="write a description of your store"
                 ></textarea>
                 <div className="input-details">
-                  * Please describe your business so others can know what you sell
+                  * Please describe your business so others can know what you
+                  sell
                 </div>
               </div>
 
@@ -222,7 +230,9 @@ const UserStore = () => {
         ) : (
           <div>
             <h3>Your don't have a store yet</h3>
-            <button onClick={() => setShowCreateStoreForm(!showCreateStoreForm)}>
+            <button
+              onClick={() => setShowCreateStoreForm(!showCreateStoreForm)}
+            >
               Create Store
             </button>
           </div>

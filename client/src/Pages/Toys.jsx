@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import {} from "../styles/pages/ToysAndEntertainment.scss";
+import { } from "../styles/pages/ToysAndEntertainment.scss";
 
 import Product from "../Components/products/Product";
 
-import { useUser } from "../contexts/useUser";
+import {useUser} from "../contexts/useUser";
 
 import axios from "axios";
 import Loading from "../Components/Loading";
@@ -15,7 +15,7 @@ const Toys = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const { user } = useUser();
+  const {user} = useUser();
 
   useEffect(() => {
     getProducts();
@@ -50,8 +50,8 @@ const Toys = () => {
 
   return (
     <div className="page-container">
+      <h2>Toys</h2>
       <div className="products-container">
-        <h2>Toys</h2>
 
         {/* display the products */}
 
@@ -70,7 +70,7 @@ const Toys = () => {
             //   likes={product.likes}
             // />;
 
-            ({ _id: id, imageArray: image, ...rest }) => (
+            ({_id: id, imageArray: image, ...rest}) => (
               <Product key={id} image={image[0]} id={id} {...rest} />
             )
           )

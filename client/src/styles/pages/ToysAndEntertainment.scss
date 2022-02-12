@@ -6,14 +6,20 @@
 .page-container {
     font-family: Raleway;
     
+    h2 {
+        font-size: 180%;
+        margin-top: 7%;
+        text-align: center;
+        color: $blue;
+        font-weight: bold;
+    }
+
     .products-container {
-        height: 100vh;
-        h2 {
-            font-size: 180%;
-            margin-top: 7%;
-            text-align: center;
-            color: $blue;
-            font-weight: bold;
-        }
+        // height: 100vh;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
 }

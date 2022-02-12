@@ -8,6 +8,10 @@ const ToysAndEntertainment = () => {
     <div className="page-container">
       <div className="products-container">
         <h2>Toys and Entertainment</h2>
+
+
+      
+
       </div>
       <Footer />
     </div>

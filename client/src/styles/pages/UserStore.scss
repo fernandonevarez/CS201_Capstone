@@ -1,7 +1,6 @@
 @use "../util/colors.scss" as *;
 @use "../util/mixins.scss" as *;
 
-
 main {
   min-height: none;
 }
@@ -12,16 +11,25 @@ main {
   color: $blue;
   font-weight: bold;
   text-align: center;
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: "Playfair Display";
+  font-size: 1.45rem;
+  font-variation-settings: "wght" 650;
+  color: $blue;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 0.75rem;
 }
 
 .create-store-form {
   border-radius: 1rem;
   padding: 1rem;
-  border: .2rem solid $blue;
+  border: 0.2rem solid $blue;
 
   .form-info {
-
     font-size: 16px;
     // text-align: center;
     font-weight: bold;
@@ -38,56 +46,54 @@ main {
   }
 }
 
-
 .section-wrapper {
   display: flex;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    margin: 1em .5rem;
-    border-radius: 1rem;
-    padding: 5px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  margin: 1em 0.5rem;
+  border-radius: 1rem;
+  padding: 5px;
 
-    label {
-      font-size: 24px;
-      font-weight: bold;
-      color: $blue;
-      span {
-        color: $red;
-        font-size: 30px;
-      }
+  label {
+    font-size: 24px;
+    font-weight: bold;
+    color: $blue;
+    span {
+      color: $red;
+      font-size: 30px;
     }
+  }
 
-    input {
-      width: 100%;
-      height: 2rem;
-      border-radius: 5px;
-      border: 1px solid $blue;
-      padding: 0 10px;
-      font-size: 16px;
-      font-weight: bold;
-      color: $blue;
-    }
+  input {
+    width: 100%;
+    height: 2rem;
+    border-radius: 5px;
+    border: 1px solid $blue;
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: $blue;
+  }
 
-    .image-upload-input {
-      border: none;
-    }
+  .image-upload-input {
+    border: none;
+  }
 
-    .input-details {
-      font-style: italic;
-      color: rgb(116, 116, 116);
-      font-size: 18px;
-    }
+  .input-details {
+    font-style: italic;
+    color: rgb(116, 116, 116);
+    font-size: 18px;
+  }
 
-    textarea {
-      // center the textarea
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
-      resize: none;
-
-    }
+  textarea {
+    // center the textarea
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    resize: none;
+  }
 }
 
 button {
@@ -104,7 +110,6 @@ button {
   font-size: 24px;
   color: $white;
   border-radius: 1rem;
-
 }
 
 .footer {

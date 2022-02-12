@@ -146,14 +146,16 @@ const UserStore = () => {
           <>
             <h1>Your Store</h1>
             <div>
-              <h2>store name</h2>
-              <h2>{user.details.storeInfo.name}</h2>
+              <h2 className="section-title">store name</h2>
+              <h2 className="details">{user.details.storeInfo.name}</h2>
 
-              <h2>store description</h2>
-              <h2>{user.details.storeInfo.description}</h2>
+              <h2 className="section-title">store description</h2>
+              <h2 className="details">{user.details.storeInfo.description}</h2>
 
-              <h2>store owner</h2>
-              <h2>{user.details.storeInfo.storeOwnerName}</h2>
+              <h2 className="section-title">store owner</h2>
+              <h2 className="details">
+                {user.details.storeInfo.storeOwnerName}
+              </h2>
 
               {/* <p>{user.storeInfo.store.description}</p> */}
 

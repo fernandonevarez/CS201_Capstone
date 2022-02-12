@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useUser } from "../contexts/useUser";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
+import {useUser} from "../contexts/useUser";
 import axios from "axios";
 
 import "../styles/pages/UserStore.scss";
@@ -19,25 +19,25 @@ import Footer from "../Components/Footer";
 */
 
 const UserStore = () => {
-  const { userID } = useParams();
+  const {userID} = useParams();
 
-  const { user, dispatch } = useUser();
+  const {user, dispatch} = useUser();
 
   // console.log("userInfo", user);
 
   // if (user.isAuthenticated) {
-    
+
   // }
-const yourName = `${user.details.user.name.firstName} ${user.details.user.name.lastName}`;
-    const yourAccountEmail = user.details.user.email;
-    useEffect(() => {
-      setHasStore(user.details.user.hasStore);
-      // if(yourName !== undefined) {
-      //   setPassedChecker(true);
-      // }else {
-      //   user.details.isAuthenticated = false;
-      // }
-    }, [user.details.user.hasStore]);
+  const yourName = `${user.details.user.name.firstName} ${user.details.user.name.lastName}`;
+  const yourAccountEmail = user.details.user.email;
+  useEffect(() => {
+    setHasStore(user.details.user.hasStore);
+    // if(yourName !== undefined) {
+    //   setPassedChecker(true);
+    // }else {
+    //   user.details.isAuthenticated = false;
+    // }
+  }, [user.details.user.hasStore]);
   const [showCreateStoreForm, setShowCreateStoreForm] = useState(false);
 
   const [hasStore, setHasStore] = useState(user.details.user.hasStore);
@@ -46,7 +46,7 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
 
   // const [passedChecker, setPassedChecker] = useState(false);
 
-  console.log(user.details);
+  // console.log(user.details);
 
   const createStore = async (storeInfo) => {
     const response = await axios
@@ -58,9 +58,9 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
         },
       })
       .then((res) => {
-        console.log("store info", res.data.store);
+        // console.log("store info", res.data.store);
         // console.log(dispatch({ type: "STORE_INFO", payload: res.data }))
-        dispatch({ type: "STORE_INFO", payload: res.data.store });
+        dispatch({type: "STORE_INFO", payload: res.data.store});
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +88,7 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
       )
       .then((response) => {
         console.log("updated user", response.data);
-        dispatch({ type: "CREATE_STORE" });
+        dispatch({type: "CREATE_STORE"});
       })
       .catch((err) => {
         console.log(err);
@@ -100,7 +100,7 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const { target } = e;
+    const {target} = e;
 
     // console.log(target);
 
@@ -142,15 +142,15 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
   return (
     <main>
       {user.details.isAuthenticated ? (
-        user.details.user.hasStore  ? (
+        user.details.user.hasStore ? (
           <>
             <h1>Your Store</h1>
             <div>
               <h2>---store name here---</h2>
               <h2>{user.details.storeInfo.name}</h2>
               {/* <p>{user.storeInfo.store.description}</p> */}
-  
-              <button onClick={() => dispatch({ type: "DELETE_STORE" })}>
+
+              <button onClick={() => dispatch({type: "DELETE_STORE"})}>
                 Delete Store
               </button>
             </div>
@@ -159,7 +159,7 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
           // <CreateStorePopup />
           <>
             <h1 className="title">Easily Create a store to start selling</h1>
-  
+
             <form
               className="create-store-form"
               encType="multipart/form-data"
@@ -213,7 +213,7 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
                   * Please describe your business so others can know what you sell
                 </div>
               </div>
-  
+
               <button type="submit" onSubmit={(e) => handleFormSubmit(e)}>
                 Create
               </button>
@@ -227,7 +227,7 @@ const yourName = `${user.details.user.name.firstName} ${user.details.user.name.l
             </button>
           </div>
         )
-      ): (
+      ) : (
         <h1>You need to be logged in to create a store</h1>
       )}
 

@@ -6,60 +6,53 @@ import {
   useReducer,
 } from "react";
 
-import { useAuth0 } from "@auth0/auth0-react";
+import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
 import userReducer from "../reducers/userReducer";
 
 // Temp Images
-import duckImg from "../assets/images/temp/duck.jpg";
-import catImg from "../assets/images/temp/cat.png";
-import susImg from "../assets/images/temp/sus.png";
-import tempImg from "../assets/images/temp/temp.jpg";
-import temp2Img from "../assets/images/temp/temp2.jpg";
-import temp3Img from "../assets/images/temp/temp3.jpg";
+import dragon from "../assets/images/temp/dragon.png";
+import catImg from "../assets/images/temp/ct.jpg";
+import doom from "../assets/images/temp/doom.png";
+import minecraft from "../assets/images/temp/minecrarft.jpg";
+import dogfood from "../assets/images/temp/df.jpg";
+import gijoe from "../assets/images/temp/gijoe.jfif";
 
-// FAKE DATA USE FOR TESTING
 const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   {
-    name: "Duck",
+    name: "3d Printed Dragon",
     price: "1001",
-    image: duckImg,
-    favorited: true,
+    image: dragon,
     id: 0,
   },
   {
-    name: "Cat",
+    name: "Cat Toy",
     price: "2222",
     image: catImg,
-    favorited: true,
     id: 1,
   },
   {
-    name: "Amongus Sus Imposter?",
-    price: "05",
-    image: susImg,
-    favorited: true,
+    name: "Doom Eternal",
+    price: "2500",
+    image: doom,
     id: 2,
   },
   {
-    name: "Temp",
+    name: "MineCraft",
     price: "1001",
-    image: tempImg,
-    favorited: true,
+    image: minecraft,
     id: 3,
   },
   {
-    name: "Temp2",
+    name: "Dog Food",
     price: "1001",
-    image: temp2Img,
-    favorited: true,
+    image: dogfood,
     id: 4,
   },
   {
-    name: "Temp3",
+    name: "GI Joe Action Figure",
     price: "1001",
-    image: temp3Img,
-    favorited: true,
+    image: gijoe,
     id: 5,
   },
 ];
@@ -69,7 +62,7 @@ const UserContext = createContext(null);
 
 const useUser = () => useContext(UserContext);
 
-const UserProvider = ({ children }) => {
+const UserProvider = ({children}) => {
   const [user, dispatch] = useReducer(userReducer, {
     details: {
       isAuthenticated: false,
@@ -169,10 +162,10 @@ const UserProvider = ({ children }) => {
   //   console.log(userCookies.token);
 
   return (
-    <UserContext.Provider value={{ user, dispatch, userCookies }}>
+    <UserContext.Provider value={{user, dispatch, userCookies}}>
       {children}
     </UserContext.Provider>
   );
 };
 
-export { useUser, UserProvider };
+export {useUser, UserProvider};

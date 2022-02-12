@@ -15,7 +15,8 @@ const authenticationMiddleware = require("../middleware/auth")
 const productRouter = express.Router();
 
 productRouter.route("/").get(getAllProduct);
-productRouter.route("/").post(authenticationMiddleware, createProduct);
+productRouter.route("/").post(createProduct);
+// ADD BACK AUTH TO CREATE PRODUCT ROUTE 
 
 productRouter.route("/:id").get(getSingleProduct);
 productRouter.route("/:id").delete(authenticationMiddleware, deleteProduct);

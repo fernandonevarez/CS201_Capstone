@@ -417,8 +417,8 @@ const Menu = ({toggleMenu}) => {
   const navigate = useNavigate();
 
   const exit = () => {
-    setDisplay(SAMPLE_DATA_REMOVE_LATER)
-    setHistory([])
+    // setDisplay(SAMPLE_DATA_REMOVE_LATER)
+    // setHistory([])
     toggleMenu();
   }
 

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
 
 import "../styles/pages/SingleProduct.scss";
 
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 
-import { useUser } from "../contexts/useUser";
+import {useUser} from "../contexts/useUser";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 import duckImg from "../assets/images/temp/duck.jpg";
@@ -20,9 +20,9 @@ const token =
 
 const SingleProduct = () => {
   const [product, setProduct] = useState({});
-  let { id } = useParams();
+  let {id} = useParams();
 
-  const { user } = useUser();
+  const {user} = useUser();
   // const { user } = useAuth0();
 
   // console.log("user", user);
@@ -38,7 +38,7 @@ const SingleProduct = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.product);
+        // console.log(response.data.product);
         setProduct(response.data.product);
       })
       .catch((err) => console.log(err));
@@ -53,7 +53,7 @@ const SingleProduct = () => {
   // console.log("userID", user.details.user.userID)
 
   const pushToCart = async () => {
-    console.log("userToken", user.details.token);
+    // console.log("userToken", user.details.token);
 
     try {
 
@@ -62,7 +62,7 @@ const SingleProduct = () => {
         `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
         {
           wantsUpdating: "addToCart",
-          data: { userID: user.details.user._id, productID: product._id },
+          data: {userID: user.details.user._id, productID: product._id},
         },
         {
           cancelToken: new axios.CancelToken((canceler) => (cancel = canceler)),
@@ -71,11 +71,11 @@ const SingleProduct = () => {
             // "Access-Control-Allow-Origin": "http://localhost:3001",
             Authorization: `Bearer ${user.details.token}`,
           },
-          
+
         }
       )
 
-      console.log("response", response.data);
+      // console.log("response", response.data);
 
     } catch (err) {
       console.log(err);
@@ -103,14 +103,14 @@ const SingleProduct = () => {
     //   console.log(err);
     // });
 
-    
+
   };
 
-  console.log("product", product);
+  // console.log("product", product);
 
-  const { name, price, description, imageArray, likes } = product;
+  const {name, price, description, imageArray, likes} = product;
 
-  console.log("imageArray", imageArray);
+  // console.log("imageArray", imageArray);
   // console.log(imageArray);
   return (
     <main className="single-product-page">
@@ -132,7 +132,7 @@ const SingleProduct = () => {
         <div className="product-info">
           <h1>{name}</h1>
           {/* <img src={imageArray[0]} alt="image of product" /> */}
-          
+
           <div className="product-price-available">
             <h2>&#65284;{price / 100}</h2>
             <h2>In stock</h2>

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-import { FaSearch, FaTimes } from "react-icons/fa";
+import {FaSearch, FaTimes} from "react-icons/fa";
 
 import axios from "axios";
 
-import { useUser } from "../contexts/useUser";
+import {useUser} from "../contexts/useUser";
 
 import "../styles/components/Search.scss";
 // import Menu from "./Menu";
@@ -14,29 +14,25 @@ import "../styles/components/Search.scss";
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY4N2IxOGY3N2YzNDcwYmNmOWM0MGMiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkRhdnVkIiwibGFzdE5hbWUiOiJFdGFnc2duIn0sImlhdCI6MTY0MzY3NDcxOCwiZXhwIjoxNjQ2MjY2NzE4fQ.iZOj-KAmExWiJRvgKg-kFpprl8XFmIc4Z4f14jW0qmk";
 
-const Search = ({ setShowNavbar, showNavbar, toggleMenu, showMenu }) => {
+const Search = ({setShowNavbar, showNavbar, toggleMenu, showMenu}) => {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState("");
-  const { user } = useUser();
+  const {user} = useUser();
 
   const getProducts = async () => {
-    console.log("user token", user.details.token);
     const response = await axios.get("http://localhost:3000/api/v1/products", {
       headers: {
         Authorization: `Bearer ${user.details.token}`,
         "Access-Control-Allow-Origin": "http://localhost:3001",
       },
     });
-    
-    console.log("response", response);
+
     setProducts(response.data.products);
   };
 
   useEffect(() => {
     getProducts();
   }, []);
-
-  console.log("token", user.details.token);
 
   let filteredProducts = () => {
     return products
@@ -49,9 +45,7 @@ const Search = ({ setShowNavbar, showNavbar, toggleMenu, showMenu }) => {
         }
       })
       .map((product, index) => {
-        console.log("name", product.name);
-
-        const { _id: id, name } = product;
+        const {_id: id, name} = product;
 
         return (
           <div className="search-suggestions-item" key={index}>
@@ -66,8 +60,6 @@ const Search = ({ setShowNavbar, showNavbar, toggleMenu, showMenu }) => {
       });
   };
 
-  console.log("products", products);
-
   return (
     <div className="search-conatiner">
       <div className="row">
@@ -79,7 +71,6 @@ const Search = ({ setShowNavbar, showNavbar, toggleMenu, showMenu }) => {
             onChange={(e) => {
               setQuery(e.target.value);
               // setShowNavBar(true);
-              console.log("query", query);
               filteredProducts();
             }}
             placeholder="Search Items Here"

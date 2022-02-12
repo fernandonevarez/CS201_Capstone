@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import "../../styles/components/auth/Signin.scss";
 import Input from "../Input";
 import {
@@ -11,15 +11,15 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import axios from "axios";
-import { useUser } from "../../contexts/useUser";
+import {useUser} from "../../contexts/useUser";
 
-const Signin = ({ close, change }) => {
+const Signin = ({close, change}) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { user, dispatch } = useUser();
+  const {user, dispatch} = useUser();
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
   // IF YOU NEED HELP WITH THIS CONTACT ETHAN
   const formSubmit = async (e) => {
@@ -31,11 +31,11 @@ const Signin = ({ close, change }) => {
 
     if (userEmail === "" || userPassword === "") {
       //   setError("Please fill out all fields");
-      console.log("Please fill out all fields");
+      // console.log("Please fill out all fields");
     } else {
 
-      console.log("userEmail", userEmail);
-      console.log("userPassword", userPassword);
+      // console.log("userEmail", userEmail);
+      // console.log("userPassword", userPassword);
 
       const response = await axios.post(
         "http://localhost:3000/api/v1/auth/login",
@@ -45,7 +45,7 @@ const Signin = ({ close, change }) => {
         }
       );
 
-      dispatch({ type: "login", payload: response.data });
+      dispatch({type: "login", payload: response.data});
 
       close();
       // const token = response.data.token;

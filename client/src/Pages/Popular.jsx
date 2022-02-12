@@ -15,33 +15,31 @@ const Popular = () => {
   const [products, setProducts] = useState([]);
   const [popluarProducts, setPopluarProducts] = useState([]);
   const [display, setDisplay] = useState([]);
-
+  const [timesLoaded, setTimesLoaded] = useState(0);
+  const [scroll, setScroll] = useState(0);
 
   const { userCookies } = useUser();
 
-  const productsRef = useRef(null);
-  const pRef = useRef(null);
-
-
   useEffect(() => {
-    if (pRef.current && productsRef.current) {
-      let bounds = pRef.current.getBoundingClientRect();
-      const resize = (e) => bounds = e.innerWidth / 100 * 40;
-      const scroll = (e) => {
-        if (e.scroll % bounds > 1) {
-  
-        }
+      const scroll = () => {
+        
+        setScroll(window.scrollY)
       }
   
-      window.addEventListener("resize", resize)
-      productsRef.current.addEventListener("scroll", scroll)
+      window.addEventListener("scroll", scroll)
 
       return () => {
-        window.removeEventListener("resize", resize);
-        productsRef.current.removeEventListener("scroll", scroll)
+        window.removeEventListener("scroll", scroll)
       }
-    } 
-  }, [productsRef, pRef]);
+  }, []);
+
+  useEffect(() => {
+    if (Math.floor(scroll / 600) > timesLoaded) {
+      setDisplay(d => [...d, ...popluarProducts.slice(d.length, d.length + 6)])
+      setTimesLoaded(t => t + 1)
+    }
+  }, [scroll, timesLoaded]);
+  
   
   
   useEffect(() => {
@@ -73,7 +71,7 @@ const Popular = () => {
   
         return true
       }))
-      setDisplay(response.data.products.slice(0, 8))
+      setDisplay(response.data.products.slice(0, 12))
     };
     getProducts();
   }, []);
@@ -81,10 +79,10 @@ const Popular = () => {
 
   return (
     <main className="popular">
-      <div className="products" ref={productsRef}>
+      <div className="products">
       {
           popluarProducts.length > 0
-            ? popluarProducts.map(({_id: id, imageArray: image, ...rest}) => <Product key={id} id={id} image={image[0]} {...rest} />)
+            ? display.map(({_id: id, imageArray: image, ...rest}) => <Product key={id} id={id} image={image[0]} {...rest} />)
                 // console.log("product", product);
                 // console.log(`product:`, product);
                 // <h1>hello</h1>;

@@ -7,7 +7,7 @@ import SingleProduct from "./Pages/SingleProduct";
 import NewProducts from "./Pages/NewProducts";
 import Error from "./Pages/Error";
 import Popular from "./Pages/Popular";
-import ToysAndEntertainment from "./Pages/ToysAndEntertainment";
+import Toys from "./Pages/Toys";
 import TermsOfUse from "./Pages/Docs/TermsOfUse";
 import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
 import Navbar from "./Components/Navbar";
@@ -23,27 +23,26 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route 
+        <Route
           path="/profile"
-          element={<Protected>
-            <Profile />
-          </Protected>} 
+          element={
+            <Protected>
+              <Profile />
+            </Protected>
+          }
         />
-        <Route 
-          path="/cart" 
-          element={ <Cart/> }
+        <Route
+          path="/cart"
+          element={<Cart />}
           // element={<Protected>
           //   <Cart />
-          // </Protected>} 
+          // </Protected>}
         />
         <Route path="/:userID/store" element={<UserStore />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />
-        <Route
-          path="/products/catagories/Toys%20&%20Entertainment"
-          element={<ToysAndEntertainment />}
-        />
+        <Route path="/products/catagories/Toys" element={<Toys />} />
         {/* Doc Pages */}
         <Route path="/terms-of-use" element={<TermsOfUse />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

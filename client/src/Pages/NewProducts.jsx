@@ -60,17 +60,24 @@ const NewProducts = () => {
         <Loading />
       ) : (
         <div className="products">
-          {filteredProducts.length > 0
-            ? filteredProducts.map(({_id: id, imageArray: image, ...rest}) => <Product key={id} image={image[0]} id={id} {...rest} />)
-                // console.log("product", product);
+          {
+            filteredProducts.length > 0
+              ? filteredProducts.map(
+                  ({ _id: id, imageArray: image, ...rest }) => (
+                    <Product key={id} image={image[0]} id={id} {...rest} />
+                  )
+                )
+              : // console.log("product", product);
                 // console.log(`product:`, product);
                 // <h1>hello</h1>;
-            : // map over products
-              products.map(({_id: id, ...rest}) => <Product key={id} {...rest} />)
-                // console.log("product", product);
-                // console.log(`product:`, product);
-                // <h1>hello</h1>;
-              }
+                // map over products
+                products.map(({ _id: id, ...rest }) => (
+                  <Product key={id} {...rest} />
+                ))
+            // console.log("product", product);
+            // console.log(`product:`, product);
+            // <h1>hello</h1>;
+          }
         </div>
       )}
       <Footer />

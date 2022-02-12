@@ -27,6 +27,11 @@ const Register = ({ close, change }) => {
   // const [newPassword, setNewPassword] = useState("");
   const [userNewPassword, setUserNewPassword] = useState("");
 
+  const [isLoginError, setIsLoginError] = useState({
+    status: false,
+    message: "",
+  });
+
   const { user, dispatch } = useUser();
 
   const registerUser = async (
@@ -71,13 +76,37 @@ const Register = ({ close, change }) => {
             "Access-Control-Allow-Origin": "http://localhost:3001",
           }
         )
+        .then((response) => {
+          dispatch({ type: "login", payload: response.data });
+
+          setIsLoginError({ status: false, message: "" });
+
+          // if (isLoginError.status === false) {
+          close();
+          // }
+        })
         .catch((err) => {
-          console.log(err);
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            setIsLoginError({
+              status: true,
+              message: "Input boxs can't be left blank", //err.response.data.message,
+            });
+            // console.log(err.response.data);
+            // console.log(err.response.status);
+            // console.log(err.response.headers);
+
+            // console.log(err.response);
+          } else if (err.request) {
+            // client never received a response, or request never left
+          } else {
+            // anything else
+          }
         });
 
       console.log(response.data);
 
-      dispatch({ type: "login", payload: response.data });
+      // dispatch({ type: "login", payload: response.data });
 
       // console.log(user);
       // } catch (error) {
@@ -165,6 +194,11 @@ const Register = ({ close, change }) => {
             <FaTimes />
           </div>
         </div>
+
+        {isLoginError.status ? (
+          <div className="error">{isLoginError.message}</div>
+        ) : null}
+
         <form onSubmit={(e) => formSubmit(e)}>
           <div className="traditional">
             <div className="name">

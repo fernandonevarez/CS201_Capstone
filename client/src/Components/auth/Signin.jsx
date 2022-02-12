@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/components/auth/Signin.scss";
 import Input from "../Input";
 import {
@@ -11,15 +11,20 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import axios from "axios";
-import {useUser} from "../../contexts/useUser";
+import { useUser } from "../../contexts/useUser";
 
-const Signin = ({close, change}) => {
+const Signin = ({ close, change }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const {user, dispatch} = useUser();
+  const [isLoginError, setIsLoginError] = useState({
+    status: false,
+    message: "",
+  });
+
+  const { user, dispatch } = useUser();
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
   // IF YOU NEED HELP WITH THIS CONTACT ETHAN
   const formSubmit = async (e) => {
@@ -33,21 +38,42 @@ const Signin = ({close, change}) => {
       //   setError("Please fill out all fields");
       // console.log("Please fill out all fields");
     } else {
-
       // console.log("userEmail", userEmail);
       // console.log("userPassword", userPassword);
 
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/login",
-        {
+      const response = await axios
+        .post("http://localhost:3000/api/v1/auth/login", {
           email: userEmail,
           password: userPassword,
-        }
-      );
+        })
+        .then((response) => {
+          dispatch({ type: "login", payload: response.data });
 
-      dispatch({type: "login", payload: response.data});
+          setIsLoginError({ status: false, message: "" });
 
-      close();
+          // if (isLoginError.status === false) {
+          close();
+          // }
+        })
+        .catch((err) => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            setIsLoginError({
+              status: true,
+              message: "Invalid email and/or password", //err.response.data.message,
+            });
+            // console.log(err.response.data);
+            // console.log(err.response.status);
+            // console.log(err.response.headers);
+
+            // console.log(err.response);
+          } else if (err.request) {
+            // client never received a response, or request never left
+          } else {
+            // anything else
+          }
+        });
+
       // const token = response.data.token;
       // localStorage.clear();
       //   stores token in local storage
@@ -78,6 +104,11 @@ const Signin = ({close, change}) => {
             <FaTimes />
           </div>
         </div>
+
+        {isLoginError.status ? (
+          <div className="error-message">{isLoginError.message}</div>
+        ) : null}
+
         <form onSubmit={formSubmit}>
           <div className="traditional">
             <Input

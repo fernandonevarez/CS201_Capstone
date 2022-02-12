@@ -55,8 +55,9 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 // const Product = require("../Model/ProductSchema");
 
 const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "Learn React Today" }],
-  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
+  [1, { priceInCents: 10000, name: "MineCaft" }],
+  [2, { priceInCents: 2000, name: "flexiable 3D printed Articulated Dragon" }],
+  [3, { priceInCents: 2000, name: "10lb Weights" }],
 ]);
 
 const startServer = async () => {
@@ -98,7 +99,7 @@ const startServer = async () => {
       .use("/api/v1/products", productRouter)
       // .use("/api/v1/products", productRouter)
       .use("/api/v1/user", userRouter)
-      
+
       .post("/api/v1/create-checkout-session", async (req, res) => {
         try {
           // const storeItems = await Product.find({}).sort("Created at");

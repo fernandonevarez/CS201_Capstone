@@ -58,6 +58,15 @@
             }
         }
 
+        .error-message {
+            color: $red;
+            font-size: 1rem;
+            font-family: "Raleway";
+            margin-top: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
         form {
             display: flex;
             flex-direction: column;

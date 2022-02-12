@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import "../styles/pages/Home.scss";
 
@@ -12,7 +12,7 @@ import Title from "../Components/products/Title";
 import Carousel from "../Components/products/carousel/Carousel";
 
 import Profile from "../Components/Profile";
-import {useUser} from "../contexts/useUser";
+import { useUser } from "../contexts/useUser";
 import Slideshow from "../Components/products/slideshow/Slideshow";
 
 // import { useAuth0 } from "@auth0/auth0-react";
@@ -71,7 +71,7 @@ const Home = () => {
   // const [data, setData] = useState([]);
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
-  const {user} = useUser();
+  const { user } = useUser();
 
   console.log("user", user);
 
@@ -150,7 +150,7 @@ const Home = () => {
       {/* <Register /> */}
 
       {results.products?.map((product) => {
-        const {_id: id, imageArray, name, description, price} = product;
+        const { _id: id, imageArray, name, description, price } = product;
         // console.log(imageArray);
         return (
           <div className="product-container" key={id}>
@@ -165,7 +165,7 @@ const Home = () => {
         );
       })}
 
-      <Profile />
+      {/* <Profile /> */}
     </main>
   );
 };

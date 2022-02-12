@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 
 import {Link, useNavigate} from "react-router-dom";
 import {FaTimes, FaChevronRight, FaChevronLeft} from "react-icons/fa";
@@ -12,52 +12,406 @@ every product needs to have a target and name
 const SAMPLE_DATA_REMOVE_LATER = [
   {
     name: "Popular",
-    id: 1,
     children: [],
   },
   {
     name: "New",
-    id: 2,
     children: [],
   },
   {
-    name: "Toys & Entertainment",
-    id: 3,
-
+    name: "Toys",
     children: [
       {
-        name: "Toys",
-        // make an id with the current time in milliseconds
-        id: 1,
-
+        name: "Action Figures",
         children: [
           {
-            name: "Action figures.",
-            id: 1,
+            name: "GI Joe",
             children: [],
           },
           {
-            name: "Animals",
-            id: 2,
+            name: "Batman",
             children: [],
           },
           {
-            name: "Creative toys",
-            id: 3,
+            name: "Spiderman",
             children: [],
           },
           {
-            name: "Dolls",
-            id: 4,
+            name: "Villain",
+            children: [
+              {
+                name: "Doctor Octopus",
+                children: [],
+              },
+              {
+                name: "Joker",
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Dolls",
+        children: [
+          {
+            name: "Old",
+            children: [],
+          },
+          {
+            name: "Baby",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "Baby",
+        children: [
+          {
+            name: "Supplies",
+            children: [
+              {
+                name: "Bibs",
+                children: [],
+              },
+              {
+                name: "Holders",
+                children: [],
+              },
+              {
+                name: "Blankets",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "Toys",
+            children: [
+              {
+                name: "Pushies",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "Food",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "Outdoors",
+        children: [
+          {
+            name: "Playground",
+            children: [
+              {
+                name: "Bucket",
+                children: [],
+              },
+              {
+                name: "Playset",
+                children: [],
+              },
+              {
+                name: "Sandbox",
+                children: [],
+              },
+              {
+                name: "Slide",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "Camping",
+            children: [
+              {
+                name: "Bubbles",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "Beach",
+            children: [
+              {
+                name: "Sand Molds",
+                children: [],
+              },
+              {
+                name: "Shovels",
+                children: [],
+              },
+              {
+                name: "Water Guns",
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Art",
+    children: [
+      {
+        name: "Modern",
+        children: [],
+      },
+      {
+        name: "Rustic",
+        children: [],
+      },
+      {
+        name: "Stickers",
+        children: [
+          {
+            name: "Fun",
+            children: [],
+          },
+          {
+            name: "Sayings",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "Wall",
+        children: [
+          {
+            name: "Paintings",
+            children: [],
+          },
+          {
+            name: "Posters",
             children: [],
           },
         ],
       },
     ],
   },
+  {
+    name: "Entertainment",
+    children: [
+      {
+        name: "Movies",
+        children: [],
+      },
+      {
+        name: "Video Games",
+        children: [],
+      },
+      {
+        name: "Outdoors",
+        children: [
+          {
+            name: "Balls",
+            children: [
+              {
+                name: "Football",
+                children: [],
+              },
+              {
+                name: "Soccerball",
+                children: [],
+              },
+              {
+                name: "Baseball",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "Games",
+            children: [
+              {
+                name: "Cornhole",
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Clothing",
+    children: [
+      {
+        name: "Women",
+        children: [],
+      },
+      {
+        name: "Men",
+        children: [],
+      },
+      {
+        name: "Girls",
+        children: [],
+      },
+      {
+        name: "Boys",
+        children: [],
+      },
+      {
+        name: "Unisex",
+        children: [],
+      },
+    ],
+  },
+  {
+    name: "Craft Supplies",
+    children: [
+      {
+        name: "Paints",
+        children: [],
+      },
+      {
+        name: "Brushes",
+        children: [],
+      },
+      {
+        name: "Paper",
+        children: [
+          {
+            name: "Cardstock",
+            children: [],
+          },
+          {
+            name: "Origami",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "Pencils",
+        children: [],
+      },
+    ],
+  },
+  {
+    name: "Tools",
+    children: [
+      {
+        name: "Power",
+        children: [
+          {
+            name: "Drills",
+            children: [],
+          },
+          {
+            name: "Sanders",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "Woodworking",
+        children: [
+          {
+            name: "Hammers",
+            children: [],
+          },
+          {
+            name: "Sandpaper",
+            children: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Party Items",
+    children: [
+      {
+        name: "Birthday",
+        children: [
+          {
+            name: "Balloons",
+            children: [],
+          },
+          {
+            name: "Party Hats",
+            children: [],
+          },
+          {
+            name: "Goodie Bags",
+            children: [],
+          },
+          {
+            name: "Kazoos",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "Wedding",
+        children: [
+          {
+            name: "Flowers",
+            children: [],
+          },
+          {
+            name: "Chairs",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "New Years",
+        children: [
+          {
+            name: "Cider",
+            children: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Jewelry",
+    children: [
+      {
+        name: "Rings",
+        children: [],
+      },
+      {
+        name: "Necklases",
+        children: [],
+      },
+      {
+        name: "Bracelets",
+        children: [],
+      },
+      {
+        name: "Anklets",
+        children: [],
+      },
+      {
+        name: "Earings",
+        children: [],
+      },
+    ],
+  },
+  {
+    name: "Accessories",
+    children: [
+      {
+        name: "Hats",
+        children: [],
+      },
+      {
+        name: "Shoes",
+        children: [],
+      },
+    ],
+  },
 ];
 
 const Menu = ({toggleMenu}) => {
+  const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [display, setDisplay] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [history, setHistory] = useState([]);
   const navigate = useNavigate();
@@ -75,11 +429,32 @@ const Menu = ({toggleMenu}) => {
     // set the display to the prevoious display value
   }
 
-  const contuine = (next, name) => {
+  const contuine = async (next, name) => {
     setHistory(h => [...h, display]);
     setDisplay(next);
     navigate(`/products/catagories/${name}`)
+
   }
+
+  // --------------------------------------------- //
+  // Use the following later to get sub catagories //
+  // Does not work currently becuase there is no   //
+  // such thing as a sub catagory in the model     //
+  // --------------------------------------------- //
+
+  // useEffect(() => {
+  //   setCatagories(c => c.map(async (cata) => {
+  //     const {data, error} = await axios.get(`http://localhost:3000/api/v1/products/catagories/${cata.ref}`);
+  //     console.log(data, error)
+  //     if (error) {
+  //       // console.log(error);
+  //       return cata;
+  //     }
+  //     // setCatagories(c => c.map(cata => cata.name === name ? {...cata, children: data.products} : cata));
+  //     return {...cata, children: data.products}
+  //   }))
+  // }, []);
+
 
   return (
     <>
@@ -95,7 +470,7 @@ const Menu = ({toggleMenu}) => {
           </div>
         </div>
         <ul className="navigate">
-          {display.map(({name, id, children}) => <li key={id}>
+          {display.map(({name, children}, index) => <li key={index}>
             <Link to={`/products/catagories/${name}`} >
               <h3>{name}</h3>
             </Link>

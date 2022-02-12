@@ -2,18 +2,18 @@ const path = require("path");
 const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 
-const { StatusCodes } = require("http-status-codes");
-const { BadRequestError, NotFoundError } = require("../errors");
+const {StatusCodes} = require("http-status-codes");
+const {BadRequestError, NotFoundError} = require("../errors");
 
 const Product = require("../Model/ProductSchema");
 // const { log } = require("console");
 
 const createProduct = async (req, res) => {
   const {
-    body: { name, price, description, store, type, target },
+    body: {name, price, description, store, type, target},
     files: fileArrayConatiner,
     // user: { _id: userID },
-    params: { id: productID },
+    params: {id: productID},
   } = req;
 
   // console.log(Array.isArray(fileArrayConatiner.imageArray));
@@ -46,7 +46,7 @@ const createProduct = async (req, res) => {
         type: type,
         store: store,
       });
-      res.status(200).json({ product });
+      res.status(200).json({product});
     }
     uploadImages();
   } else {
@@ -69,7 +69,7 @@ const createProduct = async (req, res) => {
       type: type,
       store: store,
     });
-    res.status(200).json({ product });
+    res.status(200).json({product});
   }
 };
 
@@ -78,34 +78,34 @@ const getAllProduct = async (req, res) => {
 
   console.log(products);
 
-  res.status(StatusCodes.OK).json({ products, length: products.length });
+  res.status(StatusCodes.OK).json({products, length: products.length});
   // return products;
 };
 
 const deleteProduct = async (req, res) => {
   const {
-    params: { id: productID },
-    user: { userID },
+    params: {id: productID},
+    user: {userID},
   } = req;
 
   const product = await Product.findByIdAndRemove({
     _id: productID,
-    user: { userID },
+    user: {userID},
   });
 
   if (!product) {
     throw new NotFoundError(`No attraction with id: ${productID} found.`);
   }
 
-  res.status(StatusCodes.OK).json({ product });
+  res.status(StatusCodes.OK).json({product});
 };
 
 const updateProduct = async (req, res) => {
   const {
-    body: { name, price, description },
+    body: {name, price, description},
     files: fileArrayConatiner,
-    user: { userID },
-    params: { id: productID },
+    user: {userID},
+    params: {id: productID},
   } = req;
 
   if (!name && !price && !description) {
@@ -133,14 +133,14 @@ const updateProduct = async (req, res) => {
       }
       // UPDATES THE PRODUCT
       const product = await Product.findByIdAndUpdate(
-        { _id: productID, createdBy: userID }, // How we are finding the product
-        { name, price, description, imageArray: imageURLS }, // Whats changing in the product
-        { new: true, runValidators: true } // options
+        {_id: productID, createdBy: userID}, // How we are finding the product
+        {name, price, description, imageArray: imageURLS}, // Whats changing in the product
+        {new: true, runValidators: true} // options
       );
       if (!product) {
         throw new NotFoundError(`No product with id ${productID}`);
       }
-      res.status(200).json({ product });
+      res.status(200).json({product});
     }
     uploadImages();
   } else {
@@ -154,31 +154,44 @@ const updateProduct = async (req, res) => {
     );
     fs.unlinkSync(fileArrayConatiner.imageArray.tempFilePath);
     const product = await Product.findByIdAndUpdate(
-      { _id: productID, createdBy: userID }, // How we are finding the product
-      { name, price, description, imageArray: imageResult.secure_url }, // Whats changing in the product
-      { new: true } // options
+      {_id: productID, createdBy: userID}, // How we are finding the product
+      {name, price, description, imageArray: imageResult.secure_url}, // Whats changing in the product
+      {new: true} // options
     );
     if (!product) {
       throw new NotFoundError(`No product with id ${productID}`);
     }
-    res.status(200).json({ product });
+    res.status(200).json({product});
   }
 };
 
 const getSingleProduct = async (req, res) => {
   const {
     // user: { userID },
-    params: { id: productID },
+    params: {id: productID},
   } = req;
   // createdBy: userID,
-  const product = await Product.findOne({ _id: productID });
+  const product = await Product.findOne({_id: productID});
 
   if (!product) {
     throw new NotFoundError(`No product with the ID ${productID}`);
   }
 
-  res.status(StatusCodes.OK).json({ product });
+  res.status(StatusCodes.OK).json({product});
 };
+
+const getProductsByType = async (req, res) => {
+  const {
+    params: {type}
+  } = req;
+
+  const products = await Product.find({type});
+
+  if (!products)
+    throw new NotFoundError(`No products with the type ${type}`);
+
+  res.status(StatusCodes.OK).json({products})
+}
 
 module.exports = {
   createProduct,
@@ -186,4 +199,5 @@ module.exports = {
   deleteProduct,
   updateProduct,
   getSingleProduct,
+  getProductsByType,
 };

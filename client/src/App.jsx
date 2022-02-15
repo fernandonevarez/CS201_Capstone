@@ -15,6 +15,8 @@ import Footer from "./Components/Footer";
 import Profile from "./Pages/Profile";
 import Protected from "./Components/Protected";
 import UserStore from "./Pages/UserStore";
+
+// import Footer from "./Components/Footer";
 // import SingleNew from "./Pages/SingleNew";
 
 function App() {
@@ -48,6 +50,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<Error />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

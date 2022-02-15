@@ -4,6 +4,7 @@ import axios from "axios";
 import Product from "../Components/products/Product";
 import Footer from "../Components/Footer";
 import "../styles/pages/Popular.scss"
+import Loading from "../Components/Loading";
 
 // probelm that i ran into and still in to fix
 /*
@@ -18,27 +19,32 @@ const Popular = () => {
   const [timesLoaded, setTimesLoaded] = useState(0);
   const [scroll, setScroll] = useState(0);
 
+  const [isLoading, setIsLoading] = useState(true)
+
   const { userCookies } = useUser();
 
-  useEffect(() => {
-      const scroll = () => {
+  // useEffect(() => {
+  //     const scroll = () => {
         
-        setScroll(window.scrollY)
-      }
+  //       setScroll(window.scrollY)
+  //     }
   
-      window.addEventListener("scroll", scroll)
+  //     window.addEventListener("scroll", scroll)
 
-      return () => {
-        window.removeEventListener("scroll", scroll)
-      }
-  }, []);
+  //     return () => {
+  //       window.removeEventListener("scroll", scroll)
+  //     }
+  // }, []);
 
-  useEffect(() => {
-    if (Math.floor(scroll / 600) > timesLoaded) {
-      setDisplay(d => [...d, ...popluarProducts.slice(d.length, d.length + 6)])
-      setTimesLoaded(t => t + 1)
-    }
-  }, [scroll, timesLoaded]);
+  // useEffect(() => {
+  //   if (Math.floor(scroll / 600) > timesLoaded) {
+  //     setDisplay(d => [...d, ...popluarProducts.slice(d.length, d.length + 6)])
+  //     setTimesLoaded(t => t + 1)
+  //   }
+  // }, [scroll, timesLoaded]);
+
+
+  
   
   
   
@@ -56,6 +62,7 @@ const Popular = () => {
       );
       // console.log("response", response.data.products);
       setProducts(response.data.products);
+      setIsLoading(false);
       setPopluarProducts(response.data.products.filter((product) => {
         // console.log("product likes", product.likes);
         // return product.likes > 0;
@@ -78,7 +85,11 @@ const Popular = () => {
 
 
   return (
-    <main className="popular">
+    
+    isLoading ? (
+      <Loading />
+    ) :(
+      <main className="popular">
       <div className="products">
       {
           popluarProducts.length > 0
@@ -94,8 +105,15 @@ const Popular = () => {
               
       }
       </div>
-      <Footer />
+      <div className="button-wrapper">
+  <button>Prev</button>
+  <button>Next</button>
+</div>
+
+
     </main>
+    )
+
   );
 };
 

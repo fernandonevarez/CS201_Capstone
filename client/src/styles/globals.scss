@@ -21,6 +21,13 @@ html {
     box-sizing: inherit;
 }
 
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
 body,
 h1,
 h2,

@@ -8,4 +8,10 @@ main.popular {
         padding: 1rem;
         gap: 1rem;
     }
+
+    .button-wrapper {
+        @include center;
+        margin-top: 1rem;
+    }
 }
+

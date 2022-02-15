@@ -110,13 +110,29 @@ const SingleProduct = () => {
 
   const {name, price, description, imageArray, likes} = product;
 
+  // const [productImage, setProductImage] = useState("")
+
+  // console.log("productImage", duckImg);
+
+  // if(imageArray[0] == undefined){
+  //   // setProductImage(duckImg)
+  // }else {
+  //   setProductImage(imageArray[0])
+  // }
+
   // console.log("imageArray", imageArray);
   // console.log(imageArray);
   return (
     <main className="single-product-page">
       <div className="single-product-container">
         <div className="product-image-slide">
-          <img src={duckImg} alt="" />
+          {/* {imageArray[0] == undefined ? (
+            <img src={duckImg} alt="product" />
+          ):(
+            <img src={imageArray[0]} alt="product" />
+          )} */}
+          <img src={duckImg} alt="product Image" />
+          {/* <img src={imageArray[0]} alt="image of product" /> */}
           {/* {imageArray.map((image) => {
             return (
               <img
@@ -131,7 +147,7 @@ const SingleProduct = () => {
 
         <div className="product-info">
           <h1>{name}</h1>
-          {/* <img src={imageArray[0]} alt="image of product" /> */}
+          
 
           <div className="product-price-available">
             <h2>&#65284;{price / 100}</h2>

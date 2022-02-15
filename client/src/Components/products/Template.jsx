@@ -37,6 +37,8 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
 
   const removeFromFavorites = async (userID, productID) => {
     console.log("removed from favorites");
+    console.log("userID", userID);
+    console.log("productID", productID);
   };
 
   return (
@@ -49,7 +51,8 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
         </Link>
         <div className="top">
           <Price amount={price} />
-          <div
+          {user.details.isAuthenticated ? (
+            <div
             className="favorited"
             onClick={() =>
               dispatch({
@@ -70,6 +73,7 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
               />
             )}
           </div>
+          ): (null)}
         </div>
       </div>
       <div className="main">

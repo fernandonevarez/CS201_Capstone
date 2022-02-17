@@ -111,7 +111,7 @@ const SingleProduct = () => {
             {imageArray != undefined ? (
               <img src={imageArray[0]} alt="product" />
             ) : (
-              <img src={duckImg} alt="product" />
+              <img alt="product had no image to go with it, sorry." />
             )}
           </div>
 
@@ -124,7 +124,7 @@ const SingleProduct = () => {
             </div>
 
             {/* product favorite */}
-            
+
 
             <button onClick={() => pushToCart()}>Add to Cart</button>
 

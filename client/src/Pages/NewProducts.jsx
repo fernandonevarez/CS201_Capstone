@@ -9,6 +9,7 @@ import Footer from "../Components/Footer";
 import Product from "../Components/products/Product";
 
 import { useUser } from "../contexts/useUser";
+import axios from "axios";
 
 const NewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -17,34 +18,40 @@ const NewProducts = () => {
 
   const { user } = useUser();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch("http://localhost:3000/api/v1/products", {
-        method: "GET",
+  const getProduct = async () => {
+    const response = await axios
+      .get("http://localhost:3000/api/v1/products", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.details.token}})}`,
           "Access-Control-Allow-Origin": "http://localhost:3001",
         },
-      });
-      const data = await response.json();
+      })
+      .then((response) => {
+        setProducts(response.data.products);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
-      const newProducts = data.products.filter((product) => {
-        // check to see if a product has been made in the last 24 hours and sets the filtered products to products
-        const today = new Date();
-        const productDate = new Date(product.createdAt);
-        const diff = today - productDate;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        if (days < 1) {
-          return product;
-        }
-      });
+  
 
-      setFilteredProducts(newProducts);
-      setIsLoading(false);
-    };
-    fetchProducts();
-  }, [products, user.details]);
+  useEffect(() => {
+    getProduct();
+
+    const newProducts = products.filter((product) => {
+      // check to see if a product has been made in the last 24 hours and sets the filtered products to products
+      const today = new Date();
+      const productDate = new Date(product.createdAt);
+      const diff = today - productDate;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      if (days < 1) {
+        return product;
+      }
+    });
+  
+    setFilteredProducts(newProducts);
+  }, []);
 
   // console.log("products", products);
 

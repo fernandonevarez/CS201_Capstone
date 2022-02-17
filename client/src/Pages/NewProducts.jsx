@@ -80,7 +80,7 @@ const NewProducts = () => {
           }
         </div>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

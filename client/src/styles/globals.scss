@@ -25,7 +25,16 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+    min-height: 100vh;
+    // make sure the footer is always at the bottom
+    // height: 100vh;
+    nav{
+        position: fixed;
+        z-index: 100;
+        background: $white;
+        width: 100vw;
+        margin-bottom: 1rem;
+    }
 }
 
 body,
@@ -64,7 +73,8 @@ body {
 
 main {
     background-color: $white;
-    min-height: 100vh;
+    // min-height: 100vh;
+    margin-top: 6rem;
 }
 
 button,

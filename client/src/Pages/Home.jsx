@@ -128,12 +128,12 @@ const Home = () => {
 
   return (
     <main className="home">
-      {(user.dev.skipAuth || Object.keys(user.details).length) && (
+      {(user.details.isAuthenticated) ? (
         <div className="favorited">
           <Title name="Favorited" />
-          <Carousel items={user.products.favorites} />
+          <Carousel items={user.details.user.favorites} />
         </div>
-      )}
+      ): null}
       <div className="popular">
         <Title name="Popular" />
         <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />

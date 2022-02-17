@@ -76,7 +76,7 @@ const Toys = () => {
           )
         )}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

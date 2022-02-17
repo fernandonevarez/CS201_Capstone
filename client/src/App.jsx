@@ -23,6 +23,8 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+
+      
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route
@@ -50,6 +52,8 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<Error />} />
       </Routes>
+
+
       <Footer/>
     </div>
   );

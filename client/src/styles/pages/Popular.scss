@@ -1,7 +1,7 @@
 @use "../util/colors.scss" as *;
 @use "../util/mixins.scss" as *;
 
-main.popular {
+.popular {
     .products {
         @include center;
         flex-wrap: wrap;
@@ -9,9 +9,24 @@ main.popular {
         gap: 1rem;
     }
 
-    .button-wrapper {
-        @include center;
+    .action-wrapper {
+        display: flex;
         margin-top: 1rem;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        .page-button {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: lightblue;
+                }
     }
 }
+
+// .footer-container {
+//     // @include center;
+//     // margin-bottom: 9.8rem;
+// }
 

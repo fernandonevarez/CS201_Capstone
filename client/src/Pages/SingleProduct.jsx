@@ -162,7 +162,7 @@ const SingleProduct = () => {
         </div>
 
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

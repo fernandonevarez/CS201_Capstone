@@ -78,8 +78,8 @@ const NewProducts = () => {
                 // console.log(`product:`, product);
                 // <h1>hello</h1>;
                 // map over products
-                products.map(({ _id: id, ...rest }) => (
-                  <Product key={id} {...rest} />
+                products.map(({ _id: id, imageArray: image, ...rest }) => (
+                  <Product key={id} image={image[0]} {...rest} />
                 ))
             // console.log("product", product);
             // console.log(`product:`, product);

@@ -12,6 +12,11 @@ import { useUser } from "../contexts/useUser";
 import duckImg from "../assets/images/temp/duck.jpg";
 import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
+import Price from "../Components/products/Price";
+
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import Favorite from "../Components/products/Favorite";
+import Product from "../Components/products/Product";
 
 let cancel;
 
@@ -97,7 +102,7 @@ const SingleProduct = () => {
 
   // console.log("product", product);
 
-  const { name, price, description, imageArray, likes } = product;
+  const { _id: productID, name, price, description, imageArray, likes } = product;
 
   console.log("product info", product);
 
@@ -119,11 +124,22 @@ const SingleProduct = () => {
             <h1>{name}</h1>
 
             <div className="product-price-available">
-              <h2>&#65284;{price / 100}</h2>
+              <Price amount={price}/>
+
+              <div className="product-info-wrapper">
+              <Favorite productID={productID} /> 
               <h2>In stock</h2>
+              </div>
+
+          
             </div>
 
             {/* product favorite */}
+            
+            
+          
+
+
 
 
             <button onClick={() => pushToCart()}>Add to Cart</button>

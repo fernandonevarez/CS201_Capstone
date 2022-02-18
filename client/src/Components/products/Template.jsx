@@ -52,7 +52,10 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
           </div>
         </Link>
         <div className="top">
+
           <Price amount={price} />
+          
+
           {user.details.isAuthenticated ? (
             <div
             className="favorited"

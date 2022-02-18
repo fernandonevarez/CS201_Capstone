@@ -44,7 +44,45 @@ main{
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
+                // align-items: baseline;
+                margin-bottom: 2.5%;
+
+                line-height: 100%;
+                        height: 100%;
+            
+                #product-price {
+                    border: none !important;
+                    background-color: transparent !important;
+                    font-size: 25px;
+                    // span {
+                    //     font-size: 1.25rem;
+                    //     // font-weight: bold;
+                    //     color: $blue;
+                    // }
+                }
+
+                .product-info-wrapper {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    svg {
+                        height: 100%;
+                        width: 15%;
+                    }
+
+                    h2 {
+                        // center text vertically
+                        line-height: 100%;
+                        height: 100%;
+                        margin-bottom: 0 !important;
+                    }
+                }
             }
         }
     }
 }
+

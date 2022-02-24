@@ -1,21 +1,19 @@
-import React, {useEffect, useState} from 'react'
-import { useUser } from '../../contexts/useUser'
-import axios from 'axios'
+import React, { useEffect, useState, useMemo } from "react";
+import { useUser } from "../../contexts/useUser";
+import axios from "axios";
 
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const Favorite = ({productID}) => {
-
+const Favorite = ({ productID }) => {
   // console.log("productID", productID)
 
-  const {user: {details}, dispatch} = useUser()
+  const { user, dispatch } = useUser();
 
-  const [userDetails, setUserDetails] = useState({})
+  const [userDetails, setUserDetails] = useState({});
 
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useState([]);
 
-  
-
+  const [alreadyInFavorites, setalreadyInFavorites] = useState(false);
 
   // add to user's favorites
 
@@ -34,10 +32,12 @@ const Favorite = ({productID}) => {
             "Content-Type": "application/json",
             // "Access-Control-Allow-Origin": "http://localhost:3001",
             Authorization: `Bearer ${userDetails.token}`,
-        }}
-      ).then((response) => {
+          },
+        }
+      )
+      .then((response) => {
         console.log("added to favorites", response.data);
-        setUserDetails({...userDetails, user: response.data.user});
+        setUserDetails({ ...userDetails, user: response.data.user });
 
         console.log("userDetails", userDetails);
       })
@@ -54,47 +54,50 @@ const Favorite = ({productID}) => {
     console.log("productID", productID);
   };
 
-  
   useEffect(() => {
-    setUserDetails(details)
-  }, [details])
+    console.log("details", user.details);
+    setUserDetails(user.details);
+  }, [user]);
 
-  console.log("userDetails", userDetails)
+  const checkIfInFavorites = useMemo(() => {
+    // code that runs after the setting of the playerName and playerChoice. Will return "Win", "Lose", or "Draw"
+    console.log("userDetails -", user.details);
+    if (user.details.user.favorites != undefined) {
+      const favorites = user.details.user.favorites;
+      for (let i = 0; i < favorites.length; i++) {
+        if (favorites[i]._id === productID) {
+          setalreadyInFavorites(true);
+          // return true;/
+        }
+      }
+    } else {
+      setalreadyInFavorites(false);
+    }
+  }, [user.details, productID]);
 
+  // console.log("userDetails", user.details);
 
   return (
     <>
-    {userDetails.isAuthenticated ? (
-      <>
-      {userDetails.user.favorites.find((fav) => {
-        if(fav.id === productID) {
-          return true
-        }else {
-          return false
-        }
-      }) ? (
-              <FaHeart
-                onClick={() =>
-                  removeFromFavorites(userDetails.user._id, productID)
-                  
-                }
-              />,
-              console.log("product is in favorites")
-            ) : (
-              <FaRegHeart
-                onClick={() => addToFavorites(userDetails.user._id, productID)}
-              />,
-              console.log("product is not in favorites")
-            )
-            }
-      </>
-    ) : (
-      null,
-      console.log("user", userDetails),
-      console.log("not logged in"))
-    }
+      {user.details.isAuthenticated && {} in user.details ? (
+        <>
+          {alreadyInFavorites ? (
+            <FaHeart
+              onClick={() =>
+                removeFromFavorites(userDetails.user._id, productID)
+              }
+            />
+          ) : (
+            <FaRegHeart
+              onClick={() => addToFavorites(userDetails.user._id, productID)}
+            />
+          )}
+        </>
+      ) : (
+        (null, console.log("user", user.details), console.log("not logged in"))
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Favorite
+export default Favorite;

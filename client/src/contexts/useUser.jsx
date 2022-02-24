@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 
-import {useAuth0} from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import userReducer from "../reducers/userReducer";
 
@@ -62,10 +62,25 @@ const UserContext = createContext(null);
 
 const useUser = () => useContext(UserContext);
 
-const UserProvider = ({children}) => {
+const UserProvider = ({ children }) => {
   const [user, dispatch] = useReducer(userReducer, {
     details: {
       isAuthenticated: false,
+      // isAuthenticated: true,
+      // storeInfo: {},
+      // token:
+      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MjAzMDcwZTA1ZGExZWQ5ODFkYzZiMGIiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IkRhdmlkIiwibGFzdE5hbWUiOiJOZXZhcmV6In0sImlhdCI6MTY0NTU3MzI3MCwiZXhwIjoxNjQ4MTY1MjcwfQ.W4lctVW6w3X46wilFMbnSlVzDYMwsvL7KQDroXgw-eY",
+      // user: {
+      //   cart: [],
+      //   email: "examplens@hotmail.com",
+      //   favorites: [],
+      //   hasStore: false,
+      //   name: { firstName: "David", lastName: "Nevarez" },
+      //   password:
+      //     "$2b$10$V1is1VtP2GBsJ6oti.PYteV4zKTKE/KKojNLi0JijA0Qpq3GYyoZy",
+      //   profile_picture: "",
+      //   _id: "6203070e05da1ed981dc6b0b",
+      // },
     },
     dev: {
       skipAuth: false,
@@ -162,10 +177,10 @@ const UserProvider = ({children}) => {
   //   console.log(userCookies.token);
 
   return (
-    <UserContext.Provider value={{user, dispatch, userCookies}}>
+    <UserContext.Provider value={{ user, dispatch, userCookies }}>
       {children}
     </UserContext.Provider>
   );
 };
 
-export {useUser, UserProvider};
+export { useUser, UserProvider };

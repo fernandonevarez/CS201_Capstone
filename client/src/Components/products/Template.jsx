@@ -5,8 +5,10 @@ import Price from "./Price";
 import "../../styles/components/products/Template.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
-const Template = ({ name, image, price, classAddition, id: productID }) => {
+const Template = ({ name, image, price, classAddition, _id: productID }) => {
   const { user, dispatch } = useUser();
+
+  console.log("id", productID);
 
 //   console.log("images", image);
 
@@ -41,7 +43,7 @@ const Template = ({ name, image, price, classAddition, id: productID }) => {
     console.log("productID", productID);
   };
 
-  console.log("image", image);
+  // console.log("image", image);
 
   return (
     <div className={`product-${classAddition}`}>

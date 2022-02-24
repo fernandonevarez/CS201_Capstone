@@ -17,6 +17,7 @@ import Price from "../Components/products/Price";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Favorite from "../Components/products/Favorite";
 import Product from "../Components/products/Product";
+import Error from "../Components/Error";
 
 let cancel;
 
@@ -28,7 +29,18 @@ const SingleProduct = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [fetchingError, setFetchingError] = useState({status: false, message: ""});
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setErrorMessage(fetchingError.message);
+  }, [fetchingError]);
+  
+
   let { id } = useParams();
+
+  console.log("id", id);
 
   const { user } = useUser();
 
@@ -44,7 +56,29 @@ const SingleProduct = () => {
         setProduct(response.data.product);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+
+          console.log(err.response);
+
+          setFetchingError({
+            status: true,
+            message: "Error fetching product, try again later", //err.response.data.message,
+          });
+
+        
+          // console.log(err.response.data);
+          // console.log(err.response.status);
+          // console.log(err.response.headers);
+
+          // console.log(err.response);
+        } else if (err.request) {
+          // client never received a response, or request never left
+        } else {
+          // anything else
+        }
+      });
   };
 
   useEffect(() => {
@@ -104,12 +138,20 @@ const SingleProduct = () => {
 
   const { _id: productID, name, price, description, imageArray, likes } = product;
 
-  console.log("product info", product);
+  console.log("productID", productID);
 
   return (
     <main className="single-product-page">
       {isLoading ? (
-        <Loading />
+        <>
+        {
+          fetchingError.status ? (
+            <Error message={errorMessage} />
+          ): (
+            <Loading />
+          )
+        }
+        </>
       ) : (
         <div className="single-product-container">
           <div className="product-image-slide">

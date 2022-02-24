@@ -6,7 +6,6 @@ const userReducer = (state, action) => {
     case "logout": {
       return { ...state, details: {}, storeInfo: {} };
     }
-
     case "CREATE_STORE": {
       return {
         ...state,

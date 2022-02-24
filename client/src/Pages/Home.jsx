@@ -129,10 +129,24 @@ const Home = () => {
   return (
     <main className="home">
       {(user.details.isAuthenticated) ? (
-        <div className="favorited">
+        // check if user has favorited products
+        // <>
+        // {
+          // (user.details.favorites.length > 0 || user.details.favorites != undefined) ? (
+            <div className="favorited">
           <Title name="Favorited" />
-          <Carousel items={user.details.user.favorites} />
+          
+          
+            {/* // check if user has favorited products */}
+            
+              <Carousel items={user.details.user.favorites} />
+            
+          
+
         </div>
+          // ) : null
+        // }
+        // </>
       ): null}
       <div className="popular">
         <Title name="Popular" />

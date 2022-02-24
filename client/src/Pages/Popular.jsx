@@ -80,7 +80,7 @@ const Popular = () => {
 
   console.log("product round", Math.round(products.length / 6));
 
-  console.log("display length", display.length);
+  console.log("display", display);
 
   return isLoading ? (
     <Loading />
@@ -89,13 +89,15 @@ const Popular = () => {
       <div className="products">
         {popluarProducts.length > 0
           ? display.map(
-              ({ _id: id, imageArray: image, ...rest }) => (
-                console.log("image", image),
-                (<Product key={id} id={id} image={image[0]} {...rest} />)
-              )
+              (product) => {
+                const {_id, imageArray, ...rest} = product;
+                // console.log("productID", _id);
+                // console.log("image", image),
+              return <Product key={_id} _id={_id} image={imageArray[0]} {...rest} />
+              }
             )
-          : products.map(({ _id: id, ...rest }) => (
-              <Product key={id} id={id} {...rest} />
+          : products.map(({ _id, ...rest }) => (
+              <Product key={_id} _id={_id} {...rest} />
             ))}
       </div>
       <div className="action-wrapper">

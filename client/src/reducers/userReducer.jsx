@@ -6,6 +6,17 @@ const userReducer = (state, action) => {
     case "logout": {
       return { ...state, details: {}, storeInfo: {} };
     }
+
+    case "UPDATE_USER": {
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          user: action.payload,
+        },
+      };
+    }
+
     case "CREATE_STORE": {
       return {
         ...state,
@@ -38,7 +49,7 @@ const userReducer = (state, action) => {
         ...state,
         details: {
           ...state.details,
-          storeInfo: action.payload
+          storeInfo: action.payload,
         },
       };
     }

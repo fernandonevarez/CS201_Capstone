@@ -46,6 +46,8 @@ const Template = ({ name, image, price, classAddition, _id: productID }) => {
 
   // console.log("image", image);
 
+  
+
   return (
     <div className={`product-${classAddition}`}>
       <div className="atop">

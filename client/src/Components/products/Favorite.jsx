@@ -40,7 +40,7 @@ const Favorite = ({ productID }) => {
       )
       .then((response) => {
         console.log("added to favorites", response.data);
-        setUserDetails({ ...userDetails, user: response.data.user });
+        dispatch({ type: "UPDATE_USER", payload: response.data });
 
         console.log("userDetails", userDetails);
       })
@@ -52,9 +52,31 @@ const Favorite = ({ productID }) => {
   // remove from user's favorites
 
   const removeFromFavorites = async (userID, productID) => {
-    console.log("removed from favorites");
-    console.log("userID", userID);
-    console.log("productID", productID);
+    console.log("pong")
+    const response = await axios
+      .put(
+        `http://localhost:3000/api/v1/auth/updateUser/${userDetails.user._id}`,
+        {
+          wantsUpdating: "removeFromFavorites",
+          data: { userID: userID, productID: productID },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "http://localhost:3001",
+            Authorization: `Bearer ${userDetails.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("removed to favorites", response.data);
+        dispatch({ type: "UPDATE_USER", payload: response.data });
+
+        console.log("userDetails", userDetails);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -65,7 +87,7 @@ const Favorite = ({ productID }) => {
   const checkIfInFavorites = useMemo(() => {
     // code that runs after the setting of the playerName and playerChoice. Will return "Win", "Lose", or "Draw"
     // console.log("userDetails -", user.details);
-    if (user.details.isAuthenticated == true) {
+    if (user.details.isAuthenticated == true && user.details.user.favorites) {
       const favorites = user.details.user.favorites;
       for (let i = 0; i < favorites.length; i++) {
         if (favorites[i]._id === productID) {

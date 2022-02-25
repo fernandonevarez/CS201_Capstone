@@ -199,6 +199,50 @@ const updateUser = async (req, res) => {
     });
   } else if (wantsUpdating === "removeFromFavorites") {
 
+    const { userID, productID } = data;
+
+    // find single product
+    const product = await Product.findById({ _id: productID });
+
+    if (!product) {
+      throw new BadRequestError(
+        `Product does not exist, no product with id: ${productID}`
+      );
+    }
+
+    const user = await User.findById({ _id: userID });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: userID },
+      {
+        // $pull: {
+        //   favorites: {
+        //     _id: product._id
+        //   }
+        // }
+
+        // remove the product from the favorites array
+        $pull: {
+          favorites: {
+            _id: product._id
+          }
+        }
+        
+
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      throw new BadRequestError(
+        `User does not exist, no user with id: ${userID}`
+      );
+    }
+
+    return res.status(StatusCodes.OK).json({
+      user: updatedUser
+    });
+
   } else if (wantsUpdating === "addToCart") {
 
     const { userID, productID } = data;

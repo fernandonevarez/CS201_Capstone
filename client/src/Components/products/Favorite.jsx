@@ -108,12 +108,14 @@ const Favorite = ({ productID }) => {
         <>
           {alreadyInFavorites ? (
             <FaHeart
+              className="heart"
               onClick={() =>
                 removeFromFavorites(userDetails.user._id, productID)
               }
             />
           ) : (
             <FaRegHeart
+              className="heart"
               onClick={() => addToFavorites(userDetails.user._id, productID)}
             />
           )}

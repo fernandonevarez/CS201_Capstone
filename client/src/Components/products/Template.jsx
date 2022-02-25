@@ -5,6 +5,7 @@ import Price from "./Price";
 import "../../styles/components/products/Template.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Favorite from "./Favorite";
 const Template = ({ name, image, price, classAddition, _id: productID }) => {
   const { user, dispatch } = useUser();
 
@@ -58,29 +59,7 @@ const Template = ({ name, image, price, classAddition, _id: productID }) => {
           <Price amount={price} />
           
 
-          {user.details.isAuthenticated ? (
-            <div
-            className="favorited"
-            onClick={() =>
-              dispatch({
-                type: "favoriteToggle",
-                payload: { name, image, price, id: productID },
-              })
-            }
-          >
-            {user.products.favorites.find((fav) => fav.id === productID) ? (
-              <FaHeart
-                onClick={() =>
-                  removeFromFavorites(user.details.user._id, productID)
-                }
-              />
-            ) : (
-              <FaRegHeart
-                onClick={() => addToFavorites(user.details.user._id, productID)}
-              />
-            )}
-          </div>
-          ): (null)}
+          <Favorite productID={productID}/>
         </div>
       </div>
       <div className="main">

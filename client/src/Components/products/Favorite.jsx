@@ -2,6 +2,9 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useUser } from "../../contexts/useUser";
 import axios from "axios";
 
+// styling for the heart icon
+import "../../styles/components/products/Favorite.scss";
+
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const Favorite = ({ productID }) => {
@@ -61,8 +64,8 @@ const Favorite = ({ productID }) => {
 
   const checkIfInFavorites = useMemo(() => {
     // code that runs after the setting of the playerName and playerChoice. Will return "Win", "Lose", or "Draw"
-    console.log("userDetails -", user.details);
-    if (user.details.user.favorites != undefined) {
+    // console.log("userDetails -", user.details);
+    if (user.details.isAuthenticated == true) {
       const favorites = user.details.user.favorites;
       for (let i = 0; i < favorites.length; i++) {
         if (favorites[i]._id === productID) {
@@ -79,7 +82,7 @@ const Favorite = ({ productID }) => {
 
   return (
     <>
-      {user.details.isAuthenticated && {} in user.details ? (
+      {user.details.isAuthenticated  ? (
         <>
           {alreadyInFavorites ? (
             <FaHeart
@@ -94,7 +97,7 @@ const Favorite = ({ productID }) => {
           )}
         </>
       ) : (
-        (null, console.log("user", user.details), console.log("not logged in"))
+        (null)
       )}
     </>
   );

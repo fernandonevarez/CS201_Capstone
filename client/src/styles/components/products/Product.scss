@@ -28,11 +28,18 @@
         }
 
         > .top {
+            // height: fit-content;
+            // padding: 1rem;
+            // display: flex;
+            // justify-content: space-between;
+            // align-items: center;
+
             height: fit-content;
-            padding: 1rem;
+            padding: 0.5rem;
             display: flex;
-            justify-content: space-between;
+            width: 100%;
             align-items: center;
+            justify-content: space-between;
 
             > .favorited {
                 @include box(1.75rem);

@@ -186,34 +186,22 @@ nav {
           }
         }
 
-        ul {
-          flex-grow: 2;
-          overflow: scroll;
-          padding: 0.75rem 0.25rem;
+        .catagory {
           display: flex;
-          flex-direction: column;
-          gap: 1rem;
+          justify-content: space-between;
+          margin: .8rem 0;
 
-          li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 18px;
-            font-family: "Raleway";
-            // .category-link {
-            // text-align: center;
-            // }
-
-            h3 {
-              flex-grow: 2;
-            }
-
-            .continue {
-              @include center;
-            }
-          }
+          // font styling
+          
         }
+
+        .catagory-name {
+            font-family: "Playfair Display";
+            font-size: 1.25rem;
+          }
       }
     }
   }
 }
+
+

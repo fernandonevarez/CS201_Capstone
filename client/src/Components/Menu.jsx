@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Link, useNavigate} from "react-router-dom";
-import {FaTimes, FaChevronRight, FaChevronLeft} from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaTimes, FaChevronRight, FaChevronLeft } from "react-icons/fa";
 // import { log } from "npmlog";
 
 /*
@@ -410,7 +410,7 @@ const SAMPLE_DATA_REMOVE_LATER = [
   },
 ];
 
-const Menu = ({toggleMenu}) => {
+const Menu = ({ toggleMenu }) => {
   const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [display, setDisplay] = useState(SAMPLE_DATA_REMOVE_LATER);
   const [history, setHistory] = useState([]);
@@ -420,21 +420,20 @@ const Menu = ({toggleMenu}) => {
     // setDisplay(SAMPLE_DATA_REMOVE_LATER)
     // setHistory([])
     toggleMenu();
-  }
+  };
 
   const back = () => {
     // pops the last vlaue
-    setDisplay(history[history.length - 1])
-    setHistory(h => h.slice(0, h.length - 1))
+    setDisplay(history[history.length - 1]);
+    setHistory((h) => h.slice(0, h.length - 1));
     // set the display to the prevoious display value
-  }
+  };
 
   const contuine = async (next, name) => {
-    setHistory(h => [...h, display]);
+    setHistory((h) => [...h, display]);
     setDisplay(next);
-    navigate(`/products/catagories/${name}`)
-
-  }
+    navigate(`/products/catagories/${name}`);
+  };
 
   // --------------------------------------------- //
   // Use the following later to get sub catagories //
@@ -455,7 +454,6 @@ const Menu = ({toggleMenu}) => {
   //   }))
   // }, []);
 
-
   return (
     <>
       <div className="hide" onClick={exit}></div>
@@ -464,24 +462,48 @@ const Menu = ({toggleMenu}) => {
           <div className="back">
             {history.length ? <FaChevronLeft onClick={back} /> : null}
           </div>
-          <h2>Browse Catagories</h2>
-          <div className="exit" >
+          <h2>Browse Departments</h2>
+          <div className="exit">
             <FaTimes onClick={exit} />
           </div>
         </div>
         <ul className="navigate">
-          {display.map(({name, children}, index) => <li key={index}>
-            <Link to={`/products/catagories/${name}`} >
-              <h3>{name}</h3>
-            </Link>
-            <div className="continue">
-              {children.length ? <FaChevronRight onClick={() => contuine(children, name)} /> : null}
-            </div>
-          </li>)}
+          {display.map(({ name, children }, index) => (
+            <li key={index}>
+              <>
+                {children.length ? (
+                  // has children
+                  <div className="catagory" onClick={() => contuine(children, name)}>
+                    <Link to={`/products/catagories/${name}`}>
+                      <h3 className="catagory-name">{name}</h3>
+                    </Link>
+
+                    <div className="continue">
+                      {children.length ? (
+                        <FaChevronRight
+                          onClick={() => contuine(children, name)}
+                        />
+                      ) : null}
+                    </div>
+                  </div>
+                ) : (
+                  // doesn't have children
+                  <div className="catagory">
+                    <Link to={`/products/catagories/${name}`} onClick={exit}>
+                    <h3 className="catagory-name">{name}</h3>
+                  </Link>
+                  </div>
+                  
+                )}
+              </>
+            </li>
+          ))}
         </ul>
       </div>
     </>
   );
+
+  
 
   // OLD
   // const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
@@ -641,7 +663,6 @@ const Menu = ({toggleMenu}) => {
   //             </li>
   //           );
   //         }
-
 
   //         })}
   //     </ul>

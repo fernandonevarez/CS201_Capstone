@@ -1,0 +1,25 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+.action-wrapper {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: left;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  margin:  1rem 0 1rem 2rem;
+  .page-button {
+    margin: 0 .25rem;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background-color: lightblue;
+          }
+
+  .disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+  }
+}

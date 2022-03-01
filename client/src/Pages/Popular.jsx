@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useUser } from "../contexts/useUser";
 import axios from "axios";
 import Product from "../Components/products/Product";
-import Footer from "../Components/Footer";
+import Footer from "../Components/footer/Footer";
 import "../styles/pages/Popular.scss";
 import Loading from "../Components/Loading";
 
 // react icons
 import { GrFormPreviousLink, GrFormNextLink } from "react-icons/gr";
+import PageButtons from "../Components/PageButtons";
 
 // probelm that i ran into and still in to fix
 /*
@@ -18,9 +19,10 @@ import { GrFormPreviousLink, GrFormNextLink } from "react-icons/gr";
 const Popular = () => {
   const [products, setProducts] = useState([]);
   const [popluarProducts, setPopluarProducts] = useState([]);
+
   const [display, setDisplay] = useState([]);
 
-  const [pageNumber, setPageNumber] = useState(0);
+  // const [pageNumber, setPageNumber] = useState(0);
 
   const [timesLoaded, setTimesLoaded] = useState(0);
   const [scroll, setScroll] = useState(0);
@@ -72,9 +74,15 @@ const Popular = () => {
     getProducts();
   }, []);
 
+  // page number code section
+
+  const [pageNumber, setPageNumber] = useState(0);
+
   useEffect(() => {
-    setDisplay(products.slice(pageNumber * 6, pageNumber * 6 + 6));
+    setDisplay(products.slice(pageNumber * 6, (pageNumber * 6) + 6));
   }, [pageNumber]);
+
+
 
   console.log("product length", products.length);
 
@@ -100,27 +108,12 @@ const Popular = () => {
               <Product key={_id} _id={_id} {...rest} />
             ))}
       </div>
-      <div className="action-wrapper">
-        {pageNumber == 0 ? null : (
-          <GrFormPreviousLink
-            className="page-button"
-            onClick={() => {
-              setPageNumber((p) => p - 1);
-            }}
-          />
-        )}
-        {pageNumber > 0 && pageNumber != Math.round(products.length / 6) ? (
-          <div className="page-number">{pageNumber + 1}</div>
-        ) : null}
-        {display.length < 6 || Number.isInteger(products.length / 6) ? null : (
-          <GrFormNextLink
-            className="page-button"
-            onClick={() => {
-              setPageNumber((p) => p + 1);
-            }}
-          />
-        )}
-      </div>
+
+      
+
+      <PageButtons pageNumber={pageNumber} setPageNumber={setPageNumber} display={display} products={products} />
+
+
     </main>
   );
 };

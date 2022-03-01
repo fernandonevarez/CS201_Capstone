@@ -4,6 +4,7 @@
 .footer-container {
 
   margin-bottom: 9.8rem;
+  height: fit-content;
 
   width: 100vw;
   display: flex;
@@ -17,20 +18,49 @@
 
   padding: 1rem;
 
-  .copy-right {
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
+  // .copy-right {
+  //   margin-top: 5px;
+  //   margin-bottom: 5px;
+  // }
 
-  .docs {
+  // .docs {
+  //   display: flex;
+  //   #doc {
+  //     text-decoration: underline;
+  //   }
+  // }
+
+  // .divider {
+  //   padding-left: 10px;
+  //   padding-right: 10px;
+  // }
+
+
+  button.footer-section {
     display: flex;
-    #doc {
-      text-decoration: underline;
+    flex-direction: column;
+    padding: 2rem;
+    margin: 1rem;
+    background: none;
+
+    .footer-section-title {
+      font-family: "Playfair Display";
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+
+    .footer-section-links {
+      display: flex;
+      flex-direction: column;
+      > a {
+        // margin-bottom: 1rem;
+        text-decoration: none;
+        color: $white;
+        font-family: "Playfair Display";
+        font-size: 1rem;
+      }
     }
   }
 
-  .divider {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+
 }

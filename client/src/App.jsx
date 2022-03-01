@@ -11,7 +11,7 @@ import Toys from "./Pages/Toys";
 import TermsOfUse from "./Pages/Docs/TermsOfUse";
 import PrivacyPolicy from "./Pages/Docs/PrivacyPolicy";
 import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
+import Footer from "./Components/footer/Footer";
 import Profile from "./Pages/Profile";
 import Protected from "./Components/Protected";
 import UserStore from "./Pages/UserStore";

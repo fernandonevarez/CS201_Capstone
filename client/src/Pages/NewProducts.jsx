@@ -5,7 +5,7 @@ import "../styles/pages/NewProducts.scss";
 
 import favImage from "../assets/images/favorited.svg";
 import Loading from "../Components/Loading";
-import Footer from "../Components/Footer";
+import Footer from "../Components/footer/Footer";
 import Product from "../Components/products/Product";
 
 import { useUser } from "../contexts/useUser";

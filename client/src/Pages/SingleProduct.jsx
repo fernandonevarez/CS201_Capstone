@@ -10,7 +10,7 @@ import { useUser } from "../contexts/useUser";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 import duckImg from "../assets/images/temp/duck.jpg";
-import Footer from "../Components/Footer";
+import Footer from "../Components/footer/Footer";
 import Loading from "../Components/Loading";
 import Price from "../Components/products/Price";
 

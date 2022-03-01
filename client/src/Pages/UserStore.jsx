@@ -6,7 +6,7 @@ import axios from "axios";
 import "../styles/pages/UserStore.scss";
 
 import CreateStorePopup from "../Components/CreateStorePopup";
-import Footer from "../Components/Footer";
+import Footer from "../Components/footer/Footer";
 
 /*
 

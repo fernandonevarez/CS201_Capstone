@@ -261,8 +261,8 @@ const Navbar = () => {
                           className="dropdown-item"
                           onClick={() => {
                             dispatch({ type: "logout" });
-                            console.log("logout");
-                            console.log(user);
+                            // replace makes it so that the user can not go back, it will take them to the homepage
+                            window.location.replace("http://localhost:3001/");
                             setShowProfileDropdown(!showProfileDropdown);
                           }}
                         >

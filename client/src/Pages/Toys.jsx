@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
+import Footer from "../Components/footer/Footer";
 import { } from "../styles/pages/ToysAndEntertainment.scss";
 
 import Product from "../Components/products/Product";

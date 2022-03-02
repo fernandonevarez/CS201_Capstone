@@ -80,9 +80,9 @@ const Favorite = ({ productID }) => {
   };
 
   useEffect(() => {
-    console.log("details", user.details);
+    // console.log("details", user.details);
     setUserDetails(user.details);
-  }, [user]);
+  }, [user.details.token, user.details.user]);
 
   const checkIfInFavorites = useMemo(() => {
     // code that runs after the setting of the playerName and playerChoice. Will return "Win", "Lose", or "Draw"

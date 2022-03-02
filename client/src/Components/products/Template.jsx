@@ -9,7 +9,7 @@ import Favorite from "./Favorite";
 const Template = ({ name, image, price, classAddition, _id: productID }) => {
   const { user, dispatch } = useUser();
 
-  console.log("id", productID);
+  // console.log("id", productID);
 
 //   console.log("images", image);
 

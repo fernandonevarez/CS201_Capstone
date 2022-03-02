@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import "../../styles/components/Footer.scss";
@@ -9,6 +9,8 @@ import Dropdown from "./Dropdown";
 const Footer = () => {
   const { user } = useUser();
 
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const dropdownSections = [
     {
       id: 1,
@@ -18,16 +20,15 @@ const Footer = () => {
           id: 1,
           name: "Selling on MSB",
           link: "/selling-info",
-          hasRequirmenet: false,
+          opatialRequirement: null,
         },
         {
           id: 2,
           name: "Start Selling",
-          link: `/${user.details.user._id}/store`,
-          opatialRequirement: [
-            "user.details.isAuthenticated",
-            "!user.details.user.hasStore",
-          ],
+          // link: `/${user.details.user._id}/store`,
+          link: `/:userID/store`,
+          opatialRequirement:
+            "user.details.isAuthenticated && !user.details.user.hasStore",
         },
       ],
     },
@@ -44,7 +45,8 @@ const Footer = () => {
     },
   ];
 
-  
+  // console.log("userID", user.details.user._id);
+
   return (
     <div className="footer-container">
       {/* <div className="company-name">MSB</div>
@@ -55,6 +57,7 @@ const Footer = () => {
           <Dropdown
             name={section.name}
             links={section.links}
+            id={section.id}
             key={section.id}
           />
         );
@@ -67,6 +70,20 @@ const Footer = () => {
           <Link to="/about">About MSB</Link>
         </div>
       </div> */}
+
+      {/* <button onClick={() => setShowDropdown(!showDropdown)}>Hello</button>
+      {showDropdown ? (
+        <div class="content">
+          <Link to="/about">About MSB</Link>
+        </div>
+      ) : null}
+
+      <button onClick={() => setShowDropdown(!showDropdown)}>About</button>
+      {showDropdown ? (
+        <div class="content">
+          <Link to="/about">About MSB</Link>
+        </div>
+      ) : null} */}
 
       {/* <div className="docs">
         <Link to={`/terms-of-use`} className="terms" id="doc">

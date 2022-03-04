@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import "../../styles/components/Footer.scss";
+import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/io';
+
+import "../../styles/components/footer/Footer.scss";
 
 import { useUser } from "../../contexts/useUser";
 import Dropdown from "./Dropdown";
 
+import useCollapse from "react-collapsed";
+
 const Footer = () => {
   const { user } = useUser();
 
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState([{}]);
 
   const dropdownSections = [
     {
@@ -27,8 +31,7 @@ const Footer = () => {
           name: "Start Selling",
           // link: `/${user.details.user._id}/store`,
           link: `/:userID/store`,
-          opatialRequirement:
-            "user.details.isAuthenticated && !user.details.user.hasStore",
+          opatialRequirement: ["userAuth", "userStore"],
         },
       ],
     },
@@ -47,53 +50,42 @@ const Footer = () => {
 
   // console.log("userID", user.details.user._id);
 
+  // const closeDropdown = (dropdownSectionID) => {
+  //   // get the dropdownsectionID and set the showDropdown to false
+  //   setShowDropdown(false);
+  // }
+
+  // const content = document.getElementById("footer-dropdown-content-1");
+  // if (showDropdown) {
+  //   content.style.display = "block";
+  //   // content.classList.remove("hide");
+  // } else {
+  //   // content.classList.remove("show");
+  //   // content.classList.add("hide");
+  //   content.style.display = "none";
+  // }
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
+
   return (
     <div className="footer-container">
-      {/* <div className="company-name">MSB</div>
-      <div className="copy-right">Copyright @ 2022</div> */}
+      <Dropdown />
 
-      {dropdownSections.map((section) => {
-        return (
-          <Dropdown
-            name={section.name}
-            links={section.links}
-            id={section.id}
-            key={section.id}
-          />
-        );
-      })}
-      {/* <Dropdown name={dropdownSections[0].name} links={dropdownSections[0].links} /> */}
-
-      {/* <div className="footer-section">
-        <div className="footer-section-title">About</div>
-        <div className="footer-section-links">
-          <Link to="/about">About MSB</Link>
+      <div className="collapsible">
+        <div className="header" {...getToggleProps()}>
+          <h3>Sell</h3>
+          {isExpanded ? <IoIosArrowUp/> : <IoIosArrowDown/>}  
         </div>
-      </div> */}
+        <div className="collapsed-panel" {...getCollapseProps()}>
+          <div className="content">
+            <Link to="/selling-info">Selling on MSB</Link>
+            {user.details.isAuthenticated == true && user.details.user.hasStore == false ? (
+              <Link to={`/${user.details.user._id}/store`}>Start Selling</Link>
+            ) : null}
 
-      {/* <button onClick={() => setShowDropdown(!showDropdown)}>Hello</button>
-      {showDropdown ? (
-        <div class="content">
-          <Link to="/about">About MSB</Link>
+
+          </div>
         </div>
-      ) : null}
-
-      <button onClick={() => setShowDropdown(!showDropdown)}>About</button>
-      {showDropdown ? (
-        <div class="content">
-          <Link to="/about">About MSB</Link>
-        </div>
-      ) : null} */}
-
-      {/* <div className="docs">
-        <Link to={`/terms-of-use`} className="terms" id="doc">
-          Terms of Use
-        </Link>
-        <div className="divider">|</div>
-        <Link to={`/privacy-policy`} className="privacy" id="doc">
-          Privacy Policy
-        </Link>
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-@use "../util/colors.scss" as *;
-@use "../util/mixins.scss" as *;
+@use "../../util/colors.scss" as *;
+@use "../../util/mixins.scss" as *;
 
 .footer-container {
 
@@ -63,4 +63,25 @@
   }
 
 
+}
+
+.hide{
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+// collapse-panel styling
+
+.collapsible {
+  background-color: $blue;
+  #react-collapsed-panel-2 {
+    .content{
+      display: flex;
+      flex-direction: column;
+      
+    }
+  }
 }

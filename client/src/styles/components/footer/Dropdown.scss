@@ -2,32 +2,56 @@
 @use "../../util/mixins.scss" as *;
 
 .collapsible {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   // border-radius: 1rem;
   // padding: 1rem;
   // background-color: $blue;
   border-radius: 1rem;
   height: fit-content;
-  width: 80vw;
-  padding: .25rem;
+  // width: 80vw;
+  width: calc(100% + 2 * 18px) !important;
+  padding: 0.25rem;
+  .expanded-header {
+    background: $blue !important;
+  }
   .header {
     border-radius: 1rem;
-
     display: flex;
     justify-content: space-between;
     padding: 0 1rem;
+    // background: $blue;
+    
+    height: 2rem;
+    
+    align-items: center;
     // border-top: 1px solid black;
     // padding: .5rem;
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.5;
+      font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans",
+        "Segoe UI", "Helvetica", Arial, sans-serif;
+    }
+    
   }
   .collapsed-panel {
     padding: 0 1rem;
 
-    .content{
+    .content {
+
+      // whent the content is not collapsed, change the style
+      
+
       display: flex;
       flex-direction: column;
       // margin: 1rem 0;
       a {
-        padding: .25rem 0;
+        // padding: .25rem 0;
+        margin-left: 1rem;
+        padding-top: 6px !important;
+
+        
       }
     }
   }

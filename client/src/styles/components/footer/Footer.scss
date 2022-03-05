@@ -2,7 +2,6 @@
 @use "../../util/mixins.scss" as *;
 
 .footer-container {
-
   margin-bottom: 9.8rem;
   height: fit-content;
 
@@ -12,76 +11,9 @@
   justify-content: center;
   align-items: center;
 
-  background: $black;
+  background: hsl(196, 34%, 44%);
 
   color: $white;
 
   padding: 1rem;
-
-  // .copy-right {
-  //   margin-top: 5px;
-  //   margin-bottom: 5px;
-  // }
-
-  // .docs {
-  //   display: flex;
-  //   #doc {
-  //     text-decoration: underline;
-  //   }
-  // }
-
-  // .divider {
-  //   padding-left: 10px;
-  //   padding-right: 10px;
-  // }
-
-
-  button.footer-section {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    margin: 1rem;
-    background: none;
-
-    .footer-section-title {
-      font-family: "Playfair Display";
-      font-size: 1.5rem;
-      margin-right: 1rem;
-    }
-
-    .footer-section-links {
-      display: flex;
-      flex-direction: column;
-      > a {
-        // margin-bottom: 1rem;
-        text-decoration: none;
-        color: $white;
-        font-family: "Playfair Display";
-        font-size: 1rem;
-      }
-    }
-  }
-
-
-}
-
-.hide{
-  display: none;
-}
-
-.show {
-  display: block;
-}
-
-// collapse-panel styling
-
-.collapsible {
-  background-color: $blue;
-  #react-collapsed-panel-2 {
-    .content{
-      display: flex;
-      flex-direction: column;
-      
-    }
-  }
 }

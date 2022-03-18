@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "../Components/Navbar";
 import "../styles/pages/Home.scss";
 
@@ -12,7 +12,7 @@ import Title from "../Components/products/Title";
 import Carousel from "../Components/products/carousel/Carousel";
 
 import Profile from "../Components/Profile";
-import { useUser } from "../contexts/useUser";
+import {useUser} from "../contexts/useUser";
 import Slideshow from "../Components/products/slideshow/Slideshow";
 
 // import { useAuth0 } from "@auth0/auth0-react";
@@ -64,14 +64,14 @@ const SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA = [
   },
 ];
 
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3YmQzYTQ1MWJjZmUyNjAiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQzNTAxNjAwLCJleHAiOjE2NDYwOTM2MDB9.4sQiB07AI1GRc5Sp4AvE_5ds0zwe9AUo9yuQNBJN8A4`;
+// const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3YmQzYTQ1MWJjZmUyNjAiLCJuYW1lIjp7ImZpcnN0TmFtZSI6IlRpbSIsIm1pZGRsZU5hbWUiOiJLZXZpbiIsImxhc3ROYW1lIjoiUGhpbGwifSwiaWF0IjoxNjQzNTAxNjAwLCJleHAiOjE2NDYwOTM2MDB9.4sQiB07AI1GRc5Sp4AvE_5ds0zwe9AUo9yuQNBJN8A4`;
 
 const Home = () => {
   // call axios to get backend data
   // const [data, setData] = useState([]);
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
-  const { user } = useUser();
+  const {user} = useUser();
 
   console.log("user", user);
 
@@ -132,22 +132,22 @@ const Home = () => {
         // check if user has favorited products
         // <>
         // {
-          // (user.details.favorites.length > 0 || user.details.favorites != undefined) ? (
-            <div className="favorited">
+        // (user.details.favorites.length > 0 || user.details.favorites != undefined) ? (
+        <div className="favorited">
           <Title name="Favorited" />
-          
-          
-            {/* // check if user has favorited products */}
-            
-              <Carousel items={user.details.user.favorites} />
-            
-          
+
+
+          {/* // check if user has favorited products */}
+
+          <Carousel items={user.details.user.favorites} />
+
+
 
         </div>
-          // ) : null
+        // ) : null
         // }
         // </>
-      ): null}
+      ) : null}
       <div className="popular">
         <Title name="Popular" />
         <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
@@ -164,7 +164,7 @@ const Home = () => {
       {/* <Register /> */}
 
       {results.products?.map((product) => {
-        const { _id: id, imageArray, name, description, price } = product;
+        const {_id: id, imageArray, name, description, price} = product;
         // console.log(imageArray);
         return (
           <div className="product-container" key={id}>

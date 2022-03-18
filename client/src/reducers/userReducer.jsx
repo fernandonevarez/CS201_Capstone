@@ -1,10 +1,10 @@
 const userReducer = (state, action) => {
   switch (action.type) {
-    case "login": {
-      return { ...state, details: action.payload };
+    case "LOGIN": {
+      return {...state, details: action.payload};
     }
-    case "logout": {
-      return { ...state, details: {}, storeInfo: {} };
+    case "LOGOUT": {
+      return {...state, details: {}, storeInfo: {}};
     }
 
     case "UPDATE_USER": {
@@ -54,7 +54,7 @@ const userReducer = (state, action) => {
       };
     }
 
-    case "favoriteToggle": {
+    case "FAVORITE_TOGGLE": {
       const index = state.products.favorites.findIndex(
         (fav) => fav.name === action.payload.name
       );
@@ -74,7 +74,7 @@ const userReducer = (state, action) => {
         },
       };
     }
-    case "favorite": {
+    case "FAVORITE": {
       return {
         ...state,
         products: {
@@ -83,7 +83,7 @@ const userReducer = (state, action) => {
         },
       };
     }
-    case "unfavorite": {
+    case "UNFAVORITE": {
       return {
         ...state,
         products: {
@@ -94,7 +94,7 @@ const userReducer = (state, action) => {
         },
       };
     }
-    case "cartAdd": {
+    case "CART_ADD": {
       return {
         ...state,
         products: {
@@ -103,7 +103,7 @@ const userReducer = (state, action) => {
         },
       };
     }
-    case "cartRemove": {
+    case "CART_REMOVE": {
       return {
         ...state,
         products: {
@@ -116,7 +116,7 @@ const userReducer = (state, action) => {
     }
 
     // update hasStore to true
-    case "createStore": {
+    case "CREATE_STORE": {
       return {
         ...state,
         details: {
@@ -135,7 +135,7 @@ const userReducer = (state, action) => {
     //     : action.payload
     // }}}
 
-    case "override": {
+    case "OVERRIDE": {
       return action.payload;
     }
   }

@@ -4,6 +4,10 @@
 nav {
   color: $blue;
   font-family: "Raleway";
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background-color: $white;
 
   .bar {
     box-shadow: adjust-color($black, $alpha: -0.75) 0px 4px 4px;
@@ -145,8 +149,11 @@ nav {
     &.show {
       display: block;
       position: fixed;
+      top: 0;
       bottom: 0;
       z-index: 99;
+    
+
 
       .hide {
         @include box(100vw, 100vh);

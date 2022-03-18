@@ -1,12 +1,13 @@
-@use "../util/colors.scss" as *;
-@use "../util/mixins.scss" as *;
+@use "../../util/colors.scss" as *;
+@use "../../util/mixins.scss" as *;
 
 .input {
-    flex-grow: 2;
     margin: 5px 0;
 
     p {
         margin-left: 1rem;
+        color: $blue;
+        font-family: "Raleway";
     }
 
     label {
@@ -14,18 +15,19 @@
         align-items: center;
         height: 100%;
         border: solid $blue 2px;
-        border-radius: 20px;
+        border-radius: 1.5rem;
         padding: 0 .5rem;
-        height: 2rem;
+        height: 3rem;
 
         input {
             font-size: .85rem;
             width: 100%;
             flex-grow: 2;
             height: 100%;
-            border-radius: 20px;
+            border-radius: 1.5rem;
             font-family: "Raleway";
             color: $blue;
+            padding: 0 .5rem;
 
             &::placeholder {
                 color: $blue

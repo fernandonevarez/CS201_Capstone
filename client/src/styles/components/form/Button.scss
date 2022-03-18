@@ -1,0 +1,12 @@
+@use "../../util/colors.scss" as *;
+@use "../../util/mixins.scss" as *;
+
+.button {
+    background-color: $blue;
+    color: $white;
+    font-family: "Raleway";
+    width: 100%;
+    font-size: 1.25rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+}

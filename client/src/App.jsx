@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import "./styles/globals.scss";
 
 import Home from "./Pages/Home";
@@ -15,6 +15,7 @@ import Footer from "./Components/footer/Footer";
 import Profile from "./Pages/Profile";
 import Protected from "./Components/Protected";
 import UserStore from "./Pages/UserStore";
+import Store from "./Pages/Store";
 
 // import Footer from "./Components/Footer";
 // import SingleNew from "./Pages/SingleNew";
@@ -24,7 +25,7 @@ function App() {
     <div className="App">
       <Navbar />
 
-      
+
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route
@@ -38,11 +39,11 @@ function App() {
         <Route
           path="/cart"
           element={<Cart />}
-          // element={<Protected>
-          //   <Cart />
-          // </Protected>}
+        // element={<Protected>
+        //   <Cart />
+        // </Protected>}
         />
-        <Route path="/:userID/store" element={<UserStore />} />
+        <Route path="/:userID/store" element={<Store />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />
@@ -54,7 +55,7 @@ function App() {
       </Routes>
 
 
-      <Footer/>
+      <Footer />
     </div>
   );
 }

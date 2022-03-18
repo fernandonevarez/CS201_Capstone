@@ -1,0 +1,57 @@
+@use "../util/colors.scss" as *;
+@use "../util/mixins.scss" as *;
+
+main.store {
+    z-index: 0;
+    padding: 1rem;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+
+    form {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-grow: 2;
+        gap: 1rem;
+
+        h3 {
+            text-align: center;
+            color: $blue;
+            font-family: "Raleway";
+        }   
+
+        .center {
+            flex-grow: 2;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+
+            .side-by-side {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                
+                .store-name {
+                    flex-grow: 2
+                }
+
+                label.select-logo {
+                    @include center;
+                    width: 7.5rem;
+                    height: 7.5rem;
+                    color: $white;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    font-family: "Raleway";
+                    border-radius: 50%;
+
+                    input {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

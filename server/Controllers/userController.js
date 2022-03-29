@@ -115,7 +115,7 @@ const addToCart = async (req, res) => {
 
 const getUserCart = async (req, res) => {
   const { userID } = req.params;
-  const user = await User.findById({_id: userID});  
+  const user = await User.findById({ _id: userID });
 
   if (!user) {
     throw new BadRequestError("Invalid user");
@@ -165,15 +165,17 @@ const createStore = async (req, res) => {
     throw new BadRequestError("Invalid user");
   }
 
-  const store = new Store({
-    name: name,
-    businessEmail: businessEmail,
-    storeOwnerID: storeOwnerID,
-    storeOwnerName: storeOwnerName,
-    logo: result.secure_url,
-    description: description,
-    products: products,
-  });
+  const store = new Store(
+    {
+      name: name,
+      businessEmail: businessEmail,
+      storeOwnerID: storeOwnerID,
+      storeOwnerName: storeOwnerName,
+      logo: result.secure_url,
+      description: description,
+      products: products,
+    }
+  );
 
   user.hasStore = true;
   user.save();
@@ -199,7 +201,7 @@ const getStore = async (req, res) => {
     params: { storeID: id },
   } = req;
 
-  const store = await Store.findOne({ _id: id});
+  const store = await Store.findOne({ _id: id });
 
   if (!store) {
     throw new BadRequestError("Invalid store");

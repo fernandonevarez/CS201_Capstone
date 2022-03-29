@@ -31,7 +31,7 @@ const StoreSchema = new monogoose.Schema({
   products: [
     {
       type: Object,
-      // ref: "Product",
+      ref: "Product",
       required: [false, "Products are not required, but should have one"],
     },
   ],

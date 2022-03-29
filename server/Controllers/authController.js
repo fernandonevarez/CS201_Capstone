@@ -115,21 +115,33 @@ const updateUser = async (req, res) => {
 
   // check what the user wants to update
   if (wantsUpdating === "hasStore") {
-    const updatedUser = await User.findByIdAndUpdate(
-      { _id: userID },
-      { wantsUpdating: data },
-      { new: true, runValidators: true }
-    );
+    // const updatedUser = await User.findByIdAndUpdate(
+    //   { _id: userID },
+    //   { [wantsUpdating]: data },
+    //   { new: true, runValidators: true }
+    // );
 
-    if (!updatedUser) {
+    // find user by id
+    const user = await User.findById(userID);
+
+    if (!user) {
       throw new BadRequestError(
         `User does not exist, no user with id: ${userID}`
       );
     }
+    //  update user's hasStore field
+    user.hasStore = data;
+    // save user
+    await user.save();
+
+
+
     return res.status(StatusCodes.OK).json({
-      updatedUser: { ...updateUser, userPassword },
+      user,
       message: `User with id: ${userID} has been updated`,
     });
+
+
   } else if (wantsUpdating === "storeInfo") {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: userID },
@@ -227,7 +239,7 @@ const updateUser = async (req, res) => {
             _id: product._id
           }
         }
-        
+
 
       },
       { new: true, runValidators: true }
@@ -321,7 +333,7 @@ const updateUser = async (req, res) => {
     //   });
     // }
 
-  }else if (wantsUpdating === "removeFromCart") {}
+  } else if (wantsUpdating === "removeFromCart") { }
 };
 
 module.exports = {

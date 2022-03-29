@@ -2,8 +2,9 @@
 @use "../../util/mixins.scss" as *;
 
 .button {
-    background-color: $blue;
-    color: $white;
+    color: #4D90A8;
+    font-weight: 600;
+    /* color: #F7F3F5; */
     font-family: "Raleway";
     width: 100%;
     font-size: 1.25rem;

@@ -70,8 +70,10 @@ nav {
       .button {
         @include center;
         font-size: 0.85rem;
-        color: $blue;
+        // color: $blue;
         font-weight: 500;
+
+    
       }
 
       .side {

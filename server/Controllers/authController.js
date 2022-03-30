@@ -7,64 +7,20 @@ const JWT = require("jsonwebtoken");
 
 const bcrypt = require("bcrypt");
 
-
 const { StatusCodes } = require("http-status-codes");
 
 let cancel;
 
-
 const register = async (req, res) => {
-  // console.log(req.body);
-  // const { name, cart, favorites, profile_picture, email, hasStore } = req.body;
-  // // create a token for the user
-  // // console.log(token);
-  // const newUser = await User.create({
-  //   user: {
-  //     name: name,
-  //     email: email,
-  //     cart: cart,
-  //     favorites: favorites,
-  //     // will be a url link to the user profile picture
-  //     profile_picture: profile_picture,
-  //     hasStore: hasStore,
-  //   },
-  //   // create a token for the user
-  //   token: "",
-  //   isAuthenticated: true,
-  // });
-  // // const token = newUser.createJWT();
-  // // save user token
-  // newUser.token = newUser.createJWT();
-  // console.log("user's token: ", newUser.token);
-  // await newUser.save();
-  // console.log("token", token);
-  // console.log({ newUser, message: "User created successfully" });
-  // // res.status(StatusCodes.CREATED).json({ newUser });
-  // res.status(StatusCodes.CREATED).json({
-  //   user: {
-  //     userID: newUser._id,
-  //     name: newUser.name,
-  //     cart: newUser.cart,
-  //     favorites: newUser.favorites,
-  //     // will be a url link to the user profile picture
-  //     profile_picture: newUser.profile_picture,
-  //     email: newUser.email,
-  //     hasStore: newUser.hasStore,
-  //   },
-  //   token,
-  //   isAuthenticated: true,
-  // });
-
   console.log(req.body);
 
   const password = req.body.password;
 
   const encPassword = await bcrypt.hash(password, await bcrypt.genSalt(10));
 
-
-  const user = await User.create({...req.body, password: encPassword});
+  const user = await User.create({ ...req.body, password: encPassword });
   const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ user, storeInfo: {}, token, isAuthenticated: true });
+  res.status(StatusCodes.CREATED).json({ user, token, isAuthenticated: true });
 };
 
 const login = async (req, res) => {
@@ -107,11 +63,10 @@ const login = async (req, res) => {
       profile_picture: "",
       email: userLogin.email,
       hasStore: userLogin.hasStore,
+      storeInfo: userLogin.storeInfo,
     },
-    storeInfo: {},
     token: token,
     isAuthenticated: true,
-
   });
 };
 
@@ -142,35 +97,40 @@ const updateUser = async (req, res) => {
     // save user
     await user.save();
 
-
-
     return res.status(StatusCodes.OK).json({
       user,
       message: `User with id: ${userID} has been updated`,
     });
-
-
   } else if (wantsUpdating === "storeInfo") {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: userID },
-      { storeInfo: data },
+      { [storeInfo]: data },
       { new: true, runValidators: true }
     );
 
-    if (!updatedUser) {
+    // find ther user by id
+    // const user = await User.findById(userID);
+
+    if (!updateUser) {
       throw new BadRequestError(
         `User does not exist, no user with id: ${userID}`
       );
     }
 
-    console.log("password", userPassword);
+    // update user's storeInfo field
+    // user.storeInfo = data;
+    // save user
+    // await user.save();
+
+    // console.log("user", user);
+
+    // console.log("password", userPassword);
 
     return res.status(StatusCodes.OK).json({
-      updatedUser: { ...updateUser, password: userPassword },
+      updateUser,
       message: `User with id: ${userID} has been updated`,
     });
   } else if (wantsUpdating === "addToFavorites") {
-
     const { userID, productID } = data;
 
     // find single product
@@ -201,9 +161,9 @@ const updateUser = async (req, res) => {
               store: product.store,
               createdAt: product.createdAt,
               __v: product.__v,
-            }
-          ]
-        }
+            },
+          ],
+        },
       },
       { new: true, runValidators: true }
     );
@@ -215,10 +175,9 @@ const updateUser = async (req, res) => {
     }
 
     return res.status(StatusCodes.OK).json({
-      user: updatedUser
+      user: updatedUser,
     });
   } else if (wantsUpdating === "removeFromFavorites") {
-
     const { userID, productID } = data;
 
     // find single product
@@ -244,11 +203,9 @@ const updateUser = async (req, res) => {
         // remove the product from the favorites array
         $pull: {
           favorites: {
-            _id: product._id
-          }
-        }
-
-
+            _id: product._id,
+          },
+        },
       },
       { new: true, runValidators: true }
     );
@@ -260,11 +217,9 @@ const updateUser = async (req, res) => {
     }
 
     return res.status(StatusCodes.OK).json({
-      user: updatedUser
+      user: updatedUser,
     });
-
   } else if (wantsUpdating === "addToCart") {
-
     const { userID, productID } = data;
 
     // find single product
@@ -275,7 +230,6 @@ const updateUser = async (req, res) => {
     console.log("productID", productID);
 
     user.cart.map(async (item) => {
-
       console.log("itemID", item._id);
 
       const updatedUser = await User.findByIdAndUpdate(
@@ -295,9 +249,9 @@ const updateUser = async (req, res) => {
                 store: product.store,
                 createdAt: product.createdAt,
                 __v: product.__v,
-              }
-            ]
-          }
+              },
+            ],
+          },
         },
         { new: false, runValidators: true }
       );
@@ -340,8 +294,8 @@ const updateUser = async (req, res) => {
     //     message: `Product added to cart`
     //   });
     // }
-
-  } else if (wantsUpdating === "removeFromCart") { }
+  } else if (wantsUpdating === "removeFromCart") {
+  }
 };
 
 module.exports = {

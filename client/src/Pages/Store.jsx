@@ -12,7 +12,7 @@ const Store = () => {
   const { user, dispatch } = useUser();
   const [logo, setLogo] = useState(null);
 
-  console.log(user)
+  console.log(user);
 
   const onSubmit = async (e) => {
     // init
@@ -70,7 +70,7 @@ const Store = () => {
         }
       )
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         dispatch({ type: "CREATE_STORE" });
         // console.log("updated user", response.data);
       })
@@ -98,15 +98,13 @@ const Store = () => {
           Authorization: `Bearer ${user.details.token}`,
         },
       }
-    )
-  }
+    );
+  };
 
-  if(user.details.user.hasStore) {
+  if (user.details.user.hasStore) {
     // get all products
     // const userProducts = user.storeInfo.products;
-
     // get products who created by user
-    
   }
 
   return (
@@ -115,20 +113,19 @@ const Store = () => {
         <main>
           <div className="top">
             <div className="image">
-              <img src={user.details.storeInfo.store.logo} alt={`${user.details.storeInfo.store.name}'s logo`} />
+              <img
+                src={user.details.user.storeInfo.logo}
+                alt={`${user.details.user.storeInfo.name}'s logo`}
+              />
             </div>
             <div className="details">
-              <div className="name">
-                {user.details.storeInfo.store.name}
-              </div>
+              <div className="name">{user.details.user.storeInfo.name}</div>
               <div className="owner">
-                {user.details.storeInfo.store.storeOwnerName}
+                {user.details.user.storeInfo.storeOwnerName}
               </div>
             </div>
           </div>
-          <div className="desc">
-            {user.details.storeInfo.store.description}
-          </div>
+          <div className="desc">{user.details.user.storeInfo.description}</div>
         </main>
       ) : (
         <main className="store">

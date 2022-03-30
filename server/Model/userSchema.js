@@ -4,9 +4,6 @@ const JWT = require("jsonwebtoken");
 const Product = require("./ProductSchema");
 const Store = require("./StoreSchema");
 
-
-
-
 const userSchema = new mongoose.Schema({
   name: {
     firstName: {
@@ -53,15 +50,11 @@ const userSchema = new mongoose.Schema({
 
   // this is how you can allow user's to be able to add object to there own schema
   cart: {
-    type: [
-      Product.schema,
-    ],
+    type: [Product.schema],
     required: false,
   },
   favorites: {
-    type: [
-      Product.schema,
-    ],
+    type: [Product.schema],
     required: false,
   },
   profile_picture: {
@@ -85,8 +78,6 @@ const userSchema = new mongoose.Schema({
 //   this.password = await bcrypt.hash(this.password, await bcrypt.genSalt(10));
 //   next();
 // });
-
-
 
 userSchema.methods.createJWT = function () {
   return JWT.sign(

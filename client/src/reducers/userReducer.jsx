@@ -1,10 +1,10 @@
 const userReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN": {
-      return {...state, details: action.payload};
+      return { ...state, details: action.payload };
     }
     case "LOGOUT": {
-      return {...state, details: {}, storeInfo: {}};
+      return { ...state, details: {}, storeInfo: {} };
     }
 
     case "UPDATE_USER": {
@@ -44,12 +44,15 @@ const userReducer = (state, action) => {
     }
 
     case "STORE_INFO": {
-      console.log("this is what is returning", action.payload);
+      // console.log("this is what is returning", action.payload);
       return {
         ...state,
         details: {
           ...state.details,
-          storeInfo: action.payload,
+          user: {
+            ...state.details.user,
+            storeInfo: action.payload.store,
+          },
         },
       };
     }

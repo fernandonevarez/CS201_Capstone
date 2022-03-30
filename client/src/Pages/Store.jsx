@@ -12,6 +12,8 @@ const Store = () => {
   const { user, dispatch } = useUser();
   const [logo, setLogo] = useState(null);
 
+  const [userProducts, setUserProducts] = useState([]);
+
   console.log(user);
 
   const onSubmit = async (e) => {
@@ -79,11 +81,41 @@ const Store = () => {
       });
   };
 
+  const createProduct = async () => {
+    const productCreationResponse = await axios.post(
+      "/api/v1/products",
+      {
+        name: "",
+        price: 1000,
+        type: "",
+        target: "",
+        description: "",
+        imageArray: [],
+        createBy: user.details.user._id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      }
+    )
+  }
+
+  if(user.details.user.hasStore) {
+    // get all products
+    // const userProducts = user.storeInfo.products;
+
+    // get products who created by user
+    
+  }
+
   return (
     <>
       {user.details.user.hasStore ? (
         <main>
-          <h1>You have a Store</h1>
+          
         </main>
       ) : (
         <main className="store">

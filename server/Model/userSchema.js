@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const Product = require("./ProductSchema");
+const Store = require("./StoreSchema");
 
 
 
@@ -70,6 +71,10 @@ const userSchema = new mongoose.Schema({
   hasStore: {
     type: Boolean,
     default: false,
+  },
+  storeInfo: {
+    type: Store.schema,
+    required: false,
   },
 });
 

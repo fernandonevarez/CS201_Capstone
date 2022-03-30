@@ -73,13 +73,15 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
-  // Hashing - hashing a string through a formula to get back a completely different string.
-  // salting - adding a random string of numbers to the start of the string to make it harder to guess.
-  // peppering - adding a random letter [a-zA-Z] to the end of a string to make it harder to guess.
-  this.password = await bcrypt.hash(this.password, await bcrypt.genSalt(10));
-  next();
-});
+// userSchema.pre("save", async function (next) {
+//   // Hashing - hashing a string through a formula to get back a completely different string.
+//   // salting - adding a random string of numbers to the start of the string to make it harder to guess.
+//   // peppering - adding a random letter [a-zA-Z] to the end of a string to make it harder to guess.
+//   this.password = await bcrypt.hash(this.password, await bcrypt.genSalt(10));
+//   next();
+// });
+
+
 
 userSchema.methods.createJWT = function () {
   return JWT.sign(

@@ -64,14 +64,16 @@ const ProductSchema = new monogoose.Schema({
     default: 0,
   },
 
-  store: {
-    type: String,
+  createdBy: {
+    type: monogoose.Schema.Types.ObjectId,
+    ref: "User",
     required: [true, "Please add a store"],
-    maxlength: [50, "Description must be less than 500 characters"],
-    minlength: [3, "Description must be more than 3 characters"],
-    // default: "User's store",
-    // required: [true, "What store does this product belong to? Please add a store"],
-  }
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 ProductSchema.pre("validate", function(next) {

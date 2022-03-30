@@ -5,6 +5,9 @@ const { BadRequestError, UnauthError } = require("../errors");
 require("dotenv").config();
 const JWT = require("jsonwebtoken");
 
+const bcrypt = require("bcrypt");
+
+
 const { StatusCodes } = require("http-status-codes");
 
 let cancel;
@@ -54,7 +57,12 @@ const register = async (req, res) => {
 
   console.log(req.body);
 
-  const user = await User.create(req.body);
+  const password = req.body.password;
+
+  const encPassword = await bcrypt.hash(password, await bcrypt.genSalt(10));
+
+
+  const user = await User.create({...req.body, password: encPassword});
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({ user, storeInfo: {}, token, isAuthenticated: true });
 };

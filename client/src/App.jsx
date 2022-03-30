@@ -43,7 +43,9 @@ function App() {
         //   <Cart />
         // </Protected>}
         />
-        <Route path="/:userID/store" element={<Store />} />
+        <Route path="/:userID/store" element={<Protected>
+          <Store />
+        </Protected>} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />

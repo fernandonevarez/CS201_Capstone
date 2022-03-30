@@ -12,7 +12,7 @@ const Store = () => {
   const { user, dispatch } = useUser();
   const [logo, setLogo] = useState(null);
 
-  console.log(user);
+  console.log(user)
 
   const onSubmit = async (e) => {
     // init
@@ -44,7 +44,7 @@ const Store = () => {
         },
       })
       .then((response) => {
-        console.log("created store", response.data);
+        // console.log("created store", response.data);
         dispatch({ type: "STORE_INFO", payload: response.data });
       })
       .catch((err) => {
@@ -83,7 +83,22 @@ const Store = () => {
     <>
       {user.details.user.hasStore ? (
         <main>
-          <h1>You have a Store</h1>
+          <div className="top">
+            <div className="image">
+              <img src={user.details.storeInfo.store.logo} alt={`${user.details.storeInfo.store.name}'s logo`} />
+            </div>
+            <div className="details">
+              <div className="name">
+                {user.details.storeInfo.store.name}
+              </div>
+              <div className="owner">
+                {user.details.storeInfo.store.storeOwnerName}
+              </div>
+            </div>
+          </div>
+          <div className="desc">
+            {user.details.storeInfo.store.description}
+          </div>
         </main>
       ) : (
         <main className="store">

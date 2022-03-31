@@ -44,7 +44,7 @@ const Store = () => {
         },
       })
       .then((response) => {
-        // console.log("created store", response.data);
+        console.log("created store", response.data);
         dispatch({ type: "STORE_INFO", payload: response.data });
       })
       .catch((err) => {

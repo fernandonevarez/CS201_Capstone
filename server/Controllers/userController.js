@@ -178,6 +178,10 @@ const createStore = async (req, res) => {
   );
 
   user.hasStore = true;
+
+  // upadte the user's storeInfo to have the store info
+  user.storeInfo = store;
+
   user.save();
   store.save();
 

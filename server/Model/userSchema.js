@@ -67,6 +67,7 @@ const userSchema = new mongoose.Schema({
   },
   storeInfo: {
     type: Store.schema,
+    default: Object,
     required: false,
   },
 });

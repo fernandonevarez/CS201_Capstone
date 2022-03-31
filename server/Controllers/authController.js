@@ -102,32 +102,32 @@ const updateUser = async (req, res) => {
       message: `User with id: ${userID} has been updated`,
     });
   } else if (wantsUpdating === "storeInfo") {
-    const updatedUser = await User.findByIdAndUpdate(
-      { _id: userID },
-      { [storeInfo]: data },
-      { new: true, runValidators: true }
-    );
+    // const updatedUser = await User.findByIdAndUpdate(
+    //   { _id: userID },
+    //   { [storeInfo]: data },
+    //   { new: true, runValidators: true }
+    // );
 
     // find ther user by id
-    // const user = await User.findById(userID);
+    const user = await User.findById(userID);
 
-    if (!updateUser) {
+    if (!user) {
       throw new BadRequestError(
         `User does not exist, no user with id: ${userID}`
       );
     }
 
     // update user's storeInfo field
-    // user.storeInfo = data;
+    user.storeInfo = data;
     // save user
-    // await user.save();
+    await user.save();
 
     // console.log("user", user);
 
     // console.log("password", userPassword);
 
     return res.status(StatusCodes.OK).json({
-      updateUser,
+      user,
       message: `User with id: ${userID} has been updated`,
     });
   } else if (wantsUpdating === "addToFavorites") {

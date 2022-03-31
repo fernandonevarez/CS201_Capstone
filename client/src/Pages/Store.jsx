@@ -113,21 +113,21 @@ const Store = () => {
         <main className="store-display">
           <div className="top">
             <div className="image">
-              <img src={user.details.storeInfo.store?.logo} alt={`${user.details.storeInfo.store?.name}'s logo`} />
+              <img src={user.details.user.storeInfo.logo} alt={`${user.details.user.storeInfo.name}'s logo`} />
             </div>
             <div className="details">
               <div className="name">
-                {user.details.storeInfo.store?.name}
+                {user.details.user.storeInfo.name}
               </div>
               <div className="owner">
-                From {user.details.storeInfo.store?.storeOwnerName}
+                From {user.details.user.storeInfo.storeOwnerName}
               </div>
             </div>
           </div>
           <div className="desc">
             <span className="title">Description:</span>
             <p className="content">
-              {user.details.storeInfo.store?.description}
+              {user.details.user.storeInfo.description}
             </p>
           </div>
           <div className="products-wrapper">

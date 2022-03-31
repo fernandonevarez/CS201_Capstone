@@ -3,19 +3,19 @@ const monogoose = require("mongoose");
 const StoreSchema = new monogoose.Schema({
   name: {
     type: String,
-    required: [true, "Store name is required"],
+    required: [false, "Store name is required"],
   },
   businessEmail: {
     type: String,
-    required: [true, "Business email is required"],
+    required: [false, "Business email is required"],
   },
   storeOwnerID: {
     type: String,
-    required: [true, "Store owner ID is required"],
+    required: [false, "Store owner ID is required"],
   },
   storeOwnerName: {
     type: String,
-    required: [true, "Store owner name is required"],
+    required: [false, "Store owner name is required"],
   },
   logo: {
     type: String,
@@ -24,7 +24,7 @@ const StoreSchema = new monogoose.Schema({
 
   description: {
     type: String,
-    required: [true, "Please add a description"],
+    required: [false, "Please add a description"],
     maxlength: [500, "Description must be less than 500 characters"],
     minlength: [3, "Description must be more than 3 characters"],
   },

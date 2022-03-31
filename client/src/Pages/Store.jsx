@@ -12,7 +12,7 @@ const Store = () => {
   const { user, dispatch } = useUser();
   const [logo, setLogo] = useState(null);
 
-  console.log(user)
+  console.log(user);
 
   const onSubmit = async (e) => {
     // init
@@ -44,7 +44,7 @@ const Store = () => {
         },
       })
       .then((response) => {
-        // console.log("created store", response.data);
+        console.log("created store", response.data);
         dispatch({ type: "STORE_INFO", payload: response.data });
       })
       .catch((err) => {
@@ -70,7 +70,7 @@ const Store = () => {
         }
       )
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         dispatch({ type: "CREATE_STORE" });
         // console.log("updated user", response.data);
       })
@@ -78,6 +78,34 @@ const Store = () => {
         console.log(err);
       });
   };
+
+  const createProduct = async () => {
+    const productCreationResponse = await axios.post(
+      "/api/v1/products",
+      {
+        name: "",
+        price: 1000,
+        type: "",
+        target: "",
+        description: "",
+        imageArray: [],
+        createBy: user.details.user._id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      }
+    );
+  };
+
+  if (user.details.user.hasStore) {
+    // get all products
+    // const userProducts = user.storeInfo.products;
+    // get products who created by user
+  }
 
   return (
     <>

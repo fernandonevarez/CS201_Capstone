@@ -68,8 +68,6 @@ const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWY1ZDdmMDU3
 // ];
 
 const Navbar = () => {
-  // const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
   const [showMenu, setShowMenu] = useState(false);
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);

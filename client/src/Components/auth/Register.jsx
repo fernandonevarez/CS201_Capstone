@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 // require("dotenv").config();
 
-import {useUser} from "../../contexts/useUser";
+import { useUser } from "../../contexts/useUser";
 
 import axios from "axios";
 import Input from "../form/Input";
@@ -21,7 +21,7 @@ import "../../styles/components/auth/Register.scss";
 
 // const token = localStorage.getItem("userToken");
 
-const Register = ({close, change}) => {
+const Register = ({ close, change }) => {
   const [error, setError] = useState("");
 
   // const [newPassword, setNewPassword] = useState("");
@@ -32,7 +32,7 @@ const Register = ({close, change}) => {
     message: "",
   });
 
-  const {user, dispatch} = useUser();
+  const { user, dispatch } = useUser();
 
   const registerUser = async (
     email,
@@ -70,6 +70,7 @@ const Register = ({close, change}) => {
             favorites: [],
             profile_picture: "",
             hasStore: false,
+            storeInfo: {},
           },
           {
             "Content-Type": "application/json",
@@ -77,9 +78,9 @@ const Register = ({close, change}) => {
           }
         )
         .then((response) => {
-          dispatch({type: "LOGIN", payload: response.data});
+          dispatch({ type: "LOGIN", payload: response.data });
 
-          setIsLoginError({status: false, message: ""});
+          setIsLoginError({ status: false, message: "" });
 
           // if (isLoginError.status === false) {
           close();
@@ -135,7 +136,7 @@ const Register = ({close, change}) => {
   // IF YOU NEED HELP WITH THIS CONTACT ETHAN
   const formSubmit = (e) => {
     e.preventDefault();
-    const {target} = e;
+    const { target } = e;
     // registerUser()
 
     const email = target.email.value;

@@ -82,22 +82,51 @@ const Store = () => {
   return (
     <>
       {user.details.user.hasStore ? (
-        <main>
+        <main className="store-display">
           <div className="top">
             <div className="image">
-              <img src={user.details.storeInfo.store.logo} alt={`${user.details.storeInfo.store.name}'s logo`} />
+              <img src={user.details.storeInfo.store?.logo} alt={`${user.details.storeInfo.store?.name}'s logo`} />
             </div>
             <div className="details">
               <div className="name">
-                {user.details.storeInfo.store.name}
+                {user.details.storeInfo.store?.name}
               </div>
               <div className="owner">
-                {user.details.storeInfo.store.storeOwnerName}
+                From {user.details.storeInfo.store?.storeOwnerName}
               </div>
             </div>
           </div>
           <div className="desc">
-            {user.details.storeInfo.store.description}
+            <span className="title">Description:</span>
+            <p className="content">
+              {user.details.storeInfo.store?.description}
+            </p>
+          </div>
+          <div className="products-wrapper">
+            <div className="products">
+              {new Array(10).fill(<div className="store-product">
+                <div className="image">
+                  {/* <img src="" alt="null" /> */}
+                </div>
+                <div className="details">
+                  <div className="product-name">
+                    Product Name
+                  </div>
+                  <div className="product-desc">
+                    Product Desc
+                  </div>
+                </div>
+              </div>)}
+            </div>
+            <div className="add">
+              <div className="hor"></div>
+              <div className="ver"></div>
+            </div>
+          </div>
+          <div className="delete-store">
+            <button className="delete-button">
+              Delete Store
+            </button>
           </div>
         </main>
       ) : (

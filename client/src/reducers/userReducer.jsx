@@ -38,6 +38,7 @@ const userReducer = (state, action) => {
           user: {
             ...state.details.user,
             hasStore: false,
+            storeInfo: {},
           },
         },
       };

@@ -21,9 +21,9 @@ const Store = () => {
 
     // Gets all of the inputs and makes them into form inputs
     const formData = new FormData();
-    formData.append("name", target["store-name"].value);
-    formData.append("businessEmail", target["business-email"].value);
-    formData.append("logo", target.logo.files[0]);
+    formData.append("name", target["store-name"].value = "" ? `${user.details.user.name.firstName}'s Store`: target["store-name"].value);
+    formData.append("businessEmail", target["business-email"].value = ""? user.details.user.email: target["business-email"].value);
+    formData.append("logo", target.logo.files[0] ? "https://res.cloudinary.com/drl5uagby/image/upload/v1648774467/Store_Images_uploader/download_csbcyt.png": target.logo.files[0]);
     formData.append("storeOwnerID", userID);
     formData.append(
       "storeOwnerName",
@@ -101,6 +101,23 @@ const Store = () => {
     );
   };
 
+  const deleteStore = async () => {
+    const storeDeleteResponse = await axios.delete(
+      `http://localhost:3000/api/v1/user/store/${user.details.user.storeInfo._id}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      }
+    ).then((response) => {
+      // console.log(response);
+      dispatch({ type: "DELETE_STORE" });
+    }
+    );
+  };
+
   if (user.details.user.hasStore) {
     // get all products
     // const userProducts = user.storeInfo.products;
@@ -113,12 +130,13 @@ const Store = () => {
         <main className="store-display">
           <div className="top">
             <div className="image">
-              <img src={user.details.user.storeInfo.logo} alt={`${user.details.user.storeInfo.name}'s logo`} />
+              <img
+                src={user.details.user.storeInfo.logo}
+                alt={`${user.details.user.storeInfo.name}'s logo`}
+              />
             </div>
             <div className="details">
-              <div className="name">
-                {user.details.user.storeInfo.name}
-              </div>
+              <div className="name">{user.details.user.storeInfo.name}</div>
               <div className="owner">
                 From {user.details.user.storeInfo.storeOwnerName}
               </div>
@@ -126,25 +144,19 @@ const Store = () => {
           </div>
           <div className="desc">
             <span className="title">Description:</span>
-            <p className="content">
-              {user.details.user.storeInfo.description}
-            </p>
+            <p className="content">{user.details.user.storeInfo.description}</p>
           </div>
           <div className="products-wrapper">
             <div className="products">
-              {new Array(10).fill(<div className="store-product">
-                <div className="image">
-                  {/* <img src="" alt="null" /> */}
-                </div>
-                <div className="details">
-                  <div className="product-name">
-                    Product Name
-                  </div>
-                  <div className="product-desc">
-                    Product Desc
+              {new Array(10).fill(
+                <div className="store-product">
+                  <div className="image">{/* <img src="" alt="null" /> */}</div>
+                  <div className="details">
+                    <div className="product-name">Product Name</div>
+                    <div className="product-desc">Product Desc</div>
                   </div>
                 </div>
-              </div>)}
+              )}
             </div>
             <div className="add">
               <div className="hor"></div>
@@ -152,9 +164,9 @@ const Store = () => {
             </div>
           </div>
           <div className="delete-store">
-            <button className="delete-button">
-              Delete Store
-            </button>
+            <button className="delete-button" onClick={() => {
+              deleteStore();
+            }}>Delete Store</button>
           </div>
         </main>
       ) : (

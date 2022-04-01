@@ -156,6 +156,22 @@ const Store = () => {
               Delete Store
             </button>
           </div>
+
+          <div className="modal">
+            <Input name="name" />
+            <Input name="price" />
+            Dropdown
+            <input
+                className="input-logo"
+                type="file"
+                name="logo"
+                id="logo"
+                accept="image/png,image/jpeg"
+                onChange={(e) =>
+                  setLogo(URL.createObjectURL(e.target.files[0]))
+                }
+              />
+          </div>
         </main>
       ) : (
         <main className="store">

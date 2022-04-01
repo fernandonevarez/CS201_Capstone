@@ -98,7 +98,7 @@ main.store-display {
     .desc {
         padding: 2rem 0;
         font-size: 1rem;
-
+        
         .title {
             font-size: 1rem;
             text-decoration: underline;
@@ -107,6 +107,8 @@ main.store-display {
         }
 
         p.content {
+            inline-size: 100%;
+            overflow-wrap: break-word;
             padding: .25rem 1rem;
         }
     }
@@ -195,6 +197,7 @@ main.store-display {
 
     .delete-store {
         width: 100%;
+        margin-top: 2rem;
 
         .delete-button {
             width: 100%;
@@ -203,7 +206,7 @@ main.store-display {
             border-radius: 20rem;
             color: $white;
             font-family: "Raleway";
-            font-size: 2rem;
+            font-size: 1.25rem;
         }
     }
 }

@@ -25,10 +25,17 @@ const Footer = () => {
           ]}
         />
       ) : (
-        <Dropdown
-          title="Sell"
-          content={[<Link to="/selling-info">Selling on MSB</Link>]}
-        />
+        <>
+          <Dropdown
+            title="Sell"
+            content={[<Link to="/selling-info">Selling on MSB</Link>]}
+          />
+          <Dropdown
+            title="Sell"
+            content={[<Link to="/selling-info">Selling on MSB</Link>]}
+          />
+        
+        </>
       )}
     </div>
   );

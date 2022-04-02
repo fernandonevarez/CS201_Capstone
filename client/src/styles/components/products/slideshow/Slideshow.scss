@@ -78,3 +78,20 @@
         }
     }
 }
+
+@media (min-width: 420px) {
+    .main-slideshow {
+        .display {
+            .sect {
+                width: 33.33vw;
+
+                .atop {
+                    img {
+                        width: 33.33vw;
+                        height: 33.33vw;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-@use "../../../util/colors.scss" as *;
+     @use "../../../util/colors.scss" as *;
 @use "../../../util/mixins.scss" as *;
 
 .product-seat {
@@ -58,6 +58,19 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
+        }
+    }
+}
+
+@media (min-width: 420px) {
+    .product-seat {
+        width: 30vw;
+
+        .atop {
+            .image {
+                width: 30vw;
+                height: 30vw;
+            }
         }
     }
 }

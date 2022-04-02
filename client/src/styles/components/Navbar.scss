@@ -16,6 +16,8 @@ nav {
     .top {
       display: flex;
       gap: 1rem;
+      width: 100%;
+      justify-content: space-between;
 
       .title {
         font-family: "Playfair Display";
@@ -23,7 +25,8 @@ nav {
         font-variation-settings: "wght" 650;
       }
       label {
-        width: 79vw;
+        max-width: 100%;
+        
         display: flex;
         align-items: center;
         height: 100%;
@@ -58,6 +61,7 @@ nav {
       display: flex;
       justify-content: space-between;
       padding: 0.5rem;
+      align-items: center;
 
       .hamburger-icon {
         @include box(1.75rem);
@@ -213,4 +217,41 @@ nav {
   }
 }
 
+@media (min-width: 420px) {
+  nav {
+    .company-name {
+      font-size: 2rem;
+    }
 
+    .bar {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+
+      .top {
+        height: 2.5rem;
+      }
+
+      .bottom {
+        padding: 0 1rem;
+        // width: 50%;
+        height: 2.5rem;
+        justify-content: flex-end;
+        gap: 1.5rem;
+
+        .side {
+          .button {
+            padding: 0;
+            height: min-content;
+            width: 4rem;
+            font-size: 1.25rem;
+          }
+        }
+      }
+    }
+
+    .menu {
+      width: 30rem;
+    }
+  }
+}

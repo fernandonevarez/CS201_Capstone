@@ -70,10 +70,10 @@ const ProductSchema = new monogoose.Schema({
     required: [true, "Please add a store"],
   },
 
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
 });
 
 ProductSchema.pre("validate", function(next) {

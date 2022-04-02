@@ -5,14 +5,40 @@ import InputArea from "../Components/form/InputArea";
 import { useUser } from "../contexts/useUser";
 import "../styles/pages/Store.scss";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Store = () => {
   const { userID } = useParams();
   const { user, dispatch } = useUser();
   const [logo, setLogo] = useState(null);
 
-  console.log(user);
+  const [shownProducts, setShownProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await axios
+        .get(`http://localhost:3000/api/v1/products`, {
+          headers: {
+            Authorization: `Bearer ${user.details.token}`,
+            "Access-Control-Allow-Origin": "http://localhost:3001",
+          },
+        })
+        .then((response) => {
+          // console.log(response.data.products);
+          // filter products to only show products that belong to the store
+          const filteredProducts = response.data.products.filter(
+            (product) => product.createdBy === userID
+          );
+          setShownProducts(filteredProducts);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchProducts();
+  }, [user.details.user.storeInfo.products]);
+
+  // console.log(user);
 
   const onSubmit = async (e) => {
     // init
@@ -21,9 +47,9 @@ const Store = () => {
 
     // Gets all of the inputs and makes them into form inputs
     const formData = new FormData();
-    formData.append("name", target["store-name"].value = "" ? `${user.details.user.name.firstName}'s Store`: target["store-name"].value);
-    formData.append("businessEmail", target["business-email"].value = ""? user.details.user.email: target["business-email"].value);
-    formData.append("logo", target.logo.files[0] ? "https://res.cloudinary.com/drl5uagby/image/upload/v1648774467/Store_Images_uploader/download_csbcyt.png": target.logo.files[0]);
+    formData.append("name", target["store-name"].value);
+    formData.append("businessEmail", target["business-email"].value);
+    formData.append("logo", target.logo.files[0]);
     formData.append("storeOwnerID", userID);
     formData.append(
       "storeOwnerName",
@@ -79,50 +105,71 @@ const Store = () => {
       });
   };
 
-  const createProduct = async () => {
-    const productCreationResponse = await axios.post(
-      "/api/v1/products",
-      {
-        name: "",
-        price: 1000,
-        type: "",
-        target: "",
-        description: "",
-        imageArray: [],
-        createBy: user.details.user._id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3001",
-          Authorization: `Bearer ${user.details.token}`,
-        },
+  const createProductForm = (e) => {
+    e.preventDefault();
+    const { target } = e;
+
+    const convertedPrice = target["price"].value.replace(/[^0-9.]/g, "");
+
+    // convert the price into pennies
+    // const convertedPrice = target["product-price"].value.replace(
+    //   /[^0-9.]/g,
+    //   ""
+    // ).replace(/\./g, "");
+
+    // console.log(convertedPrice);
+
+    const formData = new FormData();
+    formData.append("name", target["name"].value);
+    formData.append("price", convertedPrice);
+    formData.append("type", target["type"].value);
+    formData.append("target", target["target"].value);
+    formData.append("description", target["product-desc"].value);
+
+    formData.append("imageArray", target["product-images"].value);
+    // formData.append("createdBy", userID);
+    formData.append("createdBy", user.details.user._id);
+    // formData.append("storeID", user.details.user.store._id);
+
+    const createProduct = async () => {
+      const productCreationResponse = await axios.post(
+        "/api/v1/products",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001",
+            Authorization: `Bearer ${user.details.token}`,
+          },
+        }
+      ).then((response) => {
+        console.log("products", response.data);
+        // dispatch({ type: "CREATE_PRODUCT", payload: response.data });
       }
-    );
+      ).catch((err) => {
+        console.log(err);
+      }
+      );
+    };
   };
 
   const deleteStore = async () => {
-    const storeDeleteResponse = await axios.delete(
-      `http://localhost:3000/api/v1/user/store/${user.details.user.storeInfo._id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3001",
-          Authorization: `Bearer ${user.details.token}`,
-        },
-      }
-    ).then((response) => {
-      // console.log(response);
-      dispatch({ type: "DELETE_STORE" });
-    }
-    );
+    const storeDeleteResponse = await axios
+      .delete(
+        `http://localhost:3000/api/v1/user/store/${user.details.user.storeInfo._id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001",
+            Authorization: `Bearer ${user.details.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response);
+        dispatch({ type: "DELETE_STORE" });
+      });
   };
-
-  if (user.details.user.hasStore) {
-    // get all products
-    // const userProducts = user.storeInfo.products;
-    // get products who created by user
-  }
 
   return (
     <>
@@ -148,15 +195,15 @@ const Store = () => {
           </div>
           <div className="products-wrapper">
             <div className="products">
-              {new Array(10).fill(
+              {shownProducts.map((product) => (
                 <div className="store-product">
-                  <div className="image">{/* <img src="" alt="null" /> */}</div>
-                  <div className="details">
-                    <div className="product-name">Product Name</div>
-                    <div className="product-desc">Product Desc</div>
-                  </div>
+                <div className="image"><img src={product.imageArray[0]} alt={product.name} /></div>
+                <div className="details">
+                  <div className="product-name">{product.name}</div>
+                  <div className="product-desc">{product.description}</div>
                 </div>
-              )}
+              </div>
+              ))}
             </div>
             <div className="add">
               <div className="hor"></div>
@@ -164,16 +211,79 @@ const Store = () => {
             </div>
           </div>
           <div className="delete-store">
-            <button className="delete-button" onClick={() => {
-              deleteStore();
-            }}>Delete Store</button>
+            <button
+              className="delete-button"
+              onClick={() => {
+                deleteStore();
+              }}
+            >
+              Delete Store
+            </button>
           </div>
 
           <div className="modal">
-            <Input name="name" />
-            <Input name="price" />
-            Dropdown
-            <input
+            <form onSubmit={createProductForm}>
+              <Input name="name" />
+              {/* <Input type={"number"} name="price" onChange={(e) => console.log(e.target.value)}/> */}
+
+              <div className="price-wrapper">
+                <span className="title">Price</span>
+                <input name="price" type={"number"}></input>
+              </div>
+
+              <div className="type">
+                <span className="title">type of Product</span>
+                <br />
+                <select name="type">
+                  <option value="">Select a type</option>
+                  <option value="toy">toy</option>
+                  <option value="art">art</option>
+                  <option value="entertainment">entertainment</option>
+                  <option value="clothing">clothing</option>
+                  <option value="craft supplies">craft supplies</option>
+                  <option value="Tools">Tools</option>
+                  <option value="party">party</option>
+                  <option value="jewelry">jewelry</option>
+                  <option value="accessories">accessories</option>
+                </select>
+              </div>
+
+              <div className="target">
+                <span className="title">Target audience:</span>
+                <br />
+                <select name="target">
+                  <option value="">Select a type</option>
+                  <option value="kids">Kids</option>
+                  <option value="teens">Teens</option>
+                  <option value="adults">Adults</option>
+                  <option value="netural">netural</option>
+                </select>
+              </div>
+
+              <div className="desc">
+                <span className="title">Description:</span>
+                <br />
+                <textarea
+                  name="product-desc"
+                  cols="30"
+                  rows="10"
+                  placeholder="Enter a description"
+                ></textarea>
+              </div>
+
+              {/* allow for users to be able to upload multiply images */}
+              <div className="images">
+                <span className="title">Images:</span>
+                <br />
+                <input
+                  type="file"
+                  name="product-images"
+                  multiple
+                  accept="image/png,image/jpeg"
+                />
+              </div>
+
+              {/* <input
                 className="input-logo"
                 type="file"
                 name="logo"
@@ -182,7 +292,9 @@ const Store = () => {
                 onChange={(e) =>
                   setLogo(URL.createObjectURL(e.target.files[0]))
                 }
-              />
+              /> */}
+              <Button type="submit" text="Create Product" />
+            </form>
           </div>
         </main>
       ) : (

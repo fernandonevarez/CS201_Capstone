@@ -6,11 +6,12 @@ const {StatusCodes} = require("http-status-codes");
 const {BadRequestError, NotFoundError} = require("../errors");
 
 const Product = require("../Model/ProductSchema");
+const Store = require("../Model/StoreSchema");
 // const { log } = require("console");
 
 const createProduct = async (req, res) => {
   const {
-    body: {name, price, description, store, type, target},
+    body: {name, price, description, store, type, target, createdBy},
     files: fileArrayConatiner,
     // user: { _id: userID },
     params: {id: productID},
@@ -45,7 +46,16 @@ const createProduct = async (req, res) => {
         target: target,
         type: type,
         store: store,
+        createdBy: createdBy,
       });
+
+      // add product to the store
+      const store = await Store.findByIdAndUpdate(
+        {_id: store},
+        {$push: {products: product._id}},
+        {new: true}
+      );
+
       res.status(200).json({product});
     }
     uploadImages();
@@ -68,6 +78,7 @@ const createProduct = async (req, res) => {
       target: target,
       type: type,
       store: store,
+      createdBy: createdBy,
     });
     res.status(200).json({product});
   }

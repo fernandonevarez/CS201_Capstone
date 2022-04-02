@@ -98,23 +98,27 @@ const userReducer = (state, action) => {
         },
       };
     }
-    case "CART_ADD": {
+    case "ADD_TO_CART": {
       return {
         ...state,
-        products: {
-          ...state.products,
-          cart: [...state.cart, action.payload],
+        details: {
+          ...state.details,
+          user: {
+            ...state.details.user,
+            cart: action.payload,
+          },
         },
       };
     }
-    case "CART_REMOVE": {
+    case "REMOVE_FROM_CART": {
       return {
         ...state,
-        products: {
-          ...state.products,
-          cart: state.products.cart.filter(
-            (item) => item.name !== action.payload.name
-          ),
+        details: {
+          ...state.details,
+          user: {
+            ...state.details.user,
+            cart: action.payload,
+          },
         },
       };
     }

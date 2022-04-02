@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { BsCart4 } from "react-icons/bs";
 // import {GiHamburgerMenu} from "react-icons/gi";
@@ -72,7 +72,27 @@ const Navbar = () => {
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
-  const { user, dispatch } = useUser();
+  const { user, dispatch, cartAmount } = useUser();
+
+  // const [cartNumber, setCartNumber] = useState(0);
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // update cartNumber when user logs in
+
+  // update cartNumber when user logs in
+
+  // if (user.details.isAuthenticated) {
+  //   useEffect(() => {
+  //     setCartNumber(user.details.user.cart.length);
+  //   }, [user.isAuthenticated, user.details.user.cart]);
+  // }
+
+  // check if the user is logged in
+
+  // const updateCartNumber = useMemo(() => {
+  //   setCartNumber(user.details.user.cart.length);
+  // }, [user.details.isAuthenticated === true]);
 
   // const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);
 
@@ -200,6 +220,15 @@ const Navbar = () => {
                   <div className="cart-icon">
                     <Link to="/cart">
                       <BsCart4 />
+
+                      {user.details.user.cart.length > 0
+                        ? (console.log(user.details.user.cart.length),
+                          (
+                            <div className="badge">
+                              <>{cartAmount}</>
+                            </div>
+                          ))
+                        : null}
                     </Link>
                   </div>
                 </>

@@ -90,32 +90,62 @@ const getAllFavorites = async (req, res) => {
 // User's cart
 
 const addToCart = async (req, res) => {
-  const { userID, productID } = req.params;
-  const { user, product } = await Promise.all([
-    User.findById(userID),
-    Product.findById(productID),
-  ]);
+  const { userID } = req.params;
+  const { product } = req.body; // product is an object
+
+  const user = await User.findById(userID);
 
   if (!user) {
-    throw new BadRequestError("Invalid user");
+    throw new BadRequestError(`No user with id: ${userID}`);
   }
 
   if (!product) {
-    throw new BadRequestError("Invalid product");
+    throw new BadRequestError(`No product with id: ${product._id}`);
   }
 
-  user.cart.push(product);
+  console.log(product);
+
+  // check if the product is already in the user's cart
+  const isInCart = user.cart.some(
+    (item) => item._id.toString() === product._id
+  );
+
+  // if the product is already in the cart, then just update the quantity
+  if (isInCart) {
+    user.cart.map((item) => {
+      if (item._id.toString() === product._id) {
+        item.quantity += 1;
+      }
+    });
+  } else {
+    // if the product is not in the cart, then add it to the cart
+    user.cart.push({
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      type: product.type,
+      target: product.target,
+      description: product.description,
+      imageArray: product.imageArray,
+      likes: product.likes,
+      createdAt: product.createdAt,
+      createdBy: product.createdBy,
+      __v: product.__v,
+      quantity: 1,
+    });
+  }
+
   user.save();
-  res.status(200).json({ user });
-  console.log({ user });
+  res.status(StatusCodes.OK).json({ user });
 };
 
 const getUserCart = async (req, res) => {
   const { userID } = req.params;
+
   const user = await User.findById({ _id: userID });
 
   if (!user) {
-    throw new BadRequestError("Invalid user");
+    throw new BadRequestError(`No user with id: ${userID} exists`);
   }
 
   // find the users cart
@@ -125,6 +155,34 @@ const getUserCart = async (req, res) => {
 
   res.status(200).json({ cart });
   // console.log({ user });
+};
+
+const removeFromCart = async (req, res) => {
+  // get the userID and productID
+  const { userID, productID } = req.params;
+
+  // find the user
+  const user = await User.findById(userID);
+  if (!user) {
+    throw new BadRequestError(`No user with id: ${userID} exists`);
+  }
+
+  // find the product in the user's cart
+  const product = user.cart.find((item) => item._id.toString() === productID);
+
+  // if the product is not in the cart, throw an error
+  if (!product) {
+    throw new BadRequestError(`No product with id: ${productID} exists`);
+  }
+
+  // if the product is in the cart, then remove it
+  user.cart.pull(product);
+
+  // save the user
+  user.save();
+
+  // return the user
+  res.status(StatusCodes.OK).json({ user });
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,6 +284,10 @@ const deleteStore = async (req, res) => {
 
 const updateStore = async (req, res) => {};
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 module.exports = {
   addingFavorite,
   removeFavorite,
@@ -233,6 +295,7 @@ module.exports = {
   updateUser,
   addToCart,
   getUserCart,
+  removeFromCart,
   createStore,
   getAllStores,
   getStore,

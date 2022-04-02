@@ -92,6 +92,22 @@ const UserProvider = ({ children }) => {
     // isAuthenticated: false,
   });
 
+  const [cartAmount, setCartAmount] = useState(0);
+
+  // useEffect(() => {
+  //   if (user.details.token) {
+  //     // update cartNumber
+  //     setCartAmount(user.details.user.cart.length);
+  //   }
+  // }, [user.details.user.cart.length]);
+
+  // update cartNumber whenever the cart is updated
+  useEffect(() => {
+    if (user.details.token) {
+      setCartAmount(user.details.user.cart.length);
+    }
+  }, [user.details]);
+
   // const [userMetadata, setUserMetadata] = useState(null);
 
   // const {
@@ -177,7 +193,7 @@ const UserProvider = ({ children }) => {
   //   console.log(userCookies.token);
 
   return (
-    <UserContext.Provider value={{ user, dispatch, userCookies }}>
+    <UserContext.Provider value={{ user, dispatch, cartAmount, setCartAmount }}>
       {children}
     </UserContext.Provider>
   );

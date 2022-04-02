@@ -1,4 +1,4 @@
-const {truncate} = require("fs/promises");
+const { truncate } = require("fs/promises");
 const monogoose = require("mongoose");
 
 const ProductSchema = new monogoose.Schema({
@@ -70,13 +70,15 @@ const ProductSchema = new monogoose.Schema({
     required: [true, "Please add a store"],
   },
 
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now,
-  // },
+  // for cart only
+  quantity: {
+    type: Number,
+    required: false,
+    default: 1,
+  },
 });
 
-ProductSchema.pre("validate", function(next) {
+ProductSchema.pre("validate", function (next) {
   if (this.imageArray.length > 10)
     throw "Amount of images submited exceeds maximum size of 10 images. Please remove some images and try again.";
 

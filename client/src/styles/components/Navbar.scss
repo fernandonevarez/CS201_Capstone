@@ -26,7 +26,7 @@ nav {
       }
       label {
         max-width: 100%;
-        
+
         display: flex;
         align-items: center;
         height: 100%;
@@ -76,8 +76,6 @@ nav {
         font-size: 0.85rem;
         // color: $blue;
         font-weight: 500;
-
-    
       }
 
       .side {
@@ -107,6 +105,27 @@ nav {
 
           svg {
             @include box;
+          }
+        }
+
+        .cart-icon {
+          .badge {
+            position: relative;
+            top: -42px;
+            right: -15px;
+            display: flex;
+            padding: 0.01rem;
+            text-align: center;
+            border-radius: 50%;
+            background: transparent;
+            color: red;
+            height: 1.5rem;
+            font-weight: bolder;
+            vertical-align: center;
+            width: 1.5rem;
+            align-content: center;
+            align-items: center;
+            justify-content: space-evenly;
           }
         }
 
@@ -158,8 +177,6 @@ nav {
       top: 0;
       bottom: 0;
       z-index: 99;
-    
-
 
       .hide {
         @include box(100vw, 100vh);
@@ -202,16 +219,15 @@ nav {
         .catagory {
           display: flex;
           justify-content: space-between;
-          margin: .8rem 0;
+          margin: 0.8rem 0;
 
           // font styling
-          
         }
 
         .catagory-name {
-            font-family: "Playfair Display";
-            font-size: 1.25rem;
-          }
+          font-family: "Playfair Display";
+          font-size: 1.25rem;
+        }
       }
     }
   }

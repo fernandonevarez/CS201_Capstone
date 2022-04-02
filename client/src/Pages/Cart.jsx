@@ -21,11 +21,13 @@ const Cart = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const { user, userCookies } = useUser();
+  const { user, dispatch, userCookies, setCartAmount } = useUser();
 
-  console.log(userCookies.token);
+  // console.log(userCookies.token);
 
-  const cart = user.details.user.cart;
+  const [cart, setCart] = useState(user.details.user.cart);
+
+  // const cart = user.details.user.cart;
 
   const checkout = async () => {
     const checkout = await axios.post(
@@ -42,20 +44,21 @@ const Cart = () => {
   };
 
   const UserCart = async () => {
-    console.log(user.details.user);
+    // console.log(user.details.user);
 
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/user/${user.details.user._id}/cart`,
-      {
+    const response = await axios
+      .get(`http://localhost:3000/api/v1/user/${user.details.user._id}/cart`, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "http://localhost:3001/cart",
           Authorization: `Bearer ${user.details.token}`,
         },
-      }
-    );
-    console.log("user's cart", response.data);
-    setIsLoading(false);
+      })
+      .then((response) => {
+        // console.log(response.data.cart);
+        setCart(response.data.cart);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -63,7 +66,51 @@ const Cart = () => {
     if (cart.length > 0) {
       setHasCartItems(true);
     }
+    // cleanup
+    // return () => {
+    //   // cleanup
+
+    // };
   }, []);
+
+  const removeFromCart = async (productID) => {
+    const response = await axios
+      .delete(
+        `http://localhost:3000/api/v1/user/${user.details.user._id}/cart/${productID}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001/cart",
+            Authorization: `Bearer ${user.details.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("remove from cart", response.data.user.cart);
+        setCart(response.data.user.cart);
+
+        dispatch({
+          type: "REMOVE_FROM_CART",
+          payload: response.data.user.cart,
+        });
+
+        if (
+          response.data.user.cart.length === 0 ||
+          response.data.user.cart === null ||
+          response.data.user.cart === undefined
+        ) {
+          setHasCartItems(false);
+        }
+
+        // update user cart in context
+        setCartAmount(response.data.user.cart.length);
+        // UserCart();
+        // setIsLoading(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // console.log(`User Auth Status: ${isAuthenticated}`);
 
@@ -86,26 +133,35 @@ const Cart = () => {
                   className="product-container"
                   key={product._id}
                 >
-                  <div className="left">
+                  <div className="top">
                     <img src={product.imageArray[0]} alt="placeholder" />
-
-                    <div className="product-description">
-                      <h3>{product.description}</h3>
-                    </div>
-                  </div>
-
-                  <div className="right">
                     <div className="product-info">
                       <div className="info-wrapper">
                         <h3 id="product-name">{product.name}</h3>
                         {/* <h3 id="product-quantity">{product.quantity}</h3> */}
-                        <h3 id="product-price">${product.price / 100}</h3>
+                        <h3 id="product-price">
+                          Price: ${product.price / 100}
+                        </h3>
+                        <h3 id="product-quantity">
+                          quantity: {product.quantity}
+                        </h3>
                       </div>
                     </div>
-                    <div className="button-wrapper">
-                      <button className="button" id="svl">Save For Later</button>
-                      <button className="button" id="rmve">Remove</button>
-                    </div>
+                  </div>
+
+                  <div className="bottom">
+                    <button className="button" id="svl">
+                      Save For Later
+                    </button>
+                    <button
+                      className="button"
+                      id="rmve"
+                      onClick={() => {
+                        removeFromCart(product._id);
+                      }}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </Link>
               );
@@ -113,6 +169,7 @@ const Cart = () => {
           ) : (
             <div className="empty-cart">
               <h2>Your cart is empty</h2>
+              <p>Discover something new to fill up your cart</p>
             </div>
           )}
         </section>
@@ -120,39 +177,6 @@ const Cart = () => {
       </div>
     </main>
   );
-
-  {
-    /* total price */
-  }
-  {
-    /* // <section className="cart-price">
-        //   <div>
-        //     {" "}
-        //     <h2>Item(s) Total</h2> <h3>8.00</h3>{" "}
-        //   </div>
-        //   <div>
-        //     {" "}
-        //     <h2>Shipping</h2> <h3>79.00</h3>{" "}
-        //   </div>
-        //   <hr />
-        //   <div>
-        //     {" "}
-        //     <h2>Total</h2> <h3>87.00</h3>{" "}
-        //   </div>
-        // </section> */
-  }
-
-  {
-    /* // <button */
-  }
-  //   onClick={() => {
-  //     checkout();
-  //   }}
-  // >
-  //   <h1>Checkout</h1>
-  // </button>
-  //   </div>
-  // </main>
 };
 
 export default Cart;

@@ -29,20 +29,24 @@ const SingleProduct = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [fetchingError, setFetchingError] = useState({status: false, message: ""});
+  const [fetchingError, setFetchingError] = useState({
+    status: false,
+    message: "",
+  });
 
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setErrorMessage(fetchingError.message);
   }, [fetchingError]);
-  
 
   let { id } = useParams();
 
   console.log("id", id);
 
-  const { user } = useUser();
+  const { user, dispatch, setCartAmount } = useUser();
+
+  console.log("user's token", user.details.token);
 
   const getProduct = async () => {
     const response = await axios
@@ -67,7 +71,6 @@ const SingleProduct = () => {
             message: "Error fetching product, try again later", //err.response.data.message,
           });
 
-        
           // console.log(err.response.data);
           // console.log(err.response.status);
           // console.log(err.response.headers);
@@ -90,26 +93,51 @@ const SingleProduct = () => {
   const pushToCart = async () => {
     try {
       cancel && cancel();
-      const response = await axios.put(
-        `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
-        {
-          wantsUpdating: "addToCart",
-          data: { userID: user.details.user._id, productID: product._id },
-        },
-        {
-          cancelToken: new axios.CancelToken((canceler) => (cancel = canceler)),
-          headers: {
-            "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "http://localhost:3001",
-            Authorization: `Bearer ${user.details.token}`,
+      const response = await axios
+        .put(
+          `http://localhost:3000/api/v1/user/${user.details.user._id}/cart`,
+          {
+            product,
           },
-        }
-      );
-
-      // console.log("response", response.data);
-    } catch (err) {
-      console.log(err);
+          {
+            // cancelToken: new axios.CancelToken((canceler) => (cancel = canceler)),
+            headers: {
+              "Content-Type": "application/json",
+              // "Access-Control-Allow-Origin": "http://localhost:3001",
+              Authorization: `Bearer ${user.details.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data.user.cart);
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: response.data.user.cart,
+          });
+          // update cart amount in navbar
+          setCartAmount(response.data.user.cart.length);
+          console.log("cart", response.data.user);
+          // update cartNumber
+        })
+        .catch((err) => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(err.response);
+            setErrorMessage(err.response.data.message);
+          } else if (err.request) {
+            // client never received a response, or request never left
+          } else {
+            // anything else
+          }
+        });
+    } catch (error) {
+      console.log(error);
     }
+
+    // console.log("response", response.data);
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
     // const response = await axios.put(
     //   `http://localhost:3000/api/v1/auth/updateUser/${user.details.user._id}`,
@@ -136,7 +164,14 @@ const SingleProduct = () => {
 
   // console.log("product", product);
 
-  const { _id: productID, name, price, description, imageArray, likes } = product;
+  const {
+    _id: productID,
+    name,
+    price,
+    description,
+    imageArray,
+    likes,
+  } = product;
 
   console.log("productID", productID);
 
@@ -144,13 +179,11 @@ const SingleProduct = () => {
     <main className="single-product-page">
       {isLoading ? (
         <>
-        {
-          fetchingError.status ? (
+          {fetchingError.status ? (
             <Error message={errorMessage} />
-          ): (
+          ) : (
             <Loading />
-          )
-        }
+          )}
         </>
       ) : (
         <div className="single-product-container">
@@ -166,23 +199,15 @@ const SingleProduct = () => {
             <h1>{name}</h1>
 
             <div className="product-price-available">
-              <Price amount={price}/>
+              <Price amount={price} />
 
               <div className="product-info-wrapper">
-              <Favorite productID={productID} /> 
-              <h2>In stock</h2>
+                <Favorite productID={productID} />
+                <h2>In stock</h2>
               </div>
-
-          
             </div>
 
             {/* product favorite */}
-            
-            
-          
-
-
-
 
             <button onClick={() => pushToCart()}>Add to Cart</button>
 

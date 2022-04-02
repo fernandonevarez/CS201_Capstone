@@ -67,9 +67,19 @@ const userSchema = new mongoose.Schema({
   },
   storeInfo: {
     type: Store.schema,
-    default: Object,
     required: false,
+    default: null,
   },
+
+  // storeInfo: {
+  //   // type: Store.schema,
+  //   // default: Object,
+  //   // required: false,
+  //   // ref: "Store",
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Store",
+  //   required: false,
+  // },
 });
 
 // userSchema.pre("save", async function (next) {

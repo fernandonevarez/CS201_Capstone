@@ -59,7 +59,7 @@ userRouter.route("/store").post(authenticationMiddleware, createStore);
 userRouter.route("/store").get(getAllStores);
 
 
-userRouter.route("/store/:storeID/?userID").delete(authenticationMiddleware, deleteStore);
+userRouter.route("/store/:storeID").delete(authenticationMiddleware, deleteStore);
 
 userRouter.route("/store/:storeID/?userID").put(authenticationMiddleware, updateStore);
 

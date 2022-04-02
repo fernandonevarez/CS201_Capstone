@@ -217,7 +217,17 @@ const getStore = async (req, res) => {
 }
 
 const deleteStore = async (req, res) => {
+  const { storeID } = req.params;
+  const store = await Store.findById(storeID);
 
+  if (!store) {
+    throw new BadRequestError("No store with this ID exist to delete, plaese try a differnt store ID");
+  }
+
+  // delete the store
+  store.remove();
+
+  res.status(StatusCodes.OK).json({ store });
 }
 
 const updateStore = async (req, res) => {

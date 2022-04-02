@@ -121,9 +121,9 @@ const Cart = () => {
       <div className="cart-page-container">
         {/* actual cart sect */}
         <section className="cart-div">
-          <div className="cart-title">
+          {/* <div className="cart-title">
             <h2>Cart</h2>
-          </div>
+          </div> */}
 
           {hasCartItems ? (
             cart.map((product) => {
@@ -169,7 +169,9 @@ const Cart = () => {
           ) : (
             <div className="empty-cart">
               <h2>Your cart is empty</h2>
-              <p>Discover something new to fill up your cart</p>
+              <Link to="/products/catagories/New">
+                <p>Discover something new to fill up your cart</p>
+              </Link>
             </div>
           )}
         </section>

@@ -121,3 +121,18 @@
     }
   }
 }
+
+.empty-cart {
+  p {
+    height: 5rem;
+    text-align: center;
+    // center the text vertically
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline;
+    font-family: "Raleway";
+    font-weight: 500;
+  }
+}

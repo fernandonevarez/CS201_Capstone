@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Button from "../Components/form/Button";
 import Input from "../Components/form/Input";
 import InputArea from "../Components/form/InputArea";
@@ -6,11 +6,14 @@ import { useUser } from "../contexts/useUser";
 import "../styles/pages/Store.scss";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 const Store = () => {
   const { userID } = useParams();
   const { user, dispatch } = useUser();
   const [logo, setLogo] = useState(null);
+
+  const [showAddProduct, setShowAddProduct] = useState(false);
 
   const [shownProducts, setShownProducts] = useState([]);
 
@@ -36,7 +39,7 @@ const Store = () => {
         });
     };
     fetchProducts();
-  }, [user.details.user.storeInfo.products]);
+  }, [shownProducts]);
 
   // console.log(user);
 
@@ -105,7 +108,7 @@ const Store = () => {
       });
   };
 
-  const createProductForm = (e) => {
+  const createProductForm = async (e) => {
     e.preventDefault();
     const { target } = e;
 
@@ -125,35 +128,63 @@ const Store = () => {
     formData.append("type", target["type"].value);
     formData.append("target", target["target"].value);
     formData.append("description", target["product-desc"].value);
+    const imageArray = Object.values(target["product-images"].files);
 
-    formData.append("imageArray", target["product-images"].value);
+    imageArray.forEach((image) => {
+      formData.append("imageArray", image);
+    });
+    // formData.append(
+    //   "imageArray",
+
+    // );
+
+    // console.log("images - ", Object.values(target["product-images"].files));
+    // get all the images and convert them to an array
+
+    // console.log("imageArray", imageAr);
     // formData.append("createdBy", userID);
     formData.append("createdBy", user.details.user._id);
     // formData.append("storeID", user.details.user.store._id);
 
-    const createProduct = async () => {
-      const productCreationResponse = await axios.post(
-        "/api/v1/products",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3001",
-            Authorization: `Bearer ${user.details.token}`,
-          },
-        }
-      ).then((response) => {
+    // const createProduct = async () => {
+    const productCreationResponse = await axios
+      .post("http://localhost:3000/api/v1/products", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      })
+      .then((response) => {
         console.log("products", response.data);
         // dispatch({ type: "CREATE_PRODUCT", payload: response.data });
-      }
-      ).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
-      }
-      );
-    };
+      });
+    // };
+    // createProduct();
   };
 
-  const deleteStore = async () => {
+  const deleteProduct = async (productID) => {
+    const deleteProductResponse = await axios
+      .delete(`http://localhost:3000/api/v1/products/${productID}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        // dispatch({ type: "DELETE_PRODUCT", payload: response.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteStore = async (productID) => {
     const storeDeleteResponse = await axios
       .delete(
         `http://localhost:3000/api/v1/user/store/${user.details.user.storeInfo._id}`,
@@ -196,16 +227,47 @@ const Store = () => {
           <div className="products-wrapper">
             <div className="products">
               {shownProducts.map((product) => (
-                <div className="store-product">
-                <div className="image"><img src={product.imageArray[0]} alt={product.name} /></div>
-                <div className="details">
-                  <div className="product-name">{product.name}</div>
-                  <div className="product-desc">{product.description}</div>
-                </div>
-              </div>
+                <>
+                  <Link
+                    title="click to view product"
+                    className="single-product"
+                    to={`/products/${product._id}`}
+                    key={product._id}
+                  >
+                    <div className="store-product">
+                      <div className="image">
+                        <img
+                          className="product-image"
+                          src={product.imageArray[0]}
+                          alt={product.name}
+                        />
+                      </div>
+                      <div className="details">
+                        <div className="product-name">{product.name}</div>
+                        <RiDeleteBinLine
+                          style={{
+                            height: "1.5rem",
+                            width: "1.5rem",
+                            color: "#E0525B",
+                          }}
+                          className="delete-icon"
+                          onClick={() => {
+                            deleteProduct(product._id);
+                          }}
+                        />
+                        {/* <div className="product-desc">{product.description}</div> */}
+                      </div>
+                    </div>
+                  </Link>
+                </>
               ))}
             </div>
-            <div className="add">
+            <div
+              className="add"
+              onClick={() => {
+                setShowAddProduct(!showAddProduct);
+              }}
+            >
               <div className="hor"></div>
               <div className="ver"></div>
             </div>
@@ -221,69 +283,82 @@ const Store = () => {
             </button>
           </div>
 
-          <div className="modal">
-            <form onSubmit={createProductForm}>
-              <Input name="name" />
-              {/* <Input type={"number"} name="price" onChange={(e) => console.log(e.target.value)}/> */}
+          {showAddProduct ? (
+            <>
+              <div
+                className="hide"
+                onClick={() => setShowAddProduct(!showAddProduct)}
+              ></div>
+              <div className="modal">
+                <form onSubmit={createProductForm}>
+                  <h3>Create a product for your store</h3>
+                  <div className="center">
+                    <Input name="name" className="name-input" />
+                    {/* <Input type={"number"} name="price" onChange={(e) => console.log(e.target.value)}/> */}
 
-              <div className="price-wrapper">
-                <span className="title">Price</span>
-                <input name="price" type={"number"}></input>
-              </div>
+                    <div className="price-wrapper">
+                      <span className="title">Price</span>
+                      <input
+                        className="price-input"
+                        name="price"
+                        type={"number"}
+                      ></input>
+                    </div>
 
-              <div className="type">
-                <span className="title">type of Product</span>
-                <br />
-                <select name="type">
-                  <option value="">Select a type</option>
-                  <option value="toy">toy</option>
-                  <option value="art">art</option>
-                  <option value="entertainment">entertainment</option>
-                  <option value="clothing">clothing</option>
-                  <option value="craft supplies">craft supplies</option>
-                  <option value="Tools">Tools</option>
-                  <option value="party">party</option>
-                  <option value="jewelry">jewelry</option>
-                  <option value="accessories">accessories</option>
-                </select>
-              </div>
+                    <div className="type">
+                      <span className="title">type of Product</span>
+                      <br />
+                      <select name="type">
+                        <option value="">Select a type</option>
+                        <option value="toy">toy</option>
+                        <option value="art">art</option>
+                        <option value="entertainment">entertainment</option>
+                        <option value="clothing">clothing</option>
+                        <option value="craft supplies">craft supplies</option>
+                        <option value="Tools">Tools</option>
+                        <option value="party">party</option>
+                        <option value="jewelry">jewelry</option>
+                        <option value="accessories">accessories</option>
+                      </select>
+                    </div>
 
-              <div className="target">
-                <span className="title">Target audience:</span>
-                <br />
-                <select name="target">
-                  <option value="">Select a type</option>
-                  <option value="kids">Kids</option>
-                  <option value="teens">Teens</option>
-                  <option value="adults">Adults</option>
-                  <option value="netural">netural</option>
-                </select>
-              </div>
+                    <div className="target">
+                      <span className="title">Target audience:</span>
+                      <br />
+                      <select name="target">
+                        <option value="">Select a type</option>
+                        <option value="kids">Kids</option>
+                        <option value="teens">Teens</option>
+                        <option value="adults">Adults</option>
+                        <option value="netural">netural</option>
+                      </select>
+                    </div>
 
-              <div className="desc">
-                <span className="title">Description:</span>
-                <br />
-                <textarea
-                  name="product-desc"
-                  cols="30"
-                  rows="10"
-                  placeholder="Enter a description"
-                ></textarea>
-              </div>
+                    <div className="desc">
+                      <span className="title">Description:</span>
+                      <br />
+                      <textarea
+                        name="product-desc"
+                        cols="30"
+                        rows="10"
+                        placeholder="Enter a description"
+                      ></textarea>
+                    </div>
 
-              {/* allow for users to be able to upload multiply images */}
-              <div className="images">
-                <span className="title">Images:</span>
-                <br />
-                <input
-                  type="file"
-                  name="product-images"
-                  multiple
-                  accept="image/png,image/jpeg"
-                />
-              </div>
+                    {/* allow for users to be able to upload multiply images */}
+                    <div className="images">
+                      <span className="title">Images:</span>
+                      <br />
+                      <input
+                        className="image-input"
+                        type="file"
+                        name="product-images"
+                        multiple="multiple"
+                        accept="image/png,image/jpeg"
+                      />
+                    </div>
 
-              {/* <input
+                    {/* <input
                 className="input-logo"
                 type="file"
                 name="logo"
@@ -293,9 +368,16 @@ const Store = () => {
                   setLogo(URL.createObjectURL(e.target.files[0]))
                 }
               /> */}
-              <Button type="submit" text="Create Product" />
-            </form>
-          </div>
+                  </div>
+                  <Button
+                    type="submit"
+                    text="Create Product"
+                    onClick={() => setShowAddProduct(!showAddProduct)}
+                  />
+                </form>
+              </div>
+            </>
+          ) : null}
         </main>
       ) : (
         <main className="store">

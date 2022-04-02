@@ -100,7 +100,6 @@ const addToCart = async (req, res) => {
     throw new BadRequestError("Invalid user");
   }
 
-
   if (!product) {
     throw new BadRequestError("Invalid product");
   }
@@ -109,9 +108,7 @@ const addToCart = async (req, res) => {
   user.save();
   res.status(200).json({ user });
   console.log({ user });
-
-
-}
+};
 
 const getUserCart = async (req, res) => {
   const { userID } = req.params;
@@ -128,21 +125,23 @@ const getUserCart = async (req, res) => {
 
   res.status(200).json({ cart });
   // console.log({ user });
-}
-
+};
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const createStore = async (req, res) => {
-
   // create a store for the user
 
   const {
     body: {
-      name, businessEmail, storeOwnerID, storeOwnerName, description, products
+      name,
+      businessEmail,
+      storeOwnerID,
+      storeOwnerName,
+      description,
+      products,
     },
-    files: logo
-
+    files: logo,
   } = req;
 
   console.log("logo", logo);
@@ -165,17 +164,15 @@ const createStore = async (req, res) => {
     throw new BadRequestError("Invalid user");
   }
 
-  const store = new Store(
-    {
-      name: name,
-      businessEmail: businessEmail,
-      storeOwnerID: storeOwnerID,
-      storeOwnerName: storeOwnerName,
-      logo: result.secure_url,
-      description: description,
-      products: products,
-    }
-  );
+  const store = new Store({
+    name: name,
+    businessEmail: businessEmail,
+    storeOwnerID: storeOwnerID,
+    storeOwnerName: storeOwnerName,
+    logo: result.secure_url,
+    description: description,
+    products: products,
+  });
 
   user.hasStore = true;
 
@@ -187,20 +184,17 @@ const createStore = async (req, res) => {
 
   res.status(200).json({ store });
   console.log({ store });
-}
+};
 
 const getAllStores = async (req, res) => {
-
   const stores = await Store.find({}).sort("createdAt");
 
   console.log(stores);
 
   res.status(StatusCodes.OK).json({ stores, length: stores.length });
-
-}
+};
 
 const getStore = async (req, res) => {
-
   const {
     params: { storeID: id },
   } = req;
@@ -212,28 +206,25 @@ const getStore = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ store });
-
-
-}
+};
 
 const deleteStore = async (req, res) => {
   const { storeID } = req.params;
   const store = await Store.findById(storeID);
 
   if (!store) {
-    throw new BadRequestError("No store with this ID exist to delete, plaese try a differnt store ID");
+    throw new BadRequestError(
+      "No store with this ID exist to delete, plaese try a differnt store ID"
+    );
   }
 
   // delete the store
   store.remove();
 
   res.status(StatusCodes.OK).json({ store });
-}
+};
 
-const updateStore = async (req, res) => {
-
-}
-
+const updateStore = async (req, res) => {};
 
 module.exports = {
   addingFavorite,

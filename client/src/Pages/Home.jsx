@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import "../styles/pages/Home.scss";
 
@@ -12,8 +12,8 @@ import Title from "../Components/products/Title";
 import Carousel from "../Components/products/carousel/Carousel";
 
 import Profile from "../Components/Profile";
-import {useUser} from "../contexts/useUser";
-import Slideshow from "../Components/products/slideshow/Slideshow";
+import { useUser } from "../contexts/useUser";
+import Slideshow from "../Components/Slider/Slideshow";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 
@@ -71,28 +71,41 @@ const Home = () => {
   // const [data, setData] = useState([]);
   // const [productData, setProductData] = useState([]);
   const [results, setResults] = useState({});
-  const {user} = useUser();
+
+  const [popularProducts, setPopularProducts] = useState([]);
+  const { user } = useUser();
 
   console.log("user", user);
 
-  // const { getAccessTokenSilently, isAuthenticated } = useAuth0();
-
-  // async function getProducts() {
-  //   const response = await axios.get("http://localhost:3000/api/v1/products", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       "Access-Control-Allow-Origin": "http://localhost:3001",
-  //     },
-  //   });
-  //   // console.log(response);
-  //   // console.log(response.data.products);
-  //   setResults(response.data);
-  //   // response.data returns an length and and array of objects
-  // }
-
-  // useEffect(() => {
-  //   getProducts();
-  // }, []);
+  // get products from backend
+  const getProducts = async () => {
+    const productResponse = await axios
+      .get("http://localhost:3000/api/products", {
+        headers: {
+          Authorization: `Bearer ${user.details.token}`,
+        },
+      })
+      .then((response) => {
+        console.log("response", response);
+        const popularProducts = response.data.products.filter((product) => {
+          return product.likes > 0;
+        });
+        // if popluar products is less than 0, add random products
+        if (popularProducts.length <= 4) {
+          const randomProducts = response.data.products.filter((product) => {
+            return product.likes === 0;
+          });
+          const newPopularProducts = [...popularProducts, ...randomProducts];
+          console.log("newPopularProducts", newPopularProducts);
+          setPopularProducts(newPopularProducts);
+        } else {
+          setPopularProducts(popularProducts);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
   // console.log(results);
 
@@ -128,30 +141,28 @@ const Home = () => {
 
   return (
     <main className="home">
-      {(user.details.isAuthenticated) ? (
+      {user.details.isAuthenticated ? (
         // check if user has favorited products
         // <>
         // {
         // (user.details.favorites.length > 0 || user.details.favorites != undefined) ? (
         <div className="favorited">
-          <Title name="Favorited" />
-
+          {/* <Title name="Favorited" /> */}
 
           {/* // check if user has favorited products */}
 
-          <Carousel items={user.details.user.favorites} />
+          {/* <Carousel items={user.details.user.favorites} /> */}
 
-
-
+          <Slideshow key="32456" items={user.details.user.favorites} />
         </div>
-        // ) : null
-        // }
-        // </>
-      ) : null}
+      ) : // ) : null
+      // }
+      // </>
+      null}
       <div className="popular">
         <Title name="Popular" />
-        <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
-        <Carousel items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} />
+        {/* <Slideshow items={SAMPLE_DATA_REPLACE_LATER_WITH_REAL_DATA} /> */}
+        {/* <Slideshow key="88476" items={popularProducts} /> */}
       </div>
       <Title name="Recent" />
       <Title name="About" />
@@ -164,7 +175,7 @@ const Home = () => {
       {/* <Register /> */}
 
       {results.products?.map((product) => {
-        const {_id: id, imageArray, name, description, price} = product;
+        const { _id: id, imageArray, name, description, price } = product;
         // console.log(imageArray);
         return (
           <div className="product-container" key={id}>

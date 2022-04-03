@@ -83,7 +83,7 @@ const userReducer = (state, action) => {
         ...state,
         products: {
           ...state.products,
-          favorites: [...state.favorites, action.payload],
+          favorites: action.payload,
         },
       };
     }

@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  addingFavorite,
+  addingToFavorite,
   removeFavorite,
   getAllFavorites,
   updateUser,
@@ -30,11 +30,17 @@ getttting all favorites
 
 */
 
-userRouter.route("/:userID/favorites/:productID").post(addingFavorite);
+userRouter
+  .route("/:userID/favorites")
+  .put(authenticationMiddleware, addingToFavorite);
 
-userRouter.route("/:userID/favorites/:productID").delete(removeFavorite);
+userRouter
+  .route("/:userID/favorites/:productID")
+  .delete(authenticationMiddleware, removeFavorite);
 
-userRouter.route("/:userID/favorites").get(getAllFavorites);
+userRouter
+  .route("/:userID/favorites")
+  .get(authenticationMiddleware, getAllFavorites);
 
 // userRouter.route("/:userID/favorites").post(favorite);
 

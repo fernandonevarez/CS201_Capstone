@@ -39,38 +39,138 @@ const updateUser = async (req, res) => {
   res.status(200).json({ user });
 };
 
-const addingFavorite = async (req, res) => {
-  const { userID, productID } = req.params;
-  const { user, product } = await Promise.all([
-    User.findById(userID),
-    Product.findById(productID),
-  ]);
+const addingToFavorite = async (req, res) => {
+  const { userID } = req.params;
+  const { productID } = req.body;
 
-  if (!user || !product) {
-    throw new BadRequestError("Invalid user or product");
+  // find single product
+  const product = await Product.findById({ _id: productID });
+
+  if (!product) {
+    throw new BadRequestError(
+      `Product does not exist, no product with id: ${productID}`
+    );
   }
 
-  user.favorites.push(product);
-  user.save();
-  res.status(200).json({ user });
-  console.log({ user });
+  const user = await User.findById({ _id: userID });
+
+  const updatedUser = await User.findByIdAndUpdate(
+    { _id: userID },
+    {
+      $push: {
+        favorites: [
+          {
+            _id: product._id,
+            name: product.name,
+            price: product.price,
+            imageArray: product.imageArray,
+            description: product.description,
+            target: product.target,
+            type: product.type,
+            likes: product.likes,
+            // store: product.store,
+            createdBy: product.createdBy,
+            createdAt: product.createdAt,
+            __v: product.__v,
+          },
+        ],
+      },
+    },
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedUser) {
+    throw new BadRequestError(
+      `User does not exist, no user with id: ${userID}`
+    );
+  }
+
+  res.status(StatusCodes.OK).json({
+    user: updatedUser,
+  });
+
+  // // get the userID and productID
+  // const { userID } = req.params;
+
+  // const { productID } = req.body;
+
+  // console.log(productID);
+
+  // // find the user
+  // const user = await User.findById(userID);
+  // if (!user) {
+  //   throw new BadRequestError(
+  //     `User does not exist, no user with id: ${userID}`
+  //   );
+  // }
+
+  // // find the product
+  // const product = await Product.findById(productID);
+  // if (!product) {
+  //   throw new BadRequestError(
+  //     `Product does not exist, no product with id: ${productID}`
+  //   );
+  // }
+
+  // // check if the product is already in the user's favorites
+  // const isInFavorites = user.favorites.some(
+  //   (item) => item._id.toString() === product._id
+  // );
+
+  // if (isInFavorites) {
+  //   // if the product is already in the user's favorites, then just delete it and add it to the user's favorites
+  //   user.favorites.pull({ _id: productID });
+
+  //   user.favorites.push(product);
+
+  //   user.save();
+  //   res.status(StatusCodes.OK).json({ user });
+  // } else {
+  //   // if the product is not in the user's favorites, then add it to the user's favorites
+  //   user.favorites.push(product);
+  //   user.save();
+  //   res.status(StatusCodes.OK).json({ user });
+  // }
 };
 
 const removeFavorite = async (req, res) => {
   const { userID, productID } = req.params;
-  const { user, product } = await Promise.all([
-    User.findById(userID),
-    Product.findById(productID),
-  ]);
 
-  if (!user || !product) {
-    throw new BadRequestError("Invalid user or product");
+  // find the user
+  const user = await User.findById(userID);
+  if (!user) {
+    throw new BadRequestError(
+      `User does not exist, no user with id: ${userID}`
+    );
   }
 
-  user.favorites.pull(product);
-  user.save();
+  // find the product
+  const product = await Product.findById(productID);
+  if (!product) {
+    throw new BadRequestError(
+      `Product does not exist, no product with id: ${productID}`
+    );
+  }
+
+  // check if the product is already in the user's favorites
+  const isInFavorites = user.favorites.some(
+    (item) => item._id.toString() === product._id
+  );
+
+  // if the product is in the user's favorites, then delete it
+  if (isInFavorites) {
+    // remove all the items in the user's favorites that have the same productID
+    user.favorites.pull({ _id: productID });
+    // save the user
+    user.save();
+    res.status(StatusCodes.OK).json({ user });
+  } else {
+    throw new BadRequestError(
+      `Product does not exist in user's favorites, no product with id: ${productID}`
+    );
+  }
+
   // res.status(200).json({ user });
-  console.log({ user });
 };
 
 const getAllFavorites = async (req, res) => {
@@ -289,7 +389,7 @@ const updateStore = async (req, res) => {};
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 module.exports = {
-  addingFavorite,
+  addingToFavorite,
   removeFavorite,
   getAllFavorites,
   updateUser,

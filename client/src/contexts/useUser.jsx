@@ -94,6 +94,8 @@ const UserProvider = ({ children }) => {
 
   const [cartAmount, setCartAmount] = useState(0);
 
+  const [userFavorites, setUserFavorites] = useState([]);
+
   // useEffect(() => {
   //   if (user.details.token) {
   //     // update cartNumber
@@ -105,6 +107,7 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     if (user.details.token) {
       setCartAmount(user.details.user.cart.length);
+      setUserFavorites(user.details.user.favorites);
     }
   }, [user.details]);
 
@@ -193,7 +196,16 @@ const UserProvider = ({ children }) => {
   //   console.log(userCookies.token);
 
   return (
-    <UserContext.Provider value={{ user, dispatch, cartAmount, setCartAmount }}>
+    <UserContext.Provider
+      value={{
+        user,
+        dispatch,
+        cartAmount,
+        setCartAmount,
+        userFavorites,
+        setUserFavorites,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

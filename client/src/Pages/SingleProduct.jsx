@@ -191,29 +191,27 @@ const SingleProduct = () => {
             {imageArray != undefined ? (
               <img src={imageArray[0]} alt="product" />
             ) : (
-              <img alt="product had no image to go with it, sorry." />
+              <img alt="product had no image to go with it, sorry for the inconvence." />
             )}
           </div>
 
-          <div className="product-info">
-            <h1>{name}</h1>
+          <h1 className="product-name">{name}</h1>
 
-            <div className="product-price-available">
-              <Price amount={price} />
+          <div className="product-price-available">
+            <Price amount={price} />
 
-              <div className="product-info-wrapper">
-                <Favorite productID={productID} />
-                <h2>In stock</h2>
-              </div>
+            <div className="product-info-wrapper">
+              <Favorite productID={productID} />
+              <h2>In stock</h2>
             </div>
+          </div>
 
-            {/* product favorite */}
+          <button onClick={() => pushToCart()}>Add to Cart</button>
 
-            <button onClick={() => pushToCart()}>Add to Cart</button>
-
+          <div className="product-description">
             <h2 className="details">Details</h2>
 
-            <p>{description}</p>
+            <p className="product-des">{description}</p>
           </div>
         </div>
       )}

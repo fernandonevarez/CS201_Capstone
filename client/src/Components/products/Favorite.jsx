@@ -7,8 +7,10 @@ import "../../styles/components/products/Favorite.scss";
 
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const Favorite = ({ productID }) => {
+const Favorite = ({ productID, orgin }) => {
   // console.log("productID", productID)
+
+  console.log("productID", productID);
 
   const { user, dispatch, userFavorites, setUserFavorites } = useUser();
 
@@ -55,7 +57,7 @@ const Favorite = ({ productID }) => {
   const removeFromFavorites = async (productID) => {
     // console.log("removed from favorites");
     const response = await axios
-      .put(
+      .delete(
         `http://localhost:3000/api/v1/user/${user.details.user._id}/favorites/${productID}`,
         {
           headers: {
@@ -69,10 +71,12 @@ const Favorite = ({ productID }) => {
         console.log("removed from favorites", response.data.user.favorites);
 
         dispatch({
-          type: "REMOVE_FROM_FAVORITES",
+          type: "UNFAVORITE",
           payload: response.data.user.favorites,
         });
+        console.log("ping");
         setUserFavorites(response.data.user.favorites);
+        console.log("pong");
       })
       .catch((err) => {
         console.log(err);
@@ -101,7 +105,30 @@ const Favorite = ({ productID }) => {
   // }, [user.details.user.favorites, productID]);
 
   // check if the product is in the user's favorites
+
   const checkIfInFavorites = useMemo(() => {
+    // console.log("userFavorites", userFavorites);
+    if (userFavorites) {
+      const favorites = userFavorites;
+      for (let i = 0; i < favorites.length; i++) {
+        if (favorites[i]._id === productID) {
+          return setalreadyInFavorites(true);
+          // return true;/
+        } else {
+          return setalreadyInFavorites(false);
+        }
+      }
+    } else {
+      setalreadyInFavorites(false);
+    }
+  }, [user.details.user, productID]);
+
+  console.log("userFavorites", userFavorites);
+
+  // console.log("alreadyInFavorites", alreadyInFavorites);
+
+  // update the checkIfInFavorites state when the user's favorites changes
+  useEffect(() => {
     // console.log("userFavorites", userFavorites);
     if (userFavorites) {
       const favorites = userFavorites;
@@ -109,12 +136,16 @@ const Favorite = ({ productID }) => {
         if (favorites[i]._id === productID) {
           setalreadyInFavorites(true);
           // return true;/
+        } else {
+          setalreadyInFavorites(false);
         }
       }
     } else {
       setalreadyInFavorites(false);
     }
   }, [userFavorites]);
+
+  // console.log("alreadyInFavorites", alreadyInFavorites);
 
   // console.log("userDetails", user.details);
 
@@ -124,11 +155,17 @@ const Favorite = ({ productID }) => {
         <>
           {alreadyInFavorites ? (
             <FaHeart
+              style={{
+                width: orgin === "favorites" ? "15%" : "",
+              }}
               className="heart"
               onClick={() => removeFromFavorites(productID)}
             />
           ) : (
             <FaRegHeart
+              style={{
+                width: orgin === "favorites" ? "15%" : "",
+              }}
               className="heart"
               onClick={() => addToFavorites(productID)}
             />

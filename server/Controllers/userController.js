@@ -133,42 +133,85 @@ const addingToFavorite = async (req, res) => {
   // }
 };
 
-const removeFavorite = async (req, res) => {
+const removeFromFavorite = async (req, res) => {
   const { userID, productID } = req.params;
 
-  // find the user
-  const user = await User.findById(userID);
-  if (!user) {
-    throw new BadRequestError(
-      `User does not exist, no user with id: ${userID}`
-    );
-  }
+  // find single product
+  const product = await Product.findById({ _id: productID });
 
-  // find the product
-  const product = await Product.findById(productID);
   if (!product) {
     throw new BadRequestError(
       `Product does not exist, no product with id: ${productID}`
     );
   }
 
-  // check if the product is already in the user's favorites
-  const isInFavorites = user.favorites.some(
-    (item) => item._id.toString() === product._id
+  const user = await User.findById({ _id: userID });
+
+  const updatedUser = await User.findByIdAndUpdate(
+    { _id: userID },
+    {
+      // $pull: {
+      //   favorites: {
+      //     _id: product._id
+      //   }
+      // }
+
+      // remove the product from the favorites array
+      $pull: {
+        favorites: {
+          _id: product._id,
+        },
+      },
+    },
+    { new: true, runValidators: true }
   );
 
-  // if the product is in the user's favorites, then delete it
-  if (isInFavorites) {
-    // remove all the items in the user's favorites that have the same productID
-    user.favorites.pull({ _id: productID });
-    // save the user
-    user.save();
-    res.status(StatusCodes.OK).json({ user });
-  } else {
+  if (!updatedUser) {
     throw new BadRequestError(
-      `Product does not exist in user's favorites, no product with id: ${productID}`
+      `User does not exist, no user with id: ${userID}`
     );
   }
+
+  res.status(StatusCodes.OK).json({
+    user: updatedUser,
+  });
+
+  // const { userID, productID } = req.params;
+
+  // // find the user
+  // const user = await User.findById(userID);
+  // if (!user) {
+  //   throw new BadRequestError(
+  //     `User does not exist, no user with id: ${userID}`
+  //   );
+  // }
+
+  // // find the product
+  // const product = await Product.findById(productID);
+  // if (!product) {
+  //   throw new BadRequestError(
+  //     `Product does not exist, no product with id: ${productID}`
+  //   );
+  // }
+
+  // console.log(product);
+
+  // // check if the product is already in the user's favorites
+  // const isInFavorites = user.favorites.some(
+  //   (item) => item._id.toString() === product._id
+  // );
+
+  // // if the product is in the user's favorites, then delete it
+  // if (isInFavorites) {
+  //   throw new BadRequestError(
+  //     `Product does not exist in user's favorites, no product with id: ${productID}`
+  //   );
+  // }
+
+  // user.favorites.pull({ _id: productID });
+  // // save the user
+  // user.save();
+  // res.status(StatusCodes.OK).json({ user });
 
   // res.status(200).json({ user });
 };
@@ -390,7 +433,7 @@ const updateStore = async (req, res) => {};
 
 module.exports = {
   addingToFavorite,
-  removeFavorite,
+  removeFromFavorite,
   getAllFavorites,
   updateUser,
   addToCart,

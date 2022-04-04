@@ -1,9 +1,13 @@
-     @use "../../../util/colors.scss" as *;
+@use "../../../util/colors.scss" as *;
 @use "../../../util/mixins.scss" as *;
 
 .product-seat {
-    width: 60vw;
-    box-shadow: 0px 4px 4px adjust-color($black, $alpha: -0.75);
+    width: 47vw !important;
+
+    // for the favorite seat's only
+    // width: 100vw !important;
+    // min-width: 100vw;
+    box-shadow: 0px 4px 4px rgb(33 34 27 / 25%);
     border-radius: 10px;
 
     > .atop {
@@ -15,11 +19,11 @@
         }
 
         .image {
-            @include box(60vw);
+            @include box(100%, 50vw);
             background-color: $white;
-            
+
             > img {
-                object-fit: cover;  
+                object-fit: cover;
                 background-color: $white;
                 @include box;
                 border-radius: 10px 10px 0 0;
@@ -37,7 +41,7 @@
                 @include box(1.75rem);
 
                 > svg {
-                    @include box;   
+                    @include box;
                     color: $blue;
                 }
             }
@@ -46,12 +50,12 @@
 
     > .main {
         background-color: $white;
-        padding: .5rem;
+        padding: 0.5rem;
         border-top: 4px solid $blue;
         color: $blue;
         font-family: "Raleway";
         border-radius: 0 0 10px 10px;
-        
+
         > h3 {
             text-align: center;
             font-size: 1.25rem;
@@ -61,15 +65,17 @@
         }
     }
 }
-
-@media (min-width: 420px) {
+@media only screen and (min-width: 420px) {
     .product-seat {
-        width: 30vw;
+        width: 81% !important;
+        margin: 1rem 0 !important;
 
         .atop {
             .image {
-                width: 30vw;
+                width: 100%;
                 height: 30vw;
+                object-fit: cover;
+                background-color: $white;
             }
         }
     }

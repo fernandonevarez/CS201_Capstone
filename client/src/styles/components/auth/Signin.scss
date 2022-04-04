@@ -18,10 +18,10 @@
     }
 
     .content {
-        @include box(90vw, 53vh);
+        @include box(90vw, fit-content);
         //     width: 90vw;
         // height: 53vh;
-        max-height: 550px;
+        // max-height: 550px;
         position: absolute;
         // z-index: 99;
         background-color: #f7f3f5;
@@ -82,7 +82,7 @@
             .forgot-password {
                 text-align: center;
                 text-decoration: underline;
-                margin-top: 5rem;
+                margin-top: 2rem;
                 // flex-grow: 2;
             }
 
@@ -93,6 +93,15 @@
                 color: $white;
                 font-size: 1rem;
                 border-radius: 1.5rem;
+            }
+
+            .signin-info {
+                font-size: 16px;
+                text-align: center;
+                .link {
+                    text-decoration: underline;
+                    color: $blue;
+                }
             }
 
             .sep {
@@ -119,6 +128,27 @@
                     gap: 1rem;
                     border: 2px $blue solid;
                     border-radius: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+// desgin for desktop
+@media (min-width: 768px) {
+    .signin-popup {
+        .content {
+            width: 20rem;
+            height: 57vh;
+            min-height: fit-content;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                height: 100%;
+                .signin-info {
+                    margin-top: 2rem;
                 }
             }
         }

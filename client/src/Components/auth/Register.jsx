@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 
 import "../../styles/components/auth/Register.scss";
+import { Link } from "react-router-dom";
 // import { useUser } from "../contexts/useUser";
 
 // const token = localStorage.getItem("userToken");
@@ -238,6 +239,19 @@ const Register = ({ close, change }) => {
           <button type="submit" onSubmit={(e) => formSubmit(e)}>
             Create an Account
           </button>
+
+          <p className="register-info">
+            By clicking Register, you agree to MSB's Terms of Use and{" "}
+            <Link className="link" to={`/terms-of-use`}>
+              Terms of Use
+            </Link>{" "}
+            and{" "}
+            <Link className="link" to="/privacy-policy">
+              Privacy Policy
+            </Link>
+            . MSB may send you communications; you may change your preferences
+            in your account settings. We'll never post without your permission.
+          </p>
 
           {/* <div className="sep">
             <div className="dash"></div>

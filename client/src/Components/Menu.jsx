@@ -457,6 +457,7 @@ const Menu = ({ toggleMenu }) => {
   return (
     <>
       <div className="hide" onClick={exit}></div>
+
       <div className="content">
         <div className="top">
           <div className="back">
@@ -473,7 +474,10 @@ const Menu = ({ toggleMenu }) => {
               <>
                 {children.length ? (
                   // has children
-                  <div className="catagory" onClick={() => contuine(children, name)}>
+                  <div
+                    className="catagory"
+                    onClick={() => contuine(children, name)}
+                  >
                     <Link to={`/products/catagories/${name}`}>
                       <h3 className="catagory-name">{name}</h3>
                     </Link>
@@ -490,10 +494,9 @@ const Menu = ({ toggleMenu }) => {
                   // doesn't have children
                   <div className="catagory">
                     <Link to={`/products/catagories/${name}`} onClick={exit}>
-                    <h3 className="catagory-name">{name}</h3>
-                  </Link>
+                      <h3 className="catagory-name">{name}</h3>
+                    </Link>
                   </div>
-                  
                 )}
               </>
             </li>
@@ -502,8 +505,6 @@ const Menu = ({ toggleMenu }) => {
       </div>
     </>
   );
-
-  
 
   // OLD
   // const [catagories, setCatagories] = useState(SAMPLE_DATA_REMOVE_LATER);

@@ -1,4 +1,4 @@
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./styles/globals.scss";
 
 import Home from "./Pages/Home";
@@ -16,6 +16,7 @@ import Profile from "./Pages/Profile";
 import Protected from "./Components/Protected";
 import UserStore from "./Pages/UserStore";
 import Store from "./Pages/Store";
+import About from "./Pages/About";
 
 // import Footer from "./Components/Footer";
 // import SingleNew from "./Pages/SingleNew";
@@ -24,7 +25,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-
 
       <Routes>
         <Route exact path="/" element={<Home />} />
@@ -39,13 +39,18 @@ function App() {
         <Route
           path="/cart"
           element={<Cart />}
-        // element={<Protected>
-        //   <Cart />
-        // </Protected>}
+          // element={<Protected>
+          //   <Cart />
+          // </Protected>}
         />
-        <Route path="/:userID/store" element={<Protected>
-          <Store />
-        </Protected>} />
+        <Route
+          path="/:userID/store"
+          element={
+            <Protected>
+              <Store />
+            </Protected>
+          }
+        />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/products/catagories/new" element={<NewProducts />} />
         <Route path="/products/catagories/popular" element={<Popular />} />
@@ -53,9 +58,9 @@ function App() {
         {/* Doc Pages */}
         <Route path="/terms-of-use" element={<TermsOfUse />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>
-
 
       <Footer />
     </div>

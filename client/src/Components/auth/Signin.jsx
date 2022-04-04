@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/components/auth/Signin.scss";
 import Input from "../form/Input";
 import {
@@ -11,9 +11,11 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import axios from "axios";
-import {useUser} from "../../contexts/useUser";
+import { useUser } from "../../contexts/useUser";
 
-const Signin = ({close, change}) => {
+import { Link } from "react-router-dom";
+
+const Signin = ({ close, change }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -24,7 +26,7 @@ const Signin = ({close, change}) => {
     message: "",
   });
 
-  const {user, dispatch} = useUser();
+  const { user, dispatch } = useUser();
   // FORM VALIDATION STILL NEEDS TO BE DONE. (IE. PASSWORD IS INNCORRECT OR NAME IS TOO LONG)
   // IF YOU NEED HELP WITH THIS CONTACT ETHAN
   const formSubmit = async (e) => {
@@ -47,9 +49,9 @@ const Signin = ({close, change}) => {
           password: userPassword,
         })
         .then((response) => {
-          dispatch({type: "LOGIN", payload: response.data});
+          dispatch({ type: "LOGIN", payload: response.data });
 
-          setIsLoginError({status: false, message: ""});
+          setIsLoginError({ status: false, message: "" });
 
           // if (isLoginError.status === false) {
           close();
@@ -142,6 +144,19 @@ const Signin = ({close, change}) => {
           >
             Login
           </button>
+
+          <p className="signin-info">
+            By clicking Sign in, you agree to MSB's{" "}
+            <Link className="link" to={`/terms-of-use`}>
+              Terms of Use
+            </Link>{" "}
+            and{" "}
+            <Link className="link" to="/privacy-policy">
+              Privacy Policy
+            </Link>
+            . MSB may send you communications; you may change your preferences
+            in your account settings. We'll never post without your permission.
+          </p>
 
           {/* <div className="sep">
             <div className="dash"></div>

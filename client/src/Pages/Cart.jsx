@@ -76,7 +76,7 @@ const Cart = () => {
   const removeFromCart = async (productID) => {
     const response = await axios
       .delete(
-        `http://localhost:3000/api/v1/user/${user.details.user._id}/cart/${productID}`,
+        `http://localhost:3000/api/v1/user/${user.details.user._id}/favorites/${productID}`,
         {
           headers: {
             "Content-Type": "application/json",

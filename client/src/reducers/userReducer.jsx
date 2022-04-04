@@ -81,20 +81,24 @@ const userReducer = (state, action) => {
     case "FAVORITE": {
       return {
         ...state,
-        products: {
-          ...state.products,
-          favorites: action.payload,
+        details: {
+          ...state.details,
+          user: {
+            ...state.details.user,
+            favorites: action.payload,
+          },
         },
       };
     }
     case "UNFAVORITE": {
       return {
         ...state,
-        products: {
-          ...state.products,
-          favorites: state.products.favorites.filter(
-            (fav) => fav.name !== action.payload.name
-          ),
+        details: {
+          ...state.details,
+          user: {
+            ...state.details.user,
+            favorites: action.payload,
+          },
         },
       };
     }

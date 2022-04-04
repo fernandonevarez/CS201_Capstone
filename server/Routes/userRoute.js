@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   addingToFavorite,
-  removeFavorite,
+  removeFromFavorite,
   getAllFavorites,
   updateUser,
   addToCart,
@@ -36,7 +36,7 @@ userRouter
 
 userRouter
   .route("/:userID/favorites/:productID")
-  .delete(authenticationMiddleware, removeFavorite);
+  .delete(authenticationMiddleware, removeFromFavorite);
 
 userRouter
   .route("/:userID/favorites")

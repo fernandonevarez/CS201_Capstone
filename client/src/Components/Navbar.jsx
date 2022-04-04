@@ -13,6 +13,9 @@ import Signup from "./auth/Signin";
 // import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 
+// import {}
+import { motion } from "framer-motion";
+
 import NewProducts from "../Pages/NewProducts";
 // import CategoryMenu from "./CategoryMenu";
 import axios from "axios";
@@ -152,6 +155,38 @@ const Navbar = () => {
   });
 
   const [showNavbar, setShowNavbar] = useState(true);
+
+  const container = {
+    // make a slide in animation
+    open: {
+      opacity: 1,
+      x: 0,
+      TransformStyle: "translateY(0)",
+      // transition: { duration: 0.5 },
+    },
+    closed: {
+      // make an transition out animation
+
+      opacity: 0,
+      x: "-100%",
+      TransformStyle: "translateY(-100%)",
+      // make a slide out animation
+      transition: {
+        delay: 0.5,
+        duration: 0.5,
+      },
+
+      // transition: { duration: 0.5 },
+    },
+    transition: {
+      type: "spring",
+      stiffness: 50,
+      mass: 0.5,
+      damping: 10,
+      restDelta: 0.5,
+      restSpeed: 10,
+    },
+  };
 
   return (
     <nav>
@@ -320,9 +355,16 @@ const Navbar = () => {
         />
       )}
 
-      <div className={`menu ${showMenu ? "show" : ""}`}>
+      <motion.div
+        animate={showMenu ? "open" : "closed"}
+        initial="closed"
+        exit="closed"
+        transition={container.transition}
+        variants={container}
+        className={`menu ${showMenu ? "show" : ""}`}
+      >
         <Menu toggleMenu={toggleMenu} />
-      </div>
+      </motion.div>
 
       {popup.open && popup.content}
     </nav>
